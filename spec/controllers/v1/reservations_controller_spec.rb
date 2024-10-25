@@ -68,6 +68,115 @@ RSpec.describe V1::ReservationsController, type: :controller do
       end
     end
 
+    context "when a 'once' Holiday exists" do
+      let!(:holiday) do
+        create(:holiday, from_timestamp: 10.days.ago.strftime("%Y-%m-%d"), to_timestamp: 10.days.from_now.strftime("%Y-%m-%d")).tap do |h|
+          h.update!(message: "Some Message mario!")
+        end
+      end
+
+      it { expect { req }.not_to change(Reservation, :count) }
+
+      it do
+        req
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it do
+        req
+        expect(json).to include(message: String)
+        expect(json[:message]).to include(holiday.message)
+      end
+    end
+
+    context "when a 'weekly' Holiday exists (whole day closed)" do
+      let!(:holiday) do
+        create(:holiday,
+          from_timestamp: 10.days.ago.strftime("%Y-%m-%d"),
+          to_timestamp: nil,
+          weekly_from: "00:00",
+          weekly_to: "23:59",
+          weekday: date.wday
+          ).tap do |h|
+          h.update!(message: "Whole day closed mario!")
+        end
+      end
+
+      it { expect { req }.not_to change(Reservation, :count) }
+
+      it do
+        req
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it do
+        req
+        expect(json).to include(message: String)
+        expect(json[:message]).to include(holiday.message)
+      end
+    end
+
+    context "when a 'weekly' Holiday exists (closed only on the morning while the reservation is made for the evening)" do
+      let!(:holiday) do
+        create(:holiday,
+          from_timestamp: 10.days.ago.strftime("%Y-%m-%d"),
+          to_timestamp: nil,
+          weekly_from: "10:00",
+          weekly_to: "15:59",
+          weekday: date.wday
+          ).tap do |h|
+          h.update!(message: "Partially closed mario!")
+        end
+      end
+
+      it { expect { req }.to change(Reservation, :count) }
+
+      it do
+        req
+        expect(json).not_to include(message: String)
+        expect(response).to have_http_status(:ok)
+      end
+
+      [
+        "9:59",
+        "16:00"
+      ].each do |valid_time|
+        context "when time is #{valid_time}" do
+          let(:datetime) { "#{date.strftime("%Y-%m-%d")} #{valid_time}" }
+
+          it { expect { req }.to change(Reservation, :count) }
+
+          it do
+            req
+            expect(json).not_to include(message: String)
+            expect(response).to have_http_status(:ok)
+          end
+        end
+      end
+    end
+
+    context "when a 'weekly' Holiday exists but is for another wday" do
+      let!(:holiday) do
+        create(:holiday,
+          from_timestamp: 10.days.ago.strftime("%Y-%m-%d"),
+          to_timestamp: nil,
+          weekly_from: "10:00",
+          weekly_to: "15:59",
+          weekday: (date.wday + 1) % 6
+          ).tap do |h|
+          h.update!(message: "Whole day closed mario!")
+        end
+      end
+
+      it { expect { req }.to change(Reservation, :count) }
+
+      it do
+        req
+        expect(json).not_to include(message: String)
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
     context "when lang is blank" do
       let(:lang) { nil }
 

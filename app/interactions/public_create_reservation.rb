@@ -29,6 +29,8 @@ class PublicCreateReservation < ActiveInteraction::Base
 
   validate :lang_is_present
 
+  validate :no_holidays
+
   attr_reader :reservation
 
   def execute
@@ -129,6 +131,18 @@ class PublicCreateReservation < ActiveInteraction::Base
   # ###################################
   # Validation methods
   # ###################################
+  def no_holidays
+    return if datetime.blank?
+
+    @holidays = Holiday.active_at(datetime)
+    return if @holidays.empty?
+
+    @holidays.each do |h|
+      # TODO i18n is ok?
+      errors.add(:base, h.message)
+    end
+  end
+
   def phone_is_present
     return if phone.present?
 
@@ -193,7 +207,7 @@ class PublicCreateReservation < ActiveInteraction::Base
 
   def datetime_format_is_valid
     return if params[:datetime].to_s.blank?
-    return if /\A\d{4}-\d{2}-\d{2} \d{2}:\d{2}\z/.match?(params[:datetime].to_s) # YYYY-MM-DD HH:MM
+    return if /\A\d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{2}\z/.match?(params[:datetime].to_s) # YYYY-M(M)-D(D) (H)H:MM
     # YYYY-MM-DDTHH:MM:SS.000Z
     return if /\A\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z?\z/.match?(params[:datetime].to_s)
 
