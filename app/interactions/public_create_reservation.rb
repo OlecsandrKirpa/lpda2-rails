@@ -8,7 +8,6 @@ class PublicCreateReservation < ActiveInteraction::Base
   validate :datetime_is_not_in_the_past
   validate :datetime_has_reservation_turn
   validate :datetime_is_in_valid_reservation_turn_step
-  # TODO: validate datetime is not in a holiday.
 
   validate :people_count_is_valid
   validate :people_count_is_not_zero
