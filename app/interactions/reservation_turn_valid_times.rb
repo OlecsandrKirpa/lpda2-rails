@@ -6,7 +6,7 @@ class ReservationTurnValidTimes < ActiveInteraction::Base
   string :format, default: "%H:%M"
 
   # When date is provided, times will be fildered to only include times that are greater than the current time.
-  string :date, default: nil
+  string :date
 
   def execute
     starts_at = turn.starts_at
@@ -14,15 +14,21 @@ class ReservationTurnValidTimes < ActiveInteraction::Base
     times = []
 
     while starts_at <= ends_at
-      times << starts_at.strftime(format)
+      times << Time.zone.parse("#{date} #{starts_at.strftime('%H:%M')}")
 
       starts_at += turn.step.minutes
     end
 
-    if date.present? && date.to_date == Time.zone.now.to_date
-      times = times.select { |time| Time.zone.parse(time) > Time.zone.now }
+    if date.to_date == Time.zone.now.to_date
+      times = times.select { |time| time > Time.zone.now }
     end
 
-    times
+    times = delete_times_overlapping_with_weekly_holidays(times)
+
+    times.map { |time| time.strftime(format) }
+  end
+
+  def delete_times_overlapping_with_weekly_holidays(times)
+    times.reject { |time| Holiday.active_at(time).any? }
   end
 end

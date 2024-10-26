@@ -21,6 +21,108 @@ RSpec.context "GET /v1/reservations/valid_times", type: :request do
     it { expect(json).to eq [] }
   end
 
+  context "when there are turns but there are also holidays" do
+    before do
+      ReservationTurn.create!(
+          name: "Day",
+          weekday: Time.zone.now.wday,
+          starts_at: "12:00",
+          ends_at: "13:00",
+          step: 10
+        )
+    end
+
+    context "when got holidays on all weekdays but they are expired (to_timestamp is in the past): should see all times available" do
+      before do
+        (0..6).to_a.each do |weekday|
+          create(:holiday,
+            from_timestamp: 4.days.ago,
+            to_timestamp: 2.days.ago,
+            weekday: weekday,
+            weekly_from: "00:00",
+            weekly_to: "23:59"
+          )
+        end
+
+        travel_to Time.zone.now.beginning_of_day do
+          req(date: Time.zone.now.to_date.to_s)
+        end
+      end
+
+      it { expect(Holiday.all.count).to eq(7) }
+      it { expect(response).to have_http_status(:ok) }
+      it { expect(json).not_to include(message: String) }
+      it { expect(json.dig(0, "valid_times")).to match_array(%w[12:00 12:10 12:20 12:30 12:40 12:50 13:00]) }
+    end
+
+    context "when got holidays on all weekdays but they are not active yet (from_timestamp is in the future)" do
+      before do
+        (0..6).to_a.each do |weekday|
+          create(:holiday,
+            from_timestamp: 20.days.from_now,
+            to_timestamp: nil,
+            weekday: weekday,
+            weekly_from: "00:00",
+            weekly_to: "23:59"
+          )
+        end
+
+        travel_to Time.zone.now.beginning_of_day do
+          req(date: Time.zone.now.to_date.to_s)
+        end
+      end
+
+      it { expect(Holiday.all.count).to eq(7) }
+      it { expect(response).to have_http_status(:ok) }
+      it { expect(json).not_to include(message: String) }
+      it { expect(json.dig(0, "valid_times")).to match_array(%w[12:00 12:10 12:20 12:30 12:40 12:50 13:00]) }
+    end
+
+    context "when got one weekly holiday overlapping with the only turn" do
+      before do
+        create(:holiday, from_timestamp: 10.days.ago, to_timestamp: 10.days.from_now, weekday: Time.zone.now.wday, weekly_from: "12:30", weekly_to: "15:00")
+
+        travel_to Time.zone.now.beginning_of_day do
+          req(date: Time.zone.now.to_date.to_s)
+        end
+      end
+
+      it { expect(response).to have_http_status(:ok) }
+      it { expect(json).not_to include(message: String) }
+      it { expect(json.dig(0, "valid_times")).to match_array(%w[12:00 12:10 12:20]) }
+    end
+
+    context "when got a weekly holiday covering entirely the turn" do
+      before do
+        create(:holiday, from_timestamp: 10.days.ago, to_timestamp: 10.days.from_now, weekday: Time.zone.now.wday, weekly_from: "11:00", weekly_to: "15:00")
+
+        travel_to Time.zone.now.beginning_of_day do
+          req(date: Time.zone.now.to_date.to_s)
+        end
+      end
+
+      it { expect(response).to have_http_status(:ok) }
+      it { expect(json).not_to include(message: String) }
+      it { expect(json.length).to eq(1) }
+      it { expect(json.dig(0, "valid_times")).to eq([]) }
+    end
+
+    context "when got a holiday during many days" do
+      before do
+        create(:holiday, from_timestamp: 1.days.ago, to_timestamp: 1.day.from_now)
+
+        travel_to Time.zone.now.beginning_of_day do
+          req(date: Time.zone.now.to_date.to_s)
+        end
+      end
+
+      it { expect(response).to have_http_status(:ok) }
+      it { expect(json).not_to include(message: String) }
+      it { expect(json.length).to eq(1) }
+      it { expect(json.dig(0, "valid_times")).to eq([]) }
+    end
+  end
+
   context "when there are turns: one turn for each day" do
     subject { response }
 
