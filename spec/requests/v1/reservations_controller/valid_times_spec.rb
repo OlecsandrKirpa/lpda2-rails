@@ -6,8 +6,8 @@ RSpec.context "GET /v1/reservations/valid_times", type: :request do
   let(:date) { Time.zone.now.to_date.to_s }
   let(:params) { { date: } }
 
-  def req(_params = params)
-    get "/v1/reservations/valid_times", params: _params
+  def req(provided_params = params)
+    get "/v1/reservations/valid_times", params: provided_params
   end
 
   context "when there are no turns" do
