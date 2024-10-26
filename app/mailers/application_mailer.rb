@@ -9,13 +9,13 @@ class ApplicationMailer < ActionMailer::Base
   before_action do
     headers "X-ApplicationSender" => "lpda2"
 
-    if params[:locale]
+    locale = detect_locale
+    if locale
       @locale_was = I18n.locale
-      I18n.locale = params[:locale]
+      I18n.locale = locale
     else
       @locale_was = nil
     end
-
 
     @images = Image.where("key ILIKE 'email_images_%'").all.map do |image|
       [
@@ -47,5 +47,15 @@ class ApplicationMailer < ActionMailer::Base
       headers: mail.header.fields.map { |field| [field.name, field.value] }.to_h,
       raw: mail.to_s
     )
+  end
+
+  private
+
+  # Overwrite this method in your mailer to provide a custom locale from params or some record.
+  def detect_locale
+    return nil if params.blank?
+    return nil if params[:locale].blank?
+
+    params[:locale]
   end
 end

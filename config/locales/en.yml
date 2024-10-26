@@ -292,6 +292,9 @@ en:
     confirmation:
       subject: "Your reservation at La Porta D'acqua %{fullname}"
       no_email: "This reservation has no email."
+    reminder:
+      subject: "Remember your reservation at La Porta D'acqua %{fullname}"
+      body: "We remind you that you have a reservation for the day %{date} at %{hour} for %{people} people."
     btn_not_working_copy_url: "If the button doesn't work, copy and paste the following URL in your browser:"
     greetings: "Hello %{fullname}"
     reservation_registered: "We inform you that your reservation on the day %{date} at %{hour}, for %{people} people has been registered correctly."

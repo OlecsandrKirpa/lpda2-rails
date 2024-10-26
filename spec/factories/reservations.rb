@@ -10,5 +10,9 @@ FactoryBot.define do
     fullname { "Mark" }
     email { Faker::Internet.email }
     phone { Faker::PhoneNumber.cell_phone }
+
+    trait :with_fullname do
+      fullname { Faker::Name.name }
+    end
   end
 end
