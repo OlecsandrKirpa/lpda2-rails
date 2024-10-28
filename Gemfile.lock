@@ -229,7 +229,7 @@ GEM
     multipart-post (2.3.0)
     mustache (1.1.1)
     nenv (0.3.0)
-    net-imap (0.4.10)
+    net-imap (0.4.17)
       date
       net-protocol
     net-pop (0.1.2)
