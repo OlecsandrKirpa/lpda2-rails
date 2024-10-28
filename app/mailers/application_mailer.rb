@@ -41,11 +41,14 @@ class ApplicationMailer < ActionMailer::Base
     delivered_email = params[:delivered_email] || Log::DeliveredEmail.find_by(id: params[:delivered_email_id]) || Log::DeliveredEmail.create!
 
     delivered_email.update!(
-      text: mail.text_part&.body&.decoded,
-      html: mail.html_part&.body&.decoded,
-      subject: mail.subject,
-      headers: mail.header.fields.map { |field| [field.name, field.value] }.to_h,
-      raw: mail.to_s
+      {
+        text: mail.text_part&.body&.decoded,
+        html: mail.html_part&.body&.decoded,
+        subject: mail.subject,
+        headers: mail.header.fields.map { |field| [field.name, field.value] }.to_h,
+        raw: mail.to_s,
+        record: detect_record,
+      }.compact
     )
   end
 
@@ -57,5 +60,12 @@ class ApplicationMailer < ActionMailer::Base
     return nil if params[:locale].blank?
 
     params[:locale]
+  end
+
+  def detect_record
+    return nil if params.blank?
+    return nil if params[:record].blank?
+
+    params[:record]
   end
 end

@@ -27,7 +27,7 @@ default: &default
 
   # Basic page where you can see your reservations details.
   # 'r' stands for 'reservation'
-  show_reservation_url: "{{frontend_base_url}}/#/r/{{secret}}"
+  show_reservation_url: "/#/r/{{secret}}"
 
   # When user cancels reservation payment, will be sent here:
   cancelled_payment_reservation_url: "{{frontend_base_url}}/#/r/{{secret}}/cancelled"

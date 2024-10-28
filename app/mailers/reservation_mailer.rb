@@ -2,7 +2,8 @@
 
 class ReservationMailer < ApplicationMailer
   before_action :validate_reservation
-  before_action :cancel_reservation_url
+  before_action :cancel_reservation_path
+  before_action :show_reservation_url
   before_action :set_locale_by_reservation
   layout "public"
 
@@ -21,7 +22,18 @@ class ReservationMailer < ApplicationMailer
     )
   end
 
+  def remind_payment
+    mail(
+      to: reservation_to,
+      subject: (@title = I18n.t("reservation_mailer.remind_payment.subject", fullname: reservation.fullname))
+    )
+  end
+
   private
+
+  def detect_record
+    reservation || super
+  end
 
   def detect_locale
     reservation&.lang || super
@@ -33,8 +45,15 @@ class ReservationMailer < ApplicationMailer
     I18n.locale = reservation.lang
   end
 
-  def cancel_reservation_url
-    @cancel_url = URI.join(
+  def show_reservation_url
+    @show_reservation_url ||= URI.join(
+      Config.hash[:frontend_base_url],
+      Mustache.render(Config.hash[:show_reservation_url], { secret: reservation.secret })
+    ).to_s
+  end
+
+  def cancel_reservation_path
+    @cancel_url ||= URI.join(
       Config.hash[:frontend_base_url],
       Mustache.render(Config.hash[:cancel_reservation_path], { secret: reservation.secret })
     ).to_s

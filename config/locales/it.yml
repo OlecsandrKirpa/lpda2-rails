@@ -297,6 +297,11 @@ it:
     reminder:
       subject: "Ricorda la tua prenotazione presso La Porta D'acqua %{fullname}"
       body: "Ti ricordiamo che hai una prenotazione per il giorno %{date} alle ore %{hour} per %{people} persone."
+    reservation_details_below: "Dettagli della prenotazione al link sottostante"
+    reservation_details: "Dettagli della prenotazione"
+    remind_payment:
+      subject: "Ricorda il pagamento della tua prenotazione presso La Porta D'acqua %{fullname}"
+      body: "Ti ricordiamo che la tua prenotazione per il giorno %{date} alle ore %{hour} per %{people} persone è in attesa di pagamento."
     btn_not_working_copy_url: "Se il bottone non dovesse funzionare, copia e incolla questo link in una nuova finestra:"
     greetings: "Salve %{fullname}"
     reservation_registered: "Ti informiamo che la tua prenotazione, per il giorno %{date} alle ore %{hour} e per %{people} persone, è stata registrata correttamente."

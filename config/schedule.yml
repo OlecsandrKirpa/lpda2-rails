@@ -2,3 +2,8 @@ remind_reservations_mail_job:
   cron: "0 10 * * *"
   class: RemindReservationsMailJob
   queue: default
+
+remind_reservation_payments_job:
+  cron: "0 10 * * *"
+  class: RemindReservationPaymentsJob
+  queue: default
