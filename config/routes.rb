@@ -85,6 +85,7 @@ Rails.application.routes.draw do
 
         resources :reservations do
           collection do
+            get "export"
             get "tables_summary"
           end
 

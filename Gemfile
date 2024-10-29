@@ -99,4 +99,7 @@ end
 
 group :test do
   gem "simplecov", "~> 0.22.0", require: false
+
+  # Putting in test because for now is used only in tests.
+  gem "roo", "~> 2.10.1", require: false
 end

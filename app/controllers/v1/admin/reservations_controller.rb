@@ -92,6 +92,22 @@ module V1::Admin
       show
     end
 
+    def export
+      search = ::SearchReservations.run(params:, current_user:)
+      unless search.valid?
+        return render_error(status: 400, details: search.errors.as_json,
+                            message: search.errors.full_messages.join(", "))
+      end
+
+      export = ExportReservations.run(reservations: search.result)
+      unless export.valid?
+        return render_error(status: 400, details: export.errors.as_json,
+                            message: export.errors.full_messages.join(", "))
+      end
+
+      send_file export.result, filename: "Prenotazioni.xlsx", type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    end
+
     private
 
     def create_params

@@ -35,4 +35,8 @@ RSpec.describe "Routing /v1/admin/reservations" do
     expect(get: "v1/admin/reservations/tables_summary").to route_to("v1/admin/reservations#tables_summary",
                                                                     format: :json)
   }
+
+  it {
+    expect(get: "v1/admin/reservations/export").to route_to("v1/admin/reservations#export", format: :json)
+  }
 end

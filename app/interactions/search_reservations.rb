@@ -9,7 +9,9 @@ class SearchReservations < ActiveInteraction::Base
       filter_by_status(
         filter_by_secret(
           filter_by_date(
-            order(items)
+            filter_by_created_at(
+              order(items)
+            )
           )
         )
       )
@@ -65,24 +67,37 @@ class SearchReservations < ActiveInteraction::Base
     items
   end
 
+  def filter_by_created_at(items)
+    date_from, date_to = datetime_range(
+      date_from: params[:created_at_from],
+      date_to: params[:created_at_to]
+    )
+
+    return items if date_from.nil? && date_to.nil?
+
+    items.where(created_at: date_from..date_to)
+  rescue Date::Error
+    items
+  end
+
   # Will parse inputs and return an array of two dates: "from" and "to".
   # Both may be nil.
-  def datetime_range
-    return [Time.zone.now.beginning_of_day, Time.zone.now.end_of_day] if is_true?(params[:today])
+  def datetime_range(options = params)
+    return [Time.zone.now.beginning_of_day, Time.zone.now.end_of_day] if is_true?(options[:today])
 
-    if params[:date].is_a?(String)
-      date = Date.parse(params[:date])
+    if options[:date].is_a?(String)
+      date = Date.parse(options[:date])
       return [date.beginning_of_day, date.end_of_day]
     end
 
     date_from = nil
     date_to = nil
 
-    date_from = DateTime.parse(params[:date_from]).beginning_of_day if params[:date_from].is_a?(String)
-    date_from = DateTime.parse(params[:datetime_from]) if params[:datetime_from].is_a?(String)
+    date_from = DateTime.parse(options[:date_from]).beginning_of_day if options[:date_from].is_a?(String)
+    date_from = DateTime.parse(options[:datetime_from]) if options[:datetime_from].is_a?(String)
 
-    date_to = DateTime.parse(params[:date_to]).end_of_day if params[:date_to].is_a?(String)
-    date_to = DateTime.parse(params[:datetime_to]) if params[:datetime_to].is_a?(String)
+    date_to = DateTime.parse(options[:date_to]).end_of_day if options[:date_to].is_a?(String)
+    date_to = DateTime.parse(options[:datetime_to]) if options[:datetime_to].is_a?(String)
 
     [date_from, date_to]
   end
