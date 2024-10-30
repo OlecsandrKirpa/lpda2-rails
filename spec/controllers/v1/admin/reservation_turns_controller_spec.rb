@@ -49,6 +49,23 @@ RSpec.describe V1::Admin::ReservationTurnsController, type: :controller do
         end
       end
 
+      [0, 1].each do |weekday_param|
+        context "when filtering for weekday: #{weekday_param.inspect}" do
+        let!(:turns) do
+          [
+            create(:reservation_turn, weekday: 0),
+            create(:reservation_turn, weekday: 1)
+          ]
+        end
+
+          subject { json }
+          before { req(weekday: weekday_param) }
+
+          it { expect(subject.dig(:metadata, :total_count)).to eq 1 }
+          it { expect(subject[:items]).to all(include(weekday: weekday_param)) }
+        end
+      end
+
       context "when filtering by {date: 'YYY-MM-dd'}" do
         subject { parsed_response_body }
 
@@ -148,6 +165,18 @@ RSpec.describe V1::Admin::ReservationTurnsController, type: :controller do
         end.to change(ReservationTurn, :count).by(1)
       }
 
+      [5, 15, 30, 45].each do |step_param|
+        context "when providing step" do
+          let(:params) { { starts_at: "10:00", ends_at: "11:00", name: "Pranzo", weekday: 2, step: step_param } }
+
+          it do
+            expect { req }.to change { ReservationTurn.where(step: step_param).count }.by(1)
+            expect(response).to have_http_status(:ok)
+            expect(json).not_to include(message: String)
+          end
+        end
+      end
+
       context 'providing { starts_at: "10:00", ends_at: "11:00", name: "Pranzo", weekday: 2 }' do
         subject { response }
 
@@ -223,6 +252,22 @@ RSpec.describe V1::Admin::ReservationTurnsController, type: :controller do
       it do
         reservation_turn
         expect { req(reservation_turn.id, starts_at: "10:00") }.not_to change(ReservationTurn, :count)
+      end
+
+      [
+        5, 10, 15, 30, 45
+      ].each do |from_value|
+        [
+          5, 10, 15, 30, 45
+        ].each do |to_value|
+          next if from_value == to_value
+
+          context "when updating step from #{from_value} to #{to_value}" do
+            before { reservation_turn.update(step: from_value) }
+
+            it { expect { req(reservation_turn.id, step: to_value) }.to change { reservation_turn.reload.step }.from(from_value).to(to_value) }
+          end
+        end
       end
 
       context 'providing { starts_at: "11:00" }' do

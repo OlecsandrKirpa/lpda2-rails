@@ -48,11 +48,11 @@ module V1::Admin
     private
 
     def create_params
-      params.permit(:weekday, :starts_at, :ends_at, :name)
+      params.permit(:weekday, :starts_at, :ends_at, :name, :step)
     end
 
     def update_params
-      params.permit(:weekday, :starts_at, :ends_at, :name)
+      params.permit(:weekday, :starts_at, :ends_at, :name, :step)
     end
 
     def find_item

@@ -9,6 +9,8 @@ class SearchReservationTurns < ActiveInteraction::Base
 
     items = filter_by_date(items)
 
+    items = items.where(weekday: params[:weekday]) if params[:weekday].present?
+
     items = items.where("name ILIKE ?", "%#{params[:query]}%") if params[:query].present?
 
     items
