@@ -11,8 +11,7 @@ class ReservationTurn < ApplicationRecord
   # ################################
   # Associations
   # ################################
-  has_many :preorder_reservation_groups_to_turn, dependent: :destroy
-  has_many :preorder_reservation_groups, through: :preorder_reservation_groups_to_turn
+  # ... here any associations
 
   # ################################
   # Validations
@@ -54,6 +53,22 @@ class ReservationTurn < ApplicationRecord
     as_json.merge(
       starts_at: starts_at.strftime("%k:%M").strip,
       ends_at: ends_at.strftime("%k:%M").strip
+    )
+  end
+
+  def preorder_reservation_groups
+    return @preorder_reservation_groups if defined?(@preorder_reservation_groups)
+
+    PreorderReservationGroup.active.where(
+      id: PreorderReservationGroupsToTurn.where(
+        reservation_turn: self,
+      ).select(:preorder_reservation_group_id)
+    ).or(
+      PreorderReservationGroup.active.where(
+        id: PreorderReservationDate.where("date >= ?", Time.zone.now.to_date).where(
+          reservation_turn: self
+        ).select(:group_id)
+      )
     )
   end
 

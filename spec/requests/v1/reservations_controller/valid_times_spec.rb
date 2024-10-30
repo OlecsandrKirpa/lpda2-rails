@@ -237,7 +237,44 @@ RSpec.context "GET /v1/reservations/valid_times", type: :request do
     end
   end
 
-  context "when turn requires payment" do
+  context "when turn requires payment on specific date" do
+    let(:group) do
+      create(:preorder_reservation_group).tap do |g|
+        I18n.available_locales.each do |loc|
+          Mobility.with_locale(loc) do
+            g.update!(message: "[#{loc}] Please, pay in advance")
+          end
+        end
+      end
+    end
+
+    let(:turn) do
+      create(:reservation_turn, starts_at: "12:00", ends_at: "15:00", weekday: Time.now.wday)
+    end
+
+    before do
+      PreorderReservationDate.create!(
+        reservation_turn: turn,
+        group: group,
+        date: Time.zone.now
+      )
+
+      travel_to Time.zone.now.beginning_of_day do
+        req(date: Time.zone.now.to_date.to_s)
+      end
+    end
+
+    it { expect(response).to have_http_status(:ok) }
+    it { expect(json).not_to include(message: String) }
+    it do
+      item = json.find { |j| j["starts_at"].include?("12:00") }
+      expect(item).to include("preorder_reservation_group" => Hash)
+      expect(item["preorder_reservation_group"]).to include("id" => group.id, "payment_value" => group.payment_value, "preorder_type" => group.preorder_type, "message" => String)
+      expect(item["preorder_reservation_group"]["message"]).to include("Please, pay in advance")
+    end
+  end
+
+  context "when turn always requires payment" do
     let(:group) { create(:preorder_reservation_group) }
 
     before do

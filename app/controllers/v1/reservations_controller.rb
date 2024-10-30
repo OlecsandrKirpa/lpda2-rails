@@ -43,7 +43,7 @@ module V1
     def valid_times
       return render_error(status: 400, message: "Param 'date' is required") if params[:date].blank?
 
-      items = ReservationTurn.all.where(weekday: Date.parse(params[:date].to_s).wday).includes(:preorder_reservation_groups).map do |turn|
+      items = ReservationTurn.all.where(weekday: Date.parse(params[:date].to_s).wday).map do |turn|
         group = turn.preorder_reservation_groups.first&.active? ? turn.preorder_reservation_groups.first : nil
         turn.as_json.merge(
           valid_times: turn.valid_times(date: params[:date]),
