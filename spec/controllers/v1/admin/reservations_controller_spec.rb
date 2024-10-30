@@ -1201,7 +1201,9 @@ RSpec.describe V1::Admin::ReservationsController, type: :controller do
       end
 
       context "when reservation is valid" do
-        before { allow_any_instance_of(Hash).to receive(:dig!).and_return("something") }
+        before do
+          CreateMissingImages.run!
+        end
 
         it { expect { req }.to change { ActionMailer::Base.deliveries.count }.by(1) }
 
@@ -1275,7 +1277,7 @@ RSpec.describe V1::Admin::ReservationsController, type: :controller do
                                             :delivered_emails).first).to include(id: Integer, created_at: String,
                                                                                  image_pixels: Array)
             expect(parsed_response_body.dig(:item, :delivered_emails, 0, :image_pixels)).to be_a(Array)
-            expect(parsed_response_body.dig(:item, :delivered_emails, 0, :image_pixels).length).to eq 0
+            expect(parsed_response_body.dig(:item, :delivered_emails, 0, :image_pixels).length).to eq 1
           end
         end
       end

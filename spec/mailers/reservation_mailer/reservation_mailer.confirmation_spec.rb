@@ -13,6 +13,12 @@ RSpec.describe ReservationMailer do
   let(:default_params) { reservation.confirmation_email_params }
 
   context "when calling #confirmation prepended #with(...)" do
+    around do |example|
+      Time.use_zone(Config.app.dig!(:restaurant_location_time_zone)) do
+        example.run
+      end
+    end
+
     def mail(params = default_params)
       described_class.with(params).confirmation.deliver_now
     end

@@ -39,6 +39,8 @@ default: &default
 
   nexi_api_url: https://xpaysandbox.nexigroup.com
 
+  restaurant_location_time_zone: "Europe/Rome"
+
   # ---------------------------------------------------------
   # SMTP CONFIGURATIONS
   # ---------------------------------------------------------

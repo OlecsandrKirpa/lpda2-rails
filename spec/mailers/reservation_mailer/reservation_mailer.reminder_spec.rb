@@ -50,6 +50,12 @@ RSpec.describe ReservationMailer do
   end
 
   context "when calling #reminder prepended #with(...)" do
+    around do |example|
+      Time.use_zone(Config.app.dig!(:restaurant_location_time_zone)) do
+        example.run
+      end
+    end
+
     let(:mail) do
       described_class.with(default_params).reminder.deliver_now
     end
