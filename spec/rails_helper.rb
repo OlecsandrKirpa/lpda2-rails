@@ -17,6 +17,8 @@ require "webmock/rspec"
 require "sidekiq/testing"
 Sidekiq::Testing.fake!
 
+# require 'sidekiq-status/testing/inline'
+
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -68,12 +70,27 @@ RSpec.configure do |config|
 
   config.before do |example|
     DatabaseCleaner.start unless example.metadata[:skip_db_cleaner]
+
+    if example.metadata[:perform_enqueued_jobs]
+      @old_perform_enqueued_jobs = ActiveJob::Base.queue_adapter.perform_enqueued_jobs
+      @old_perform_enqueued_at_jobs = ActiveJob::Base.queue_adapter.perform_enqueued_at_jobs
+      ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
+      ActiveJob::Base.queue_adapter.perform_enqueued_at_jobs = true
+    end
   end
 
   config.append_after do |example|
     DatabaseCleaner.clean unless example.metadata[:skip_db_cleaner]
 
     Faker::UniqueGenerator.clear unless example.metadata[:skip_faker_reset]
+
+    ActiveJob::Base.queue_adapter.perform_enqueued_jobs = false
+    ActiveJob::Base.queue_adapter.perform_enqueued_at_jobs = false
+
+    if example.metadata[:perform_enqueued_jobs]
+      ActiveJob::Base.queue_adapter.perform_enqueued_jobs = @old_perform_enqueued_jobs
+      ActiveJob::Base.queue_adapter.perform_enqueued_at_jobs = @old_perform_enqueued_at_jobs
+    end
   end
 
   # config.before(:each) do

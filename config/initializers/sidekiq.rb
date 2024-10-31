@@ -18,16 +18,16 @@ Sidekiq.configure_server do |config|
   Sidekiq::Cron::Job.load_from_hash YAML.load_file(schedule_file) if File.exist?(schedule_file)
 
   # accepts :expiration (optional)
-  Sidekiq::Status.configure_server_middleware config, expiration: 30.minutes.to_i
+  # Sidekiq::Status.configure_server_middleware config, expiration: 30.minutes.to_i
 
   # accepts :expiration (optional)
-  Sidekiq::Status.configure_client_middleware config, expiration: 30.minutes.to_i
+  # Sidekiq::Status.configure_client_middleware config, expiration: 30.minutes.to_i
 end
 
 Sidekiq.configure_client do |config|
   config.redis = redis_configs
 
-  Sidekiq::Status.configure_client_middleware config, expiration: 30.minutes.to_i
+  # Sidekiq::Status.configure_client_middleware config, expiration: 30.minutes.to_i
 end
 
 Sidekiq.strict_args!
