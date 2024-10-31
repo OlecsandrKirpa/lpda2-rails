@@ -159,4 +159,34 @@ RSpec.describe ReservationTurn, type: :model do
       it { expect { subject.save! }.to raise_error(ActiveRecord::RecordInvalid) }
     end
   end
+
+  # Based on actual bug found in staging
+  context "times cannot overlap" do
+    let!(:pranzo) do
+      create(:reservation_turn, name: "Pranzo", weekday: 1, starts_at: "10:00", ends_at: "12:00")
+    end
+
+    let(:invalid) do
+      build(:reservation_turn, name: "Invalid", weekday: 1, starts_at: "09:00", ends_at: "13:00")
+    end
+
+    it { expect(ReservationTurn.count).to eq 1 }
+
+    it do
+      expect(invalid).not_to be_valid
+      expect(invalid.errors[:starts_at]).not_to be_empty
+    end
+
+    it { expect { invalid.save! }.to raise_error(ActiveRecord::RecordInvalid) }
+  end
+
+  # it "validating that reservation turn factory does allow rotation of starts_at and ends_at to avoid overlaps" do
+  #   1000.times do |i|
+  #     a = build(:reservation_turn)
+  #     a.save!
+  #     # debugger unless a.valid? && a.save
+
+  #     ReservationTurn.delete_all if i % 300 == 0
+  #   end
+  # end
 end

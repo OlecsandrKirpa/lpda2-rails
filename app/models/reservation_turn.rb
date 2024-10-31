@@ -24,6 +24,8 @@ class ReservationTurn < ApplicationRecord
   validate :starts_at_before_ends_at
   validate :starts_at_overlaps_other_turn
   validate :ends_at_overlaps_other_turn
+  validate :other_starts_at_overlaps
+  validate :other_ends_at_overlaps
   validate :name_should_be_unique_for_each_weekday
 
   # ################################
@@ -113,6 +115,28 @@ class ReservationTurn < ApplicationRecord
     return if overlapping.empty?
 
     errors.add(:ends_at, "overlaps with other turn(s)", overlapping: overlapping.pluck(:id))
+  end
+
+  def other_starts_at_overlaps
+    return if starts_at.blank? || ends_at.blank? || weekday.blank?
+
+    overlapping = self.class.where(weekday:).where("starts_at BETWEEN ? AND ?", starts_at, ends_at)
+    overlapping = overlapping.where.not(id:) if persisted?
+    return if overlapping.empty?
+
+    errors.add(:starts_at, "should not overlap with other turns", overlapping: overlapping.pluck(:id))
+    errors.add(:ends_at, "should not overlap with other turns", overlapping: overlapping.pluck(:id))
+  end
+
+  def other_ends_at_overlaps
+    return if starts_at.blank? || ends_at.blank? || weekday.blank?
+
+    overlapping = self.class.where(weekday:).where("ends_at BETWEEN ? AND ?", starts_at, ends_at)
+    overlapping = overlapping.where.not(id:) if persisted?
+    return if overlapping.empty?
+
+    errors.add(:starts_at, "should not overlap with other turns", overlapping: overlapping.pluck(:id))
+    errors.add(:ends_at, "should not overlap with other turns", overlapping: overlapping.pluck(:id))
   end
 
   # def should_not_overlap_with_other_reservation_turns
