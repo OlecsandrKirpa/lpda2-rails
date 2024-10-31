@@ -30,6 +30,8 @@ class ApplicationMailer < ActionMailer::Base
 
     delivered_email.update!(
       {
+        controller_path: controller_path,
+        action_name: action_name,
         text: mail.text_part&.body&.decoded,
         html: mail.html_part&.body&.decoded,
         subject: mail.subject,

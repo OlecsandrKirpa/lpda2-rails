@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_10_20_145928) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_31_152941) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -91,6 +91,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_20_145928) do
     t.text "raw"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "controller_path"
+    t.text "action_name"
     t.index ["record_type", "record_id"], name: "index_log_delivered_emails_on_record"
   end
 
