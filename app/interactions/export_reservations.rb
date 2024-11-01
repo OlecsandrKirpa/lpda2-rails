@@ -31,7 +31,7 @@ class ExportReservations < ActiveInteraction::Base
       write_row(sheet, index + 1,
                 [reservation.id, reservation.fullname, reservation.datetime.strftime("%e/%m/%Y %k:%M").strip, reservation.children, reservation.adults,
                  reservation.email, reservation.phone, reservation.table, reservation.notes, reservation.status, reservation.secret,
-                 reservation.created_at.strftime("%e/%m/%Y %k:%M"), reservation.updated_at.strftime("%e/%m/%Y %k:%M"),
+                 reservation.created_at.strftime("%e/%m/%Y %k:%M").strip, reservation.updated_at.strftime("%e/%m/%Y %k:%M").strip,
                  reservation.payment&.hpp_url, reservation.payment&.value, reservation.payment&.status
                 ].flatten)
     end
