@@ -114,6 +114,13 @@ Rails.application.routes.draw do
           end
         end
 
+        resources :contacts, only: %i[index] do
+          collection do
+            get ":key", action: :show
+            patch ":key", action: :save
+          end
+        end
+
         scope module: :menu, path: "menu" do
           get "export", action: :export, controller: :export
 

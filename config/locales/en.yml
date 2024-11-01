@@ -309,3 +309,5 @@ en:
   invalid_param: "Param %{name} is invalid."
   settings:
     key_not_found: "Key %{key} was not found"
+  contacts:
+    key_not_found: "Key %{key} was not found"

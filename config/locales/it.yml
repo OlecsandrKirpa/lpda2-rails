@@ -311,3 +311,5 @@ it:
   invalid_param: "Parametro %{name} non è valido."
   settings:
     key_not_found: "Chiave %{key} non trovata"
+  contacts:
+    key_not_found: "Chiave %{key} non trovata"
