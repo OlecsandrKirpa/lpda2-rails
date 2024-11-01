@@ -20,7 +20,8 @@ module V1
           ]
         ),
         settings: Setting.all.where(key: Setting::PUBLIC_KEYS).pluck(:key, :value).to_h,
-        public_messages: PublicMessage.visible.i18n.pluck(:key, :text).to_h
+        public_messages: PublicMessage.visible.i18n.pluck(:key, :text).to_h,
+        contacts: Contact.public_formatted,
       }
     end
   end
