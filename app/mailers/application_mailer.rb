@@ -22,7 +22,7 @@ class ApplicationMailer < ActionMailer::Base
       end
     end
 
-    @contacts = Setting[:email_contacts]
+    @contacts = Contact.public_formatted
   end
 
   after_action do

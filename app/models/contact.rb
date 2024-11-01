@@ -4,8 +4,6 @@
 # Example:
 # Contact[:email] => "info@example.com"
 class Contact < ApplicationRecord
-  PUBLIC_KEYS = DEFAULTS.keys.map(&:to_s)
-
   enum value_type: {
     text: "text"
   }
@@ -36,6 +34,14 @@ class Contact < ApplicationRecord
           value: self[key]
         }
       end
+    end
+
+    def public_formatted
+      additions = {
+        whatsapp_url: self[:whatsapp_number].present? ? "https://wa.me/#{self[:whatsapp_number]}" : nil,
+      }.compact
+
+      all_hash.transform_values { |i| i[:value] }.merge(additions).with_indifferent_access
     end
 
     def default(key)

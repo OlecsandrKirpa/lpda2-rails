@@ -13,7 +13,6 @@ class Setting
       when :available_locales then validate_available_locales
       when :max_people_per_reservation then validate_max_people_per_reservation
       when :email_images then validate_email_images
-      when :email_contacts then validate_email_contacts
       when :reservation_max_days_in_advance then validate_reservation_max_days_in_advance
       when :reservation_min_hours_in_advance then validate_reservation_min_hours_in_advance
       when :cover_price then validate_cover_price
@@ -69,21 +68,21 @@ class Setting
       end
     end
 
-    def validate_email_contacts
-      return record.errors.add(:value, "should be a Hash, got #{record.value.class}") unless record.value.is_a?(Hash)
+    # def validate_email_contacts
+    #   return record.errors.add(:value, "should be a Hash, got #{record.value.class}") unless record.value.is_a?(Hash)
 
-      record.value.each_value do |val|
-        record.errors.add(:value, "should be a string, got #{val.class}") unless val.is_a?(String)
-      end
+    #   record.value.each_value do |val|
+    #     record.errors.add(:value, "should be a string, got #{val.class}") unless val.is_a?(String)
+    #   end
 
-      mandatory_keys = %w[address email phone whatsapp_number whatsapp_url facebook_url instagram_url tripadvisor_url
-                          homepage_url google_url]
-      missing_keys = mandatory_keys - record.value.keys
-      record.errors.add(:value, "missing keys: #{missing_keys.join(", ")}") if missing_keys.present?
+    #   mandatory_keys = %w[address email phone whatsapp_number whatsapp_url facebook_url instagram_url tripadvisor_url
+    #                       homepage_url google_url]
+    #   missing_keys = mandatory_keys - record.value.keys
+    #   record.errors.add(:value, "missing keys: #{missing_keys.join(", ")}") if missing_keys.present?
 
-      unknown_keys = record.value.keys - mandatory_keys
-      record.errors.add(:value, "unknown keys: #{unknown_keys.join(", ")}") if unknown_keys.present?
-    end
+    #   unknown_keys = record.value.keys - mandatory_keys
+    #   record.errors.add(:value, "unknown keys: #{unknown_keys.join(", ")}") if unknown_keys.present?
+    # end
 
     def validate_reservation_max_days_in_advance
       return if record.value.to_f.positive? || record.value.to_f.zero?

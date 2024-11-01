@@ -110,4 +110,30 @@ RSpec.describe "PATCH /v1/admin/contacts" do
       end
     end
   end
+
+  context "if updating email and then sending reservation confirmation email, that contact should be included." do
+    let!(:email) { "info#{SecureRandom.hex}@example.com" }
+    let!(:contact) { create(:contact, key: "email", value: email) }
+    let!(:reservation) { create(:reservation) }
+
+    let(:call) do
+      reservation.deliver_confirmation_email
+    end
+
+    before do
+      CreateMissingImages.run!
+    end
+
+    it { expect { call }.not_to(change { Contact.all.as_json }) }
+    it { expect { call }.not_to(change { Setting.all.as_json }) }
+    it { expect { call }.not_to(change { PublicMessage.all.as_json }) }
+    it { expect { call }.to change { ActionMailer::Base.deliveries.count }.by(1) }
+
+    it do
+      call
+      expect(ActionMailer::Base.deliveries.last.text_part.body.encoded).to include(email)
+      expect(ActionMailer::Base.deliveries.last.html_part.body.encoded).to include(email)
+      expect(ActionMailer::Base.deliveries.last.html_part.body.encoded).to include("mailto:#{email}")
+    end
+  end
 end
