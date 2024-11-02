@@ -43,7 +43,11 @@ class TablesSummary < ActiveInteraction::Base
   end
 
   def summary_for(turn)
-    ActiveRecord::Base.connection.execute(<<~SQL.squish).to_a.index_by { |j| j["people"] }.transform_values { |j| j["count"] }
+    ActiveRecord::Base.connection.execute(summary_for_query(turn)).to_a.index_by { |j| j["people"] }.transform_values { |j| j["count"] }
+  end
+
+  def summary_for_query(turn)
+    <<~SQL.squish
       SELECT COUNT(*), #{Reservation.table_name}.children + #{Reservation.table_name}.adults AS people
       FROM #{Reservation.table_name}
       WHERE #{Reservation.table_name}.datetime::time
