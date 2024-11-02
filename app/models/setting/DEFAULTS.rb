@@ -24,7 +24,7 @@ class Setting
 
     # How many hours in advance can a reservation be made.
     reservation_min_hours_in_advance: {
-      default: 1
+      default: 0
     },
 
     # In EUR, how much does the cover per person cost.
