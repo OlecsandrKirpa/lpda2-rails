@@ -26,7 +26,8 @@ class Contact
       value: "https://www.tripadvisor.it/Restaurant_Review-g187870-d1735599-Reviews-La_Porta_D_Acqua-Venice_Veneto.html"
     },
     homepage_url: {
-      value: "https://laportadacqua.com"
+      value: "https://laportadacqua.com",
+      required: true
     },
     google_url: {
       value: "https://g.page/laportadacqua?share"

@@ -49,6 +49,7 @@ RSpec.describe "PATCH /v1/admin/contacts" do
   %w[
     email
     phone
+    homepage_url
   ].each do |contact_key|
     context "won't be able to update #{contact_key.inspect} to blank" do
       before { Contact.create_missing }
@@ -84,7 +85,6 @@ RSpec.describe "PATCH /v1/admin/contacts" do
     facebook_url
     instagram_url
     tripadvisor_url
-    homepage_url
     google_url
     address
   ].each do |contact_key|
