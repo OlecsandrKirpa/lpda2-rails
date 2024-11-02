@@ -40,10 +40,10 @@ gem "aws-sdk-s3", "~> 1.167.0"
 
 gem "rotp", "~> 6.3.0"
 
+gem "faraday", "~> 1.10.3"
 gem "sidekiq", "~> 7.2.4"
 gem "sidekiq-cron", "~> 1.11.0"
 gem "sidekiq-status", "~> 3.0.3"
-gem "faraday", "~> 1.10.3"
 
 gem "active_interaction", "~> 5.2.0"
 

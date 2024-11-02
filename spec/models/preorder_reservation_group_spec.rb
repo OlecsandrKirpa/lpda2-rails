@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe PreorderReservationGroup, type: :model do
   context "when deleted, if has turns and groups associated, turns should not be deleted." do

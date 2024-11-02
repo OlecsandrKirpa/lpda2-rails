@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
-require 'exception_notification/rails'
-require 'exception_notification/sidekiq'
+require "exception_notification/rails"
+require "exception_notification/sidekiq"
 
 recipients     = Config.app.dig(:exceptions_recipients) || []
 is_enabled     = recipients.present?
 
-if is_enabled
-  raise "Config.app.dig(:emails, :default_from) is blank. Please check config/app.yml" if Config.app.dig(:emails, :default_from).blank?
+if is_enabled && Config.app.dig(:emails,
+                                :default_from).blank?
+  raise "Config.app.dig(:emails, :default_from) is blank. Please check config/app.yml"
 end
 
 ExceptionNotification.configure do |config|

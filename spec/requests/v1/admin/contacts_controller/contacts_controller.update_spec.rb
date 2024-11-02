@@ -10,7 +10,7 @@ RSpec.describe "PATCH /v1/admin/contacts" do
   let(:value) { "info#{SecureRandom.hash}@example.com" }
   let(:key) { "email" }
 
-  def req(k = key, p = params, h = headers)
+  def req(_k = key, p = params, h = headers)
     patch "/v1/admin/contacts/#{key}", headers: h, params: p
   end
 
@@ -61,6 +61,7 @@ RSpec.describe "PATCH /v1/admin/contacts" do
       it { expect(Contact.where(key: contact_key).count).to eq(1) }
 
       it { expect(contact.reload.value).to be_present }
+
       it do
         req
         expect(contact.reload.value).to be_present

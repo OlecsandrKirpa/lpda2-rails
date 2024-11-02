@@ -3,7 +3,7 @@
 class Contact
   DEFAULTS = {
     address: {
-      value: "Riva del Vin San Polo 1097 San Polo, 30125 Venice Italy",
+      value: "Riva del Vin San Polo 1097 San Polo, 30125 Venice Italy"
     },
     email: {
       value: "info@laportadacqua.com",
@@ -29,7 +29,7 @@ class Contact
       value: "https://laportadacqua.com"
     },
     google_url: {
-      value: "https://g.page/laportadacqua?share" 
+      value: "https://g.page/laportadacqua?share"
     }
   }.with_indifferent_access.freeze
 end

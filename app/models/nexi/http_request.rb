@@ -6,13 +6,13 @@ module Nexi
     # ###################################
     # Validations
     # ###################################
-    validates_presence_of :request_body,
-                          :response_body,
-                          :url,
-                          :http_code,
-                          :http_method,
-                          :started_at,
-                          :ended_at
+    validates :request_body,
+              :response_body,
+              :url,
+              :http_code,
+              :http_method,
+              :started_at,
+              :ended_at, presence: true
 
     # ###################################
     # Associations
@@ -42,8 +42,8 @@ module Nexi
     # Returns instance of File.
     def file
       attachment&.blob&.open do |file|
-        Tempfile.new([filename, '.json']).tap do |temp_file|
-          temp_file.write(file.read.force_encoding('UTF-8'))
+        Tempfile.new([filename, ".json"]).tap do |temp_file|
+          temp_file.write(file.read.force_encoding("UTF-8"))
           temp_file.rewind
         end
       end
@@ -54,7 +54,7 @@ module Nexi
     end
 
     def generate_file
-      Tempfile.new([filename, '.json']).tap do |file|
+      Tempfile.new([filename, ".json"]).tap do |file|
         file.write(to_json)
         file.rewind
       end

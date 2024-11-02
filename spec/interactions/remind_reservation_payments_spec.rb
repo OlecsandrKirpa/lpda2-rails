@@ -46,11 +46,11 @@ RSpec.describe RemindReservationPayments, type: :interaction do
     reservations
     travel_to 2.days.ago do
       reservations.sample(3).each do |reservation|
-        create(:reservation_payment, reservation: reservation)
+        create(:reservation_payment, reservation:)
       end
 
       Reservation.active.where.not(id: ReservationPayment.pluck(:reservation_id)).sample(2).each do |reservation|
-        create(:reservation_payment, reservation: reservation)
+        create(:reservation_payment, reservation:)
       end
     end
 

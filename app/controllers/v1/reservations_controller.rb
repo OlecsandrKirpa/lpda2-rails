@@ -57,16 +57,14 @@ module V1
     end
 
     def valid_dates
-      from_date = params[:from_date].present? ? Date.parse(params[:from_date].to_s) : (Time.zone.now.to_date)
+      from_date = params[:from_date].present? ? Date.parse(params[:from_date].to_s) : Time.zone.now.to_date
       to_date = params[:to_date].present? ? Date.parse(params[:to_date].to_s) : (Time.zone.now.to_date + 30.days)
 
       # If from_date is in the past, set it to today
       from_date = Time.zone.now.to_date if from_date < Time.zone.now.to_date
 
-      if Setting.where(key: :reservation_max_days_in_advance).first.present?
-        if to_date > Time.zone.now.to_date + Setting.where(key: :reservation_max_days_in_advance).first.value.to_i.days
-          to_date = Time.zone.now.to_date + Setting.where(key: :reservation_max_days_in_advance).first.value.to_i.days
-        end
+      if Setting.where(key: :reservation_max_days_in_advance).first.present? && (to_date > Time.zone.now.to_date + Setting.where(key: :reservation_max_days_in_advance).first.value.to_i.days)
+        to_date = Time.zone.now.to_date + Setting.where(key: :reservation_max_days_in_advance).first.value.to_i.days
       end
 
       dates = []

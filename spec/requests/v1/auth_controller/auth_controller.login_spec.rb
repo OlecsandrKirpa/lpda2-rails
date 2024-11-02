@@ -35,6 +35,7 @@ RSpec.describe "POST /v1/auth/login" do
 
   context "when providing correct username and password" do
     before { user.update!(username:) }
+
     let(:default_params) { { password:, username: } }
 
     it do
@@ -54,6 +55,7 @@ RSpec.describe "POST /v1/auth/login" do
 
   context "when providing correct username but calling param as email ({ email: <username> })" do
     before { user.update!(username:) }
+
     let(:default_params) { { password:, email: username } }
 
     it do
@@ -73,6 +75,7 @@ RSpec.describe "POST /v1/auth/login" do
 
   context "when providing correct email but calling param as username ({ username: <email> })" do
     before { user.update!(username:) }
+
     let(:default_params) { { password:, username: email } }
 
     it do

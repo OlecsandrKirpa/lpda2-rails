@@ -45,7 +45,7 @@ class String
       "de" => "deu",
       "fr" => "fra",
       "es" => "spa",
-      "pt" => "por",
+      "pt" => "por"
     }[downcase]
   end
 end

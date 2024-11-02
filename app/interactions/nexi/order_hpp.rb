@@ -27,7 +27,7 @@ module Nexi
         params:,
         path: Config.nexi_hpp_payment_path,
         request_purpose:,
-        request_record: request_record
+        request_record:
       )
 
       errors.merge!(@client.errors)

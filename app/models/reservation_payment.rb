@@ -9,13 +9,13 @@ class ReservationPayment < ApplicationRecord
   # ################################
   enum status: {
     todo: "todo",
-    paid: "paid",
+    paid: "paid"
   }
 
   enum preorder_type: {
     # Will require a payment with nexi before reservation can be created.
     # Will use Nexi HPP service.
-    nexi_payment: "nexi_payment",
+    nexi_payment: "nexi_payment"
   }
 
   # ################################

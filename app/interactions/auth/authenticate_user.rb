@@ -37,7 +37,7 @@ module Auth
 
       @find_user_called = true
       result = nil
-      @user = User.find_by(username: username) || User.find_by(email: username)
+      @user = User.find_by(username:) || User.find_by(email: username)
 
       # Check if user exists
       if @user.nil?

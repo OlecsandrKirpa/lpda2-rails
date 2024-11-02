@@ -6,7 +6,7 @@ RSpec.describe "DELETE /v1/profile" do
   include_context REQUEST_AUTHENTICATION_CONTEXT
 
   let(:default_headers) { auth_headers }
-  let(:default_params) { { } }
+  let(:default_params) { {} }
 
   def req(headers: default_headers, params: default_params)
     delete "/v1/profile", headers:, params:

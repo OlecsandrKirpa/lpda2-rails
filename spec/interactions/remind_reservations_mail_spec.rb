@@ -3,8 +3,6 @@
 require "rails_helper"
 
 RSpec.describe RemindReservationsMail do
-
-
   let(:elegible) { described_class.new.elegible }
 
   context "basic scenario" do
@@ -35,7 +33,7 @@ RSpec.describe RemindReservationsMail do
       expect(elegible.map(&:id)).to match_array(reservations[0..1].map(&:id))
     end
 
-    context "when actually calling mailer", perform_enqueued_jobs: true do
+    context "when actually calling mailer", :perform_enqueued_jobs do
       # around do |example|
       #   ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
       #   example.run

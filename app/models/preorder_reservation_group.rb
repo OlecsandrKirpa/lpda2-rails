@@ -27,7 +27,7 @@ class PreorderReservationGroup < ApplicationRecord
   enum preorder_type: {
     # Will require a payment with nexi before reservation can be created.
     # Will use Nexi HPP service.
-    nexi_payment: "nexi_payment",
+    nexi_payment: "nexi_payment"
   }
 
   enum status: {
@@ -41,7 +41,9 @@ class PreorderReservationGroup < ApplicationRecord
   validates :title, presence: true
   validates :status, presence: true
   validates :preorder_type, presence: true
-  validates :payment_value, numericality: { more_than: 0 }, if: -> { PAYMENT_VALUE_MANDATORY_PREORDER_TYPES.include?(preorder_type.to_s) }
+  validates :payment_value, numericality: { more_than: 0 }, if: lambda {
+                                                                  PAYMENT_VALUE_MANDATORY_PREORDER_TYPES.include?(preorder_type.to_s)
+                                                                }
 
   # ################################
   # Callbacks / Hooks
@@ -62,7 +64,9 @@ class PreorderReservationGroup < ApplicationRecord
   # ################################
   # Scope
   # ################################
-  scope :active_now, -> { active.where("active_from IS NULL or active_from < ?", Time.zone.now).where("active_to IS NULL or active_to > ?", Time.zone.now) }
+  scope :active_now, lambda {
+                       active.where("active_from IS NULL or active_from < ?", Time.zone.now).where("active_to IS NULL or active_to > ?", Time.zone.now)
+                     }
 
   private
 

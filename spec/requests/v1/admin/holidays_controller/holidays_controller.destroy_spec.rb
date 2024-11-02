@@ -11,7 +11,9 @@ RSpec.describe "DELETE /v1/admin/holidays/<id>" do
   end
 
   let(:id) { holiday.id }
-  let!(:holiday) { create(:holiday, from_timestamp: 1.day.from_now.beginning_of_day, to_timestamp: 1.day.from_now.end_of_day) }
+  let!(:holiday) do
+    create(:holiday, from_timestamp: 1.day.from_now.beginning_of_day, to_timestamp: 1.day.from_now.end_of_day)
+  end
 
   def req(internal_id = id, params: default_params, headers: default_headers)
     delete "/v1/admin/holidays/#{internal_id}", headers:, params:

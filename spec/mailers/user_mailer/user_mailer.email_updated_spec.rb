@@ -21,9 +21,9 @@ RSpec.describe UserMailer do
       expect(mail.subject).to eq I18n.t("user_mailer.email_updated.subject")
     end
 
-    [
-      "en",
-      "it"
+    %w[
+      en
+      it
     ].each do |lang|
       it do
         I18n.with_locale(lang) do
@@ -33,7 +33,8 @@ RSpec.describe UserMailer do
     end
 
     it do
-      expect(I18n.t("user_mailer.email_updated.subject", locale: "it")).not_to eq(I18n.t("user_mailer.email_updated.subject", locale: "en"))
+      expect(I18n.t("user_mailer.email_updated.subject",
+                    locale: "it")).not_to eq(I18n.t("user_mailer.email_updated.subject", locale: "en"))
     end
 
     context "when checking text part body" do
@@ -80,7 +81,8 @@ RSpec.describe UserMailer do
       end
 
       it do
-        expect(body).to include(CGI.escapeHTML(I18n.t("user_mailer.email_updated.body", old_email:, new_email: user.email)))
+        expect(body).to include(CGI.escapeHTML(I18n.t("user_mailer.email_updated.body", old_email:,
+                                                                                        new_email: user.email)))
       end
 
       it do
@@ -111,7 +113,8 @@ RSpec.describe UserMailer do
       context "when language is #{lang}" do
         it do
           I18n.with_locale(lang) do
-            expect(mail.text_part.body.encoded).to include I18n.t("user_mailer.email_updated.body", old_email:, new_email: user.email)
+            expect(mail.text_part.body.encoded).to include I18n.t("user_mailer.email_updated.body", old_email:,
+                                                                                                    new_email: user.email)
           end
         end
 

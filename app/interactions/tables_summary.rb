@@ -43,7 +43,9 @@ class TablesSummary < ActiveInteraction::Base
   end
 
   def summary_for(turn)
-    ActiveRecord::Base.connection.execute(summary_for_query(turn)).to_a.index_by { |j| j["people"] }.transform_values { |j| j["count"] }
+    ActiveRecord::Base.connection.execute(summary_for_query(turn)).to_a.index_by do |j|
+      j["people"]
+    end.transform_values { |j| j["count"] }
   end
 
   def summary_for_query(turn)

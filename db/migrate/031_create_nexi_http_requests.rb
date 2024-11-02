@@ -12,7 +12,8 @@ class CreateNexiHttpRequests < ActiveRecord::Migration[7.0]
       t.timestamp :started_at,    null: false
       t.timestamp :ended_at,      null: false
 
-      t.belongs_to :record, polymorphic: true, null: true, comment: %(Optionally specify a record this http request belongs to)
+      t.belongs_to :record, polymorphic: true, null: true,
+                            comment: %(Optionally specify a record this http request belongs to)
       t.text :purpose, comment: %(Specify the reason this request was made, optional)
 
       t.timestamps

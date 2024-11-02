@@ -63,7 +63,7 @@ class ReservationTurn < ApplicationRecord
 
     PreorderReservationGroup.active.where(
       id: PreorderReservationGroupsToTurn.where(
-        reservation_turn: self,
+        reservation_turn: self
       ).select(:preorder_reservation_group_id)
     ).or(
       PreorderReservationGroup.active.where(

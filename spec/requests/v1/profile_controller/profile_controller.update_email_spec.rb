@@ -8,7 +8,7 @@ RSpec.describe "PATCH /v1/profile/email" do
   let(:default_headers) { auth_headers }
   let(:email) { Faker::Internet.email }
   let(:otp) { Profile::SendEmailVerificationOtp.run(user: current_user, email:).otp }
-  let(:default_params) { { email: email, otp: otp } }
+  let(:default_params) { { email:, otp: } }
 
   def req(headers: default_headers, params: default_params)
     patch "/v1/profile/email", headers:, params:
