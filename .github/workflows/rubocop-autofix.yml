@@ -3,6 +3,8 @@ name: "Rubocop autofix"
 on:
   schedule:
     - cron: '30 15 * * 5'
+  push:
+  pull_request:
 
 jobs:
   rubocop:
