@@ -17,7 +17,7 @@ RSpec.describe "PATCH /v1/admin/public_messages/:key" do
   end
 
   context "when not authenticated" do
-    let(:headers) {}
+    let(:headers) { {} }
 
     before { req }
 

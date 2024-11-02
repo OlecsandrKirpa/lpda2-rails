@@ -14,7 +14,7 @@ RSpec.describe "GET /v1/admin/preferences/:key" do
   end
 
   context "when not authenticated" do
-    let(:headers) {}
+    let(:headers) { {} }
 
     it do
       req

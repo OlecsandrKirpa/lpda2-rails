@@ -24,7 +24,7 @@ RSpec.describe "DELETE /v1/admin/preorder_reservation_groups/:id" do
   end
 
   context "when not authenticated" do
-    let(:headers) {}
+    let(:headers) { {} }
 
     before { req }
 

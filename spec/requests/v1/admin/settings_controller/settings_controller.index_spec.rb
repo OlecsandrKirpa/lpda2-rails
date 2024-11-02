@@ -15,7 +15,7 @@ RSpec.describe "GET /v1/admin/settings" do
   before { Setting.create_missing }
 
   context "when not authenticated" do
-    let(:headers) {}
+    let(:headers) { {} }
 
     it do
       req

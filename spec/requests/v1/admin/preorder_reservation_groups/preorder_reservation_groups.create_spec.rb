@@ -36,7 +36,7 @@ RSpec.describe "POST /v1/admin/preorder_reservation_groups" do
   end
 
   context "when not authenticated" do
-    let(:headers) {}
+    let(:headers) { {} }
 
     before { req }
 
