@@ -122,7 +122,7 @@ RSpec.context "GET /v1/reservations/valid_dates", type: :request do
 
     context "when setting :reservation_max_days_in_advance to 5, will return from today to 5 days forward" do
       before do
-        Setting.find_or_initialize_by(key: :reservation_max_days_in_advance).update!(value: 5)
+        Setting[:reservation_max_days_in_advance] = 5
 
         travel_to Time.zone.now.beginning_of_day do
           req({})
@@ -131,6 +131,43 @@ RSpec.context "GET /v1/reservations/valid_dates", type: :request do
 
       it { is_expected.to have_http_status(:ok) }
       it { expect(json).to eq((Time.zone.now.to_date..(Time.zone.now.to_date + 5.days)).map(&:to_s)) }
+    end
+
+    context "when setting reservation_min_hours_in_advance is set, should reflect that." do
+      before do
+        Setting[:reservation_min_hours_in_advance] = 24
+
+        travel_to Time.zone.now.beginning_of_day do
+          req({})
+        end
+      end
+
+      it { expect(response).to have_http_status(:ok) }
+      it { expect(json).not_to include(message: String) }
+
+      it do
+        expect(json[0]).to eq((Time.zone.now + 1.day).to_date.to_s)
+      end
+    end
+
+    context "when setting both min and max reservation time." do
+      before do
+        Setting[:reservation_min_hours_in_advance] = 24
+        Setting[:reservation_max_days_in_advance] = 5
+
+        travel_to Time.zone.now.beginning_of_day do
+          req({})
+        end
+      end
+
+      it { expect(response).to have_http_status(:ok) }
+      it { expect(json).not_to include(message: String) }
+
+      it do
+        expect(json[0]).to eq((Time.zone.now + 1.day).to_date.to_s)
+      end
+
+      it { expect(json).to eq((1.day.from_now.to_date..(Time.zone.now.to_date + 5.days)).map(&:to_s)) }
     end
   end
 end

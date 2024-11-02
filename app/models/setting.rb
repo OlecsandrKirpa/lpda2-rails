@@ -30,6 +30,12 @@ class Setting < ApplicationRecord
       where(key:).first&.value || default(key)
     end
 
+    def []=(key, value)
+      setting = where(key:).first_or_initialize
+      setting.value = value
+      setting.save!
+    end
+
     def create_missing
       DEFAULTS.each do |key, data|
         data[:value] ||= data[:default]

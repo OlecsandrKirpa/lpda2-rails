@@ -338,4 +338,27 @@ RSpec.context "GET /v1/reservations/valid_times", type: :request do
       expect(item["preorder_reservation_group"]).to be_nil
     end
   end
+
+  context "when setting reservation_min_hours_in_advance is set, should reflect that." do
+    before do
+      Setting[:reservation_min_hours_in_advance] = 2
+      ReservationTurn.create!(name: "Day", weekday: Time.zone.now.wday, starts_at: "12:00", ends_at: "16:00", step: 30)
+      travel_to (Time.zone.now.beginning_of_day + 12.hours) do
+        req(date: Time.zone.now.to_date.to_s)
+      end
+    end
+
+    it { expect(response).to have_http_status(:ok) }
+    it { expect(json).not_to include(message: String) }
+
+    it do
+      expect(json.length).to eq(1)
+    end
+
+    it do
+      expect(json.map do |j|
+               j["valid_times"]
+             end.flatten).to match_array(%w[14:30 15:00 15:30 16:00])
+    end
+  end
 end

@@ -70,6 +70,60 @@ RSpec.describe V1::ReservationsController, type: :controller do
       end
     end
 
+    context "when setting reservation_min_hours_in_advance" do
+      before do
+        Setting[:reservation_min_hours_in_advance] = 2
+        create(:reservation_turn, weekday: Time.zone.now.wday, starts_at: DateTime.parse("12:00"), ends_at: DateTime.parse("15:00"))
+      end
+
+      def doit
+        travel_to (Time.zone.now.beginning_of_day + 12.hours) do
+          req
+        end
+      end
+
+      let(:datetime) { "#{date.to_date} #{time}" }
+      let(:date) { Time.zone.now }
+      let(:time) { "12:00" }
+
+      context "when trying to create a reservation for same time" do
+        let(:time) { "12:00" }
+
+        it { expect { doit }.not_to change(Reservation, :count) }
+
+        it do
+          doit
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+
+        it do
+          doit
+          expect(json).to include(message: /atetime/)
+        end
+
+        it do
+          doit
+          expect(json.dig("details", "datetime")).to be_present
+        end
+      end
+
+      context "when trying to create a reservation for a valid time" do
+        let(:time) { "15:00" }
+
+        it { expect { doit }.to change(Reservation, :count).by(1) }
+
+        it do
+          doit
+          expect(response).to have_http_status(:ok)
+        end
+
+        it do
+          doit
+          expect(json).not_to include(message: String)
+        end
+      end
+    end
+
     context "when a 'once' Holiday exists" do
       let!(:holiday) do
         create(:holiday, from_timestamp: 10.days.ago.strftime("%Y-%m-%d"),
