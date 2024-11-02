@@ -27,7 +27,7 @@ jobs:
       run: bundle install
 
     - name: Rubocop run
-      run: bundle exec rubocop -a -P -o /dev/null
+      run: bundle exec rubocop -a -P
 
     - name: Create pull request
       uses: peter-evans/create-pull-request@v6.0.5
