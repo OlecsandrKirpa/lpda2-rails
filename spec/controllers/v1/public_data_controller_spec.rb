@@ -20,6 +20,67 @@ RSpec.describe V1::PublicDataController, type: :controller do
       expect(response).to have_http_status(:ok)
     end
 
+    context "when checking default contacts" do
+      before do
+        req
+      end
+
+      it { expect(Contact.count).to eq 0 }
+      it { expect(json).to include(contacts: Hash) }
+
+      # Taken from Contact::DEFAULTS.keys.join(" ")
+      %w[address email phone whatsapp_number facebook_url instagram_url tripadvisor_url homepage_url google_url].each do |key|
+        it "json->contacts->#{key} should be present" do
+          expect(json.dig("contacts", key)).to be_present
+        end
+      end
+    end
+
+    context "when email contact has been updated" do
+      let(:email) { "something#{SecureRandom.hex}@example.com" }
+
+      before do
+        create(:contact, key: :email, value: email)
+        req
+      end
+
+      it { expect(json.dig("contacts", "email")).to eq(email) }
+    end
+
+    3.times do
+      context "when phone contact has been updated" do
+        def s
+          Random.rand(2).zero? ? " " : ""
+        end
+
+        let(:phone) { "#{s}+39#{s}041#{s}241#{s}2124#{s}" }
+
+        before do
+          create(:contact, key: :phone, value: phone)
+          req
+        end
+
+        it { expect(json.dig("contacts", "phone")).to eq(phone.delete(" ")) }
+      end
+    end
+
+    3.times do
+      context "when whatsapp phone contact has been updated" do
+        def s
+          Random.rand(2).zero? ? " " : ""
+        end
+
+        let(:whatsapp_number) { "#{s}+39#{s}041#{s}241#{s}2124#{s}" }
+
+        before do
+          create(:contact, key: :whatsapp_number, value: whatsapp_number)
+          req
+        end
+
+        it { expect(json.dig("contacts", "whatsapp_number")).to eq(whatsapp_number.delete(" ")) }
+      end
+    end
+
     context "when user has created a reservation previously" do
       let(:secret) { "secret#{SecureRandom.hex}" }
       let!(:reservation) { create(:reservation, secret:) }

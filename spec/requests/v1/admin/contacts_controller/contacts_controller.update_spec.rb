@@ -46,6 +46,9 @@ RSpec.describe "PATCH /v1/admin/contacts" do
     end
   end
 
+  # ####################
+  # MANDATORY FIELDS
+  # ####################
   %w[
     email
     phone
@@ -80,6 +83,9 @@ RSpec.describe "PATCH /v1/admin/contacts" do
     end
   end
 
+  # ####################
+  # OPTIONAL FIELDS
+  # ####################
   %w[
     whatsapp_number
     facebook_url
@@ -109,6 +115,84 @@ RSpec.describe "PATCH /v1/admin/contacts" do
         expect(json).not_to include(message: String)
         expect(response).to have_http_status(:ok)
       end
+    end
+  end
+
+  # ####################
+  # WILL REMOVE WHITESPACES
+  # ####################
+  [
+    { key: "email",           value: "info@example.com" },
+    { key: "phone",           value: "+393515590063" },
+    { key: "whatsapp_number", value: "+393515590063" },
+    { key: "facebook_url",    value: "https://www.facebook.com/Laportadacqua" },
+    { key: "instagram_url",   value: "https://www.instagram.com/laportadacqua" },
+    { key: "tripadvisor_url", value: "https://www.tripadvisor.it/Restaurant_Review-g187870-d1735599-Reviews-La_Porta_D_Acqua-Venice_Veneto.html" },
+    { key: "homepage_url",    value: "https://laportadacqua.com" },
+    { key: "google_url",      value: "https://g.page/laportadacqua?share" },
+  ].each do |config|
+    context "will remove whitespaces from #{config[:key].inspect}" do
+      def s
+        ws = [
+          " ",
+          "  ",
+          "   ",
+        ].sample
+        Random.rand(2).zero? ? ws : ""
+      end
+
+      let(:key) { config[:key] }
+
+      let(:value) do
+        base = config[:value]
+        base = "#{base[0]}#{s}#{base[1..]}"
+        "#{s}#{base}#{s}"
+      end
+
+      it { expect { req }.to(change { Contact.where(key:, value: config[:value]).count }.by(1)) }
+
+      it do
+        req
+        expect(Contact.find_by(key:).value).not_to include(" ")
+      end
+
+      it do
+        req
+        expect(json).not_to include(message: String)
+      end
+
+      it do
+        req
+        expect(response).to have_http_status(:ok)
+      end
+    end
+  end
+
+  context "won't remove whitespaces from address but will strip it." do
+    let(:key) { "address" }
+    let(:clean_value) { value.strip }
+    let(:value) { "  Calle Larga XXII Marzo, 2398, 30124 San Marco, Venezia VE, Italy   " }
+
+    it { expect { req }.to(change { Contact.where(key:, value: clean_value).count }.by(1)) }
+
+    it do
+      req
+      expect(Contact.find_by(key:).value).to include(" ")
+    end
+
+    it do
+      req
+      expect(Contact.find_by(key:).value).to eq(clean_value)
+    end
+
+    it do
+      req
+      expect(json).not_to include(message: String)
+    end
+
+    it do
+      req
+      expect(response).to have_http_status(:ok)
     end
   end
 

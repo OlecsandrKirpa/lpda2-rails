@@ -18,6 +18,12 @@ class Contact < ApplicationRecord
   validates :value, presence: true, if: -> { DEFAULTS.dig(key.to_sym, :required) == true }
 
   # ##############################
+  # Callbacks
+  # ##############################
+  before_validation :strip_value_if_needed
+  before_validation :remove_whitespaces_if_needed
+
+  # ##############################
   # Class methods
   # ##############################
   class << self
@@ -63,4 +69,16 @@ class Contact < ApplicationRecord
   # ##############################
   # Instance methods
   # ##############################
+
+  def strip_value_if_needed
+    return if value.blank? || key.blank? || DEFAULTS.dig(key.to_sym, :strip) != true
+
+    self.value = value.strip
+  end
+
+  def remove_whitespaces_if_needed
+    return if value.blank? || key.blank? || DEFAULTS.dig(key.to_sym, :remove_whitespaces) != true
+
+    self.value = value.delete(" ").delete("\t").delete("\n").delete("\r")
+  end
 end
