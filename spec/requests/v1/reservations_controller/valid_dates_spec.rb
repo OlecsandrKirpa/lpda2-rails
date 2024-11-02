@@ -169,5 +169,23 @@ RSpec.context "GET /v1/reservations/valid_dates", type: :request do
 
       it { expect(json).to eq((1.day.from_now.to_date..(Time.zone.now.to_date + 5.days)).map(&:to_s)) }
     end
+
+    context "when setting both min and max reservation time and min_hours advance is > 24." do
+      before do
+        Setting[:reservation_min_hours_in_advance] = 24 * 4
+        Setting[:reservation_max_days_in_advance] = 5
+
+        travel_to Time.zone.now.beginning_of_day do
+          req({})
+        end
+      end
+
+      it { expect(response).to have_http_status(:ok) }
+      it { expect(json).not_to include(message: String) }
+
+      it do
+        expect(json).to match_array([4.days.from_now.to_date.to_s, 5.days.from_now.to_date.to_s])
+      end
+    end
   end
 end
