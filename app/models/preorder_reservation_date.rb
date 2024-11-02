@@ -16,7 +16,7 @@ class PreorderReservationDate < ApplicationRecord
   validate :turn_weekday_same_as_date
   validate :turn_cannot_be_present_in_group
 
-  # TODO check what happens if a turn is deleted or its weekday is changed.
+  # TODO: check what happens if a turn is deleted or its weekday is changed.
 
   def turn_weekday_same_as_date
     return if date.blank? || reservation_turn.nil?

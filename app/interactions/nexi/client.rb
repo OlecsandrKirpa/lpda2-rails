@@ -43,7 +43,7 @@ module Nexi
 
     def connection
       @connection ||= Faraday.new(
-        url: url,
+        url:,
         headers: headers.stringify_keys.merge(
           "Content-Type" => content_type,
           "X-Api-Key" => api_key,
@@ -91,9 +91,7 @@ module Nexi
         ["", "-", ".", "_"].each do |separator|
           ["", "msg", "message", "spec", "code"].each do |spec|
             key = "#{error}#{separator}#{spec}"
-            if json_str[key].present?
-              errors.add(:base, "error, got #{key.inspect}: #{json_str[key].inspect}")
-            end
+            errors.add(:base, "error, got #{key.inspect}: #{json_str[key].inspect}") if json_str[key].present?
           end
         end
       end
@@ -107,7 +105,7 @@ module Nexi
       @http_request = HttpRequest.create!(
         request_body: params,
         response_body: json,
-        url: url,
+        url:,
         http_code: response.status,
         http_method: http_verb,
         started_at: @request_started_at,

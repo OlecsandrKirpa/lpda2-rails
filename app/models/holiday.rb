@@ -46,10 +46,10 @@ class Holiday < ApplicationRecord
   scope :visible, -> { where("to_timestamp IS NULL OR to_timestamp >= :now", now: Time.zone.now) }
   scope :weekly, -> { where.not(weekly_from: nil, weekly_to: nil, weekday: nil) }
   scope :specific, -> { where(weekly_from: nil, weekly_to: nil, weekday: nil) }
-  scope :active_at, ->(time) {
+  scope :active_at, lambda { |time|
     time = DateTime.parse(time.to_s) unless time.respond_to?(:strftime) && time.respond_to?(:wday)
 
-    base = visible.where("from_timestamp <= :time AND (to_timestamp IS NULL OR to_timestamp >= :time)", time: time)
+    base = visible.where("from_timestamp <= :time AND (to_timestamp IS NULL OR to_timestamp >= :time)", time:)
     base.where(weekly_from: nil, weekly_to: nil, weekday: nil).or(
       base.where("weekly_from <= :hour AND weekly_to >= :hour AND weekday = :weekday", hour: time.strftime("%k:%M"), weekday: time.wday)
     )

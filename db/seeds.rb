@@ -41,9 +41,12 @@ ReservationTurn.delete_all
 
 debug "Creating reservation turns..."
 (0..6).each do |weekday|
-  ReservationTurn.create!(name: "Pranzo (#{ReservationTurn::WEEKDAYS[weekday]})", weekday:, starts_at: "10:00", ends_at: "12:00")
-  ReservationTurn.create!(name: "Cena 1 (#{ReservationTurn::WEEKDAYS[weekday]})", weekday:, starts_at: "16:00", ends_at: "17:59")
-  ReservationTurn.create!(name: "Cena 2 (#{ReservationTurn::WEEKDAYS[weekday]})", weekday:, starts_at: "18:00", ends_at: "19:30")
+  ReservationTurn.create!(name: "Pranzo (#{ReservationTurn::WEEKDAYS[weekday]})", weekday:, starts_at: "10:00",
+                          ends_at: "12:00")
+  ReservationTurn.create!(name: "Cena 1 (#{ReservationTurn::WEEKDAYS[weekday]})", weekday:, starts_at: "16:00",
+                          ends_at: "17:59")
+  ReservationTurn.create!(name: "Cena 2 (#{ReservationTurn::WEEKDAYS[weekday]})", weekday:, starts_at: "18:00",
+                          ends_at: "19:30")
 end
 
 Reservation.delete_all
@@ -89,7 +92,7 @@ preorder_group = PreorderReservationGroup.create!(
 
   preorder_group.dates.create!(
     date: Date.current.next_occurring(ReservationTurn::WEEKDAYS[weekday].to_sym),
-    reservation_turn: ReservationTurn.where(weekday: weekday).sample
+    reservation_turn: ReservationTurn.where(weekday:).sample
   )
 end
 

@@ -7,7 +7,8 @@ module V1
 
     # POST /v1/auth/login
     def login
-      auth = Auth::AuthenticateUser.run(username: params[:username].presence || params[:email], password: params[:password])
+      auth = Auth::AuthenticateUser.run(username: params[:username].presence || params[:email],
+                                        password: params[:password])
 
       if auth.invalid?
         # Always add a delay when user fails to login.

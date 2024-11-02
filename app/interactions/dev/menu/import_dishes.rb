@@ -56,7 +56,8 @@ module Dev::Menu
     def menu_ids
       return @menu_ids if @menu_ids
 
-      data = CSV.open(Rails.root.join("migration/menu/categoryItemAssociation.csv"), headers: true, col_sep: ";", liberal_parsing: true).to_a.map(&:to_h)
+      data = CSV.open(Rails.root.join("migration/menu/categoryItemAssociation.csv"), headers: true, col_sep: ";",
+                                                                                     liberal_parsing: true).to_a.map(&:to_h)
 
       @menu_ids = data.map { |j| [j["foodItemId"], j["categoryId"]] }.to_h
     end
@@ -65,7 +66,8 @@ module Dev::Menu
     def tag_ids
       return @tag_ids if @tag_ids
 
-      data = CSV.open(Rails.root.join("migration/menu/foodTagsAssociation.csv"), headers: true, col_sep: ";", liberal_parsing: true).to_a.map(&:to_h)
+      data = CSV.open(Rails.root.join("migration/menu/foodTagsAssociation.csv"), headers: true, col_sep: ";",
+                                                                                 liberal_parsing: true).to_a.map(&:to_h)
 
       @tag_ids = data.group_by { |j| j["foodItemId"] }.map { |k, v| [k, v.map { |j| j["tagId"] }] }.to_h
     end
@@ -73,7 +75,8 @@ module Dev::Menu
     def allergen_ids
       return @allergen_ids if @allergen_ids
 
-      data = CSV.open(Rails.root.join("migration/menu/foodAllergensAssociation.csv"), headers: true, col_sep: ";", liberal_parsing: true).to_a.map(&:to_h)
+      data = CSV.open(Rails.root.join("migration/menu/foodAllergensAssociation.csv"), headers: true, col_sep: ";",
+                                                                                      liberal_parsing: true).to_a.map(&:to_h)
 
       @allergen_ids = data.group_by { |j| j["foodItemId"] }.map { |k, v| [k, v.map { |j| j["allergenId"] }] }.to_h
     end
@@ -81,7 +84,8 @@ module Dev::Menu
     def ingredient_ids
       return @ingredient_ids if @ingredient_ids
 
-      data = CSV.open(Rails.root.join("migration/menu/foodIngredientsAssociation.csv"), headers: true, col_sep: ";", liberal_parsing: true).to_a.map(&:to_h)
+      data = CSV.open(Rails.root.join("migration/menu/foodIngredientsAssociation.csv"), headers: true, col_sep: ";",
+                                                                                        liberal_parsing: true).to_a.map(&:to_h)
 
       @ingredient_ids = data.group_by { |j| j["foodItemId"] }.map { |k, v| [k, v.map { |j| j["ingredientId"] }] }.to_h
     end

@@ -10,7 +10,7 @@ FactoryBot.define do
   end
 
   sequence :starts_and_ends_at_sq do |n|
-    Time.zone.now.beginning_of_day + ((n * 2 + 1) % ((24 * 60) - 1)).minutes
+    Time.zone.now.beginning_of_day + (((n * 2) + 1) % ((24 * 60) - 1)).minutes
   end
 
   sequence :turn_name_seq do |n|

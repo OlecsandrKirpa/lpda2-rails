@@ -21,19 +21,18 @@ class ExportReservations < ActiveInteraction::Base
 
   def write_all(sheet)
     write_row(sheet, 0, %w[
-      id fullname datetime children adults
-      email phone table notes status secret
-      created_at updated_at
-      payment_hpp_url payment_value payment_status
-    ])
+                id fullname datetime children adults
+                email phone table notes status secret
+                created_at updated_at
+                payment_hpp_url payment_value payment_status
+              ])
 
     reservations.each_with_index do |reservation, index|
       write_row(sheet, index + 1,
                 [reservation.id, reservation.fullname, reservation.datetime.strftime("%e/%m/%Y %k:%M").strip, reservation.children, reservation.adults,
                  reservation.email, reservation.phone, reservation.table, reservation.notes, reservation.status, reservation.secret,
                  reservation.created_at.strftime("%e/%m/%Y %k:%M").strip, reservation.updated_at.strftime("%e/%m/%Y %k:%M").strip,
-                 reservation.payment&.hpp_url, reservation.payment&.value, reservation.payment&.status
-                ].flatten)
+                 reservation.payment&.hpp_url, reservation.payment&.value, reservation.payment&.status].flatten)
     end
   end
 

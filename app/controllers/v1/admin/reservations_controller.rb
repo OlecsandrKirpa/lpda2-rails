@@ -105,7 +105,8 @@ module V1::Admin
                             message: export.errors.full_messages.join(", "))
       end
 
-      send_file export.result, filename: "Prenotazioni.xlsx", type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      send_file export.result, filename: "Prenotazioni.xlsx",
+                               type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     end
 
     private

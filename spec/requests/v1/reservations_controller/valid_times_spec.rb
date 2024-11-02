@@ -24,24 +24,23 @@ RSpec.context "GET /v1/reservations/valid_times", type: :request do
   context "when there are turns but there are also holidays" do
     before do
       ReservationTurn.create!(
-          name: "Day",
-          weekday: Time.zone.now.wday,
-          starts_at: "12:00",
-          ends_at: "13:00",
-          step: 10
-        )
+        name: "Day",
+        weekday: Time.zone.now.wday,
+        starts_at: "12:00",
+        ends_at: "13:00",
+        step: 10
+      )
     end
 
     context "when got holidays on all weekdays but they are expired (to_timestamp is in the past): should see all times available" do
       before do
         (0..6).to_a.each do |weekday|
           create(:holiday,
-            from_timestamp: 4.days.ago,
-            to_timestamp: 2.days.ago,
-            weekday: weekday,
-            weekly_from: "00:00",
-            weekly_to: "23:59"
-          )
+                 from_timestamp: 4.days.ago,
+                 to_timestamp: 2.days.ago,
+                 weekday:,
+                 weekly_from: "00:00",
+                 weekly_to: "23:59")
         end
 
         travel_to Time.zone.now.beginning_of_day do
@@ -59,12 +58,11 @@ RSpec.context "GET /v1/reservations/valid_times", type: :request do
       before do
         (0..6).to_a.each do |weekday|
           create(:holiday,
-            from_timestamp: 20.days.from_now,
-            to_timestamp: nil,
-            weekday: weekday,
-            weekly_from: "00:00",
-            weekly_to: "23:59"
-          )
+                 from_timestamp: 20.days.from_now,
+                 to_timestamp: nil,
+                 weekday:,
+                 weekly_from: "00:00",
+                 weekly_to: "23:59")
         end
 
         travel_to Time.zone.now.beginning_of_day do
@@ -80,7 +78,8 @@ RSpec.context "GET /v1/reservations/valid_times", type: :request do
 
     context "when got one weekly holiday overlapping with the only turn" do
       before do
-        create(:holiday, from_timestamp: 10.days.ago, to_timestamp: 10.days.from_now, weekday: Time.zone.now.wday, weekly_from: "12:30", weekly_to: "15:00")
+        create(:holiday, from_timestamp: 10.days.ago, to_timestamp: 10.days.from_now, weekday: Time.zone.now.wday,
+                         weekly_from: "12:30", weekly_to: "15:00")
 
         travel_to Time.zone.now.beginning_of_day do
           req(date: Time.zone.now.to_date.to_s)
@@ -94,7 +93,8 @@ RSpec.context "GET /v1/reservations/valid_times", type: :request do
 
     context "when got a weekly holiday covering entirely the turn" do
       before do
-        create(:holiday, from_timestamp: 10.days.ago, to_timestamp: 10.days.from_now, weekday: Time.zone.now.wday, weekly_from: "11:00", weekly_to: "15:00")
+        create(:holiday, from_timestamp: 10.days.ago, to_timestamp: 10.days.from_now, weekday: Time.zone.now.wday,
+                         weekly_from: "11:00", weekly_to: "15:00")
 
         travel_to Time.zone.now.beginning_of_day do
           req(date: Time.zone.now.to_date.to_s)
@@ -109,7 +109,7 @@ RSpec.context "GET /v1/reservations/valid_times", type: :request do
 
     context "when got a holiday during many days" do
       before do
-        create(:holiday, from_timestamp: 1.days.ago, to_timestamp: 1.day.from_now)
+        create(:holiday, from_timestamp: 1.day.ago, to_timestamp: 1.day.from_now)
 
         travel_to Time.zone.now.beginning_of_day do
           req(date: Time.zone.now.to_date.to_s)
@@ -255,7 +255,7 @@ RSpec.context "GET /v1/reservations/valid_times", type: :request do
     before do
       PreorderReservationDate.create!(
         reservation_turn: turn,
-        group: group,
+        group:,
         date: Time.zone.now
       )
 
@@ -266,10 +266,12 @@ RSpec.context "GET /v1/reservations/valid_times", type: :request do
 
     it { expect(response).to have_http_status(:ok) }
     it { expect(json).not_to include(message: String) }
+
     it do
       item = json.find { |j| j["starts_at"].include?("12:00") }
       expect(item).to include("preorder_reservation_group" => Hash)
-      expect(item["preorder_reservation_group"]).to include("id" => group.id, "payment_value" => group.payment_value, "preorder_type" => group.preorder_type, "message" => String)
+      expect(item["preorder_reservation_group"]).to include("id" => group.id, "payment_value" => group.payment_value,
+                                                            "preorder_type" => group.preorder_type, "message" => String)
       expect(item["preorder_reservation_group"]["message"]).to include("Please, pay in advance")
     end
   end
@@ -297,10 +299,12 @@ RSpec.context "GET /v1/reservations/valid_times", type: :request do
 
     it { expect(response).to have_http_status(:ok) }
     it { expect(json).not_to include(message: String) }
+
     it do
       item = json.find { |j| j["starts_at"].include?("12:00") }
       expect(item).to include("preorder_reservation_group" => Hash)
-      expect(item["preorder_reservation_group"]).to include("id" => group.id, "payment_value" => group.payment_value, "preorder_type" => group.preorder_type, "message" => String)
+      expect(item["preorder_reservation_group"]).to include("id" => group.id, "payment_value" => group.payment_value,
+                                                            "preorder_type" => group.preorder_type, "message" => String)
       expect(item["preorder_reservation_group"]["message"]).to include("Please, pay in advance")
     end
   end

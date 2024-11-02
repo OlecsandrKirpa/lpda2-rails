@@ -137,7 +137,7 @@ class PublicCreateReservation < ActiveInteraction::Base
     return if @holidays.empty?
 
     @holidays.each do |h|
-      # TODO i18n is ok?
+      # TODO: i18n is ok?
       errors.add(:base, h.message)
     end
   end

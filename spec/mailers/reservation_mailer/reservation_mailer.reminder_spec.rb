@@ -34,7 +34,7 @@ RSpec.describe ReservationMailer do
 
   [
     "",
-    nil,
+    nil
   ].each do |missing_mail|
     context "when email is missing or invalid (#{missing_mail.inspect})" do
       before do
@@ -63,7 +63,7 @@ RSpec.describe ReservationMailer do
     it { expect(mail.to).to include(reservation.email) }
 
     it do
-      mail_to = mail.to_s.split("\n").flatten.filter{|j| j.starts_with?("To:") }.last
+      mail_to = mail.to_s.split("\n").flatten.filter { |j| j.starts_with?("To:") }.last
       expect(mail_to.delete('"')).to include("#{reservation.fullname} <#{reservation.email}>")
     end
 
@@ -86,18 +86,21 @@ RSpec.describe ReservationMailer do
     %w[it en].each do |lang|
       it "when language is #{lang.inspect}" do
         reservation.update!(lang:)
-        expect(mail.subject).to eq I18n.t("reservation_mailer.reminder.subject", fullname: reservation.fullname, locale: lang)
+        expect(mail.subject).to eq I18n.t("reservation_mailer.reminder.subject", fullname: reservation.fullname,
+                                                                                 locale: lang)
       end
 
       context "when language is #{lang}" do
         it do
           reservation.update!(lang:)
-          expect(mail.text_part.body.encoded).to include I18n.t("reservation_mailer.greetings", fullname: reservation.fullname, locale: lang)
+          expect(mail.text_part.body.encoded).to include I18n.t("reservation_mailer.greetings",
+                                                                fullname: reservation.fullname, locale: lang)
         end
 
         it do
           reservation.update!(lang:)
-          expect(mail.html_part.body.encoded).to include CGI.escapeHTML(I18n.t("reservation_mailer.greetings", fullname: reservation.fullname, locale: lang))
+          expect(mail.html_part.body.encoded).to include CGI.escapeHTML(I18n.t("reservation_mailer.greetings",
+                                                                               fullname: reservation.fullname, locale: lang))
         end
       end
     end

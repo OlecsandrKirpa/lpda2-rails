@@ -78,7 +78,7 @@ class Reservation < ApplicationRecord
   def requires_payment?(options = {})
     @requires_payment ||= required_payment_group(options).present?
   end
-  alias_method :payment_required?, :requires_payment?
+  alias payment_required? requires_payment?
 
   def required_payment_value(options = {})
     @required_payment_value ||= required_payment_group(options)&.payment_value
@@ -103,7 +103,7 @@ class Reservation < ApplicationRecord
   def reservation_turn
     ReservationTurn.for(datetime)
   end
-  alias_method :turn, :reservation_turn
+  alias turn reservation_turn
 
   def status=(value)
     super

@@ -22,7 +22,7 @@ RSpec.describe "POST /v1/admin/holidays" do
   let(:weekly_from) { "11:00" }
   let(:weekly_to) { "13:00" }
   let(:weekday) { nil }
-  let(:message) { { it: "Vacanza!", en: "Holiday!" }}
+  let(:message) { { it: "Vacanza!", en: "Holiday!" } }
 
   def req(params: default_params, headers: default_headers)
     post "/v1/admin/holidays", headers:, params:
@@ -55,7 +55,7 @@ RSpec.describe "POST /v1/admin/holidays" do
     let(:default_params) do
       {
         from_timestamp:,
-        to_timestamp:,
+        to_timestamp:
       }
     end
 
@@ -74,6 +74,7 @@ RSpec.describe "POST /v1/admin/holidays" do
 
       it { expect(response).to have_http_status(:ok) }
       it { expect(json).to include(item: Hash) }
+
       it do
         expect(json[:item].symbolize_keys).to include(
           id: Integer,
@@ -109,14 +110,15 @@ RSpec.describe "POST /v1/admin/holidays" do
 
       it { expect(response).to have_http_status(:ok) }
       it { expect(json).to include(item: Hash) }
+
       it do
         expect(json[:item].symbolize_keys).to include(
-                                    id: Integer,
-                                    from_timestamp: String,
-                                    to_timestamp: nil,
-                                    weekly_from: weekly_from,
-                                    weekly_to: weekly_to,
-                                    weekday: weekday
+          id: Integer,
+          from_timestamp: String,
+          to_timestamp: nil,
+          weekly_from:,
+          weekly_to:,
+          weekday:
         )
       end
     end

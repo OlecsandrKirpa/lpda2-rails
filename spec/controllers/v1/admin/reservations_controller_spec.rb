@@ -96,9 +96,14 @@ RSpec.describe V1::Admin::ReservationsController, type: :controller do
 
           it { expect(response).to have_http_status(:ok) }
           it { expect(json[:items].count).to eq 2 }
-          it { expect(json[:items].filter{|j| j.keys.include?("payment") }.filter(&:present?).count).to eq(1) }
-          it { expect(json[:items].filter{|j| j.keys.include?("payment") }.first).to be_present }
-          it { expect(json[:items].filter{|j| j.keys.include?("payment") }.first["payment"].symbolize_keys).to include(hpp_url: String, status: payment_status) }
+          it { expect(json[:items].filter { |j| j.keys.include?("payment") }.filter(&:present?).count).to eq(1) }
+          it { expect(json[:items].filter { |j| j.keys.include?("payment") }.first).to be_present }
+
+          it {
+            expect(json[:items].filter do |j|
+                     j.keys.include?("payment")
+                   end.first["payment"].symbolize_keys).to include(hpp_url: String, status: payment_status)
+          }
         end
       end
 
@@ -1427,7 +1432,6 @@ RSpec.describe V1::Admin::ReservationsController, type: :controller do
   end
 
   context "GET #export" do
-
     let(:params) do
       {
         created_at_from:,
@@ -1461,7 +1465,7 @@ RSpec.describe V1::Admin::ReservationsController, type: :controller do
 
     it do
       expect(described_class).to route(:get, "/v1/admin/reservations/export").to(action: :export,
-                                                                                        format: :json)
+                                                                                 format: :json)
     end
 
     def req(pars = params)
@@ -1490,22 +1494,45 @@ RSpec.describe V1::Admin::ReservationsController, type: :controller do
       end
 
       context "checking file" do
-        before { req }
         subject { file }
 
-        it { expect(file.sheets).to match_array(["Prenotazioni"]) }
+        before { req }
+
+        it { expect(file.sheets).to contain_exactly("Prenotazioni") }
         it { expect(file.sheet("Prenotazioni").row(1)).to include("datetime") }
         it { expect(file.sheet("Prenotazioni").row(1)).to include("id") }
         it { expect(file.sheet("Prenotazioni").row(1)).to include("secret") }
         it { expect(file.sheet("Prenotazioni").row(1)).to include("payment_value") }
         it { expect(file.sheet("Prenotazioni").row(1)).to include("payment_status") }
         it { expect(file.sheet("Prenotazioni").row(1)).to include("payment_hpp_url") }
-        it { expect(file.sheet("Prenotazioni").column(col_index("id"))).to match_array(["id", *reservations.map(&:id)]) }
-        it { expect(file.sheet("Prenotazioni").column(col_index("payment_hpp_url"))).to include(*ReservationPayment.all.pluck(:hpp_url)) }
+
+        it {
+          expect(file.sheet("Prenotazioni").column(col_index("id"))).to contain_exactly("id", *reservations.map(&:id))
+        }
+
+        it {
+          expect(file.sheet("Prenotazioni").column(col_index("payment_hpp_url"))).to include(*ReservationPayment.all.pluck(:hpp_url))
+        }
+
         it { expect(file.sheet("Prenotazioni").column(col_index("payment_status"))).to include("todo", "paid") }
-        it { expect(col_values("datetime")).to match_array(Reservation.all.map{|r| r.datetime.strftime("%e/%m/%Y %k:%M").strip }) }
-        it { expect(col_values("created_at")).to match_array(Reservation.all.map{|r| r.created_at.strftime("%e/%m/%Y %k:%M").strip }) }
-        it { expect(col_values("updated_at")).to match_array(Reservation.all.map{|r| r.updated_at.strftime("%e/%m/%Y %k:%M").strip }) }
+
+        it {
+          expect(col_values("datetime")).to match_array(Reservation.all.map do |r|
+                                                          r.datetime.strftime("%e/%m/%Y %k:%M").strip
+                                                        end)
+        }
+
+        it {
+          expect(col_values("created_at")).to match_array(Reservation.all.map do |r|
+                                                            r.created_at.strftime("%e/%m/%Y %k:%M").strip
+                                                          end)
+        }
+
+        it {
+          expect(col_values("updated_at")).to match_array(Reservation.all.map do |r|
+                                                            r.updated_at.strftime("%e/%m/%Y %k:%M").strip
+                                                          end)
+        }
       end
     end
 
@@ -1537,14 +1564,15 @@ RSpec.describe V1::Admin::ReservationsController, type: :controller do
 
       let(:reservations) do
         [
-          create(:reservation, datetime: Time.zone.now - 2.months),
-          create(:reservation, datetime: Time.zone.now - 1.day),
-          create(:reservation, datetime: Time.zone.now + 1.day),
+          create(:reservation, datetime: 2.months.ago),
+          create(:reservation, datetime: 1.day.ago),
+          create(:reservation, datetime: 1.day.from_now)
         ]
       end
 
       context "when date_from and date_to are blank" do
         before { req }
+
         let(:date_from) { nil }
         let(:date_to) { nil }
 
@@ -1553,6 +1581,7 @@ RSpec.describe V1::Admin::ReservationsController, type: :controller do
 
       context do
         before { req }
+
         let(:date_from) { 1.day.ago.strftime("%Y-%m-%d") }
         let(:date_to) { 2.days.from_now.strftime("%Y-%m-%d") }
 
@@ -1562,6 +1591,7 @@ RSpec.describe V1::Admin::ReservationsController, type: :controller do
 
       context do
         before { req }
+
         let(:date_from) { 1.year.ago.strftime("%Y-%m-%d") }
         let(:date_to) { 2.days.from_now.strftime("%Y-%m-%d") }
 
@@ -1571,6 +1601,7 @@ RSpec.describe V1::Admin::ReservationsController, type: :controller do
 
       context do
         before { req }
+
         let(:date_from) { 1.year.ago.strftime("%Y-%m-%d") }
         let(:date_to) { 1.week.ago.strftime("%Y-%m-%d") }
 
@@ -1599,7 +1630,7 @@ RSpec.describe V1::Admin::ReservationsController, type: :controller do
 
         before { req }
 
-        it { expect(col_values("id")).to match_array([@middle.id]) }
+        it { expect(col_values("id")).to contain_exactly(@middle.id) }
       end
 
       context "when filtering by created_at_from: 1.week.ago and created_at_to: Time.zone.now" do
@@ -1608,7 +1639,7 @@ RSpec.describe V1::Admin::ReservationsController, type: :controller do
 
         before { req }
 
-        it { expect(col_values("id")).to match_array([@middle.id, @new.id]) }
+        it { expect(col_values("id")).to contain_exactly(@middle.id, @new.id) }
       end
 
       context "when both are blank" do
@@ -1617,7 +1648,7 @@ RSpec.describe V1::Admin::ReservationsController, type: :controller do
 
         before { req }
 
-        it { expect(col_values("id")).to match_array([@old.id, @middle.id, @new.id]) }
+        it { expect(col_values("id")).to contain_exactly(@old.id, @middle.id, @new.id) }
       end
     end
   end

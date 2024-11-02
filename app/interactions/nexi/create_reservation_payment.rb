@@ -22,7 +22,7 @@ module Nexi
         result_url:,
         cancel_url:,
         request_purpose: "reservation_payment",
-        request_record: reservation,
+        request_record: reservation
       )
 
       errors.merge!(call.errors)
@@ -33,7 +33,7 @@ module Nexi
         value: amount,
         hpp_url: call.result["hostedPage"],
         other: { order_hpp_call: call.result },
-        reservation: reservation,
+        reservation:,
         status: :todo,
         preorder_type: :nexi_payment
       )
@@ -42,13 +42,13 @@ module Nexi
     def cancel_url
       Mustache.render(
         Config.cancelled_payment_reservation_url, Config.hash.merge(secret: reservation.secret)
-      ).gsub(%r(/\/$/), "")
+      ).gsub(%r{//$/}, "")
     end
 
     def result_url
       Mustache.render(
         Config.processed_payment_reservation_url, Config.hash.merge(secret: reservation.secret)
-      ).gsub(%r(/\/$/), "")
+      ).gsub(%r{//$/}, "")
     end
   end
 end

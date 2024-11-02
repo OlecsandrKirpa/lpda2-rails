@@ -27,9 +27,12 @@ RSpec.context "GET /v1/reservations/valid_dates", type: :request do
     before do
       (0..6).each do |weekday|
         ReservationTurn.create!(name: "Day", weekday:, starts_at: "12:00", ends_at: "14:00", step: 30)
-        create(:holiday, from_timestamp: 10.days.ago, to_timestamp: 10.day.from_now, weekday: weekday, weekly_from: "15:00", weekly_to: "23:59")
-        create(:holiday, from_timestamp: 10.days.ago, to_timestamp: 10.day.from_now, weekday: weekday, weekly_from: "00:00", weekly_to: "11:59")
-        create(:holiday, from_timestamp: 3.days.ago, to_timestamp: 2.days.ago, weekday: weekday, weekly_from: "00:00", weekly_to: "23:59")
+        create(:holiday, from_timestamp: 10.days.ago, to_timestamp: 10.days.from_now, weekday:,
+                         weekly_from: "15:00", weekly_to: "23:59")
+        create(:holiday, from_timestamp: 10.days.ago, to_timestamp: 10.days.from_now, weekday:,
+                         weekly_from: "00:00", weekly_to: "11:59")
+        create(:holiday, from_timestamp: 3.days.ago, to_timestamp: 2.days.ago, weekday:, weekly_from: "00:00",
+                         weekly_to: "23:59")
       end
 
       travel_to Time.zone.now.beginning_of_day do
@@ -41,12 +44,13 @@ RSpec.context "GET /v1/reservations/valid_dates", type: :request do
     it { expect(Holiday.count).to eq(7 * 3) }
     it { is_expected.to have_http_status(:ok) }
     it { expect(json).not_to include(message: String) }
+
     it do
       expect(json).to eq([
-        (Time.zone.now.to_date).to_s,
-        (Time.zone.now.to_date + 1.days).to_s,
-        (Time.zone.now.to_date + 2.days).to_s,
-      ])
+                           Time.zone.now.to_date.to_s,
+                           (Time.zone.now.to_date + 1.day).to_s,
+                           (Time.zone.now.to_date + 2.days).to_s
+                         ])
     end
   end
 
@@ -56,7 +60,8 @@ RSpec.context "GET /v1/reservations/valid_dates", type: :request do
     before do
       (0..6).each do |weekday|
         ReservationTurn.create!(name: "Day", weekday:, starts_at: "12:00", ends_at: "14:00", step: 30)
-        create(:holiday, from_timestamp: 3.days.ago, to_timestamp: 3.day.from_now, weekday: weekday, weekly_from: "00:00", weekly_to: "23:59")
+        create(:holiday, from_timestamp: 3.days.ago, to_timestamp: 3.days.from_now, weekday:,
+                         weekly_from: "00:00", weekly_to: "23:59")
       end
 
       travel_to Time.zone.now.beginning_of_day do
@@ -89,12 +94,13 @@ RSpec.context "GET /v1/reservations/valid_dates", type: :request do
 
     it { is_expected.to have_http_status(:ok) }
     it { expect(json).not_to include(message: String) }
+
     it do
       expect(json).to eq([
-        (Time.zone.now.to_date).to_s,
-        (Time.zone.now.to_date + 1.days).to_s,
-        (Time.zone.now.to_date + 2.days).to_s,
-      ])
+                           Time.zone.now.to_date.to_s,
+                           (Time.zone.now.to_date + 1.day).to_s,
+                           (Time.zone.now.to_date + 2.days).to_s
+                         ])
     end
 
     context "when querying after all turns ended" do
@@ -105,11 +111,12 @@ RSpec.context "GET /v1/reservations/valid_dates", type: :request do
       end
 
       it { is_expected.to have_http_status(:ok) }
+
       it "dates list should not include today" do
         expect(json).to eq([
-          (Time.zone.now.to_date + 1.days).to_s,
-          (Time.zone.now.to_date + 2.days).to_s,
-        ])
+                             (Time.zone.now.to_date + 1.day).to_s,
+                             (Time.zone.now.to_date + 2.days).to_s
+                           ])
       end
     end
 
