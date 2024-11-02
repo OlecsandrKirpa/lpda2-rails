@@ -17,13 +17,9 @@ class UpdatePreorderGroup < ActiveInteraction::Base
   interface :params, methods: %i[[] merge! fetch each has_key?], default: {}
 
   validate do
-    if params[:id].blank?
-      errors.add(:params, "id is blank")
-    end
+    errors.add(:params, "id is blank") if params[:id].blank?
 
-    if group.nil?
-      errors.add(:params, "group not found")
-    end
+    errors.add(:params, "group not found") if group.nil?
   end
 
   def execute
@@ -36,15 +32,16 @@ class UpdatePreorderGroup < ActiveInteraction::Base
       raise ActiveRecord::Rollback if errors.any?
     end
 
-    unless params.blank?
-      Rails.logger.warn("expected params to be blank at this point, got #{params.inspect}")
-    end
+    Rails.logger.warn("expected params to be blank at this point, got #{params.inspect}") if params.present?
 
     group
   end
 
   def update_group
-    data = (params.keys.map(&:to_sym) & %i[title preorder_type payment_value active_from active_to status]).map { |k| [k, params.delete(k)] }.to_h
+    data = (params.keys.map(&:to_sym) & %i[title preorder_type payment_value active_from active_to
+                                           status]).index_with do |k|
+      params.delete(k)
+    end
     group.assign_attributes(data)
 
     if group.valid? && group.save
@@ -65,7 +62,7 @@ class UpdatePreorderGroup < ActiveInteraction::Base
 
     dates = [params.delete(:dates)].flatten.filter(&:present?)
 
-    call = CreatePreorderDates.run(group: group, params: { dates: dates })
+    call = CreatePreorderDates.run(group:, params: { dates: })
     errors.merge!(call.errors)
     @dates = call.result
   end

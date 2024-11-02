@@ -38,15 +38,16 @@ RSpec.describe "GET /v1/admin/contacts" do
       it { is_expected.to be_a(Hash) }
       it { expect(json[:items]).to be_a(Array) }
       it { expect(json[:items]).not_to be_empty }
+
       it do
         expect(json[:items]).to all(include(:key, :value))
       end
     end
 
     context "when some contact exist" do
-      let!(:contact) { create(:contact, key: "email", value: "info@example.com") }
-
       subject { json }
+
+      let!(:contact) { create(:contact, key: "email", value: "info@example.com") }
 
       before { req }
 
@@ -64,7 +65,7 @@ RSpec.describe "GET /v1/admin/contacts" do
       end
 
       it do
-        expect(json[:items].find{|j| j[:key] == contact.key }).to include(key: contact.key, value: contact.value)
+        expect(json[:items].find { |j| j[:key] == contact.key }).to include(key: contact.key, value: contact.value)
       end
 
       it do

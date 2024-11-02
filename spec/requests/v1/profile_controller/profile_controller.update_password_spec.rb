@@ -8,7 +8,7 @@ RSpec.describe "PATCH /v1/profile/password" do
   let(:default_headers) { auth_headers }
   let(:current_password) { current_user_password }
   let(:new_password) { SecureRandom.hex(15) }
-  let(:default_params) { { current_password:, new_password:, } }
+  let(:default_params) { { current_password:, new_password: } }
 
   def req(headers: default_headers, params: default_params)
     patch "/v1/profile/password", headers:, params:

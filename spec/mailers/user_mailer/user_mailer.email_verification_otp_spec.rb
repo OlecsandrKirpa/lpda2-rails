@@ -22,9 +22,9 @@ RSpec.describe UserMailer do
       expect(mail.subject).to eq I18n.t("user_mailer.email_verification_otp.subject")
     end
 
-    [
-      "en",
-      "it"
+    %w[
+      en
+      it
     ].each do |lang|
       it do
         I18n.with_locale(lang) do
@@ -34,7 +34,8 @@ RSpec.describe UserMailer do
     end
 
     it do
-      expect(I18n.t("user_mailer.email_verification_otp.subject", locale: "it")).not_to eq(I18n.t("user_mailer.email_verification_otp.subject", locale: "en"))
+      expect(I18n.t("user_mailer.email_verification_otp.subject",
+                    locale: "it")).not_to eq(I18n.t("user_mailer.email_verification_otp.subject", locale: "en"))
     end
 
     context "when checking text part body" do

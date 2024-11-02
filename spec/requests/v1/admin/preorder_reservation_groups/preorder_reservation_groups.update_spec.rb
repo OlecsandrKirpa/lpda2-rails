@@ -111,7 +111,7 @@ RSpec.describe "PATCH /v1/admin/preorder_reservation_groups/:id" do
   end
 
   context "when updating dates but providing already associated turns and dates" do
-    let(:params) { { dates: dates } }
+    let(:params) { { dates: } }
     let(:dates) { group.dates.map { |d| { date: d.date.to_s, turn_id: d.reservation_turn_id } } }
 
     before do
@@ -130,7 +130,7 @@ RSpec.describe "PATCH /v1/admin/preorder_reservation_groups/:id" do
 
   [
     nil,
-    [],
+    []
   ].each do |blank_val|
     context "when updating dates to #{blank_val.inspect}" do
       let(:params) { { dates: blank_val } }
@@ -163,7 +163,7 @@ RSpec.describe "PATCH /v1/admin/preorder_reservation_groups/:id" do
 
   [
     nil,
-    [],
+    []
   ].each do |blank_val|
     context "when updating turns to #{blank_val.inspect}" do
       let(:params) { { turns: blank_val } }

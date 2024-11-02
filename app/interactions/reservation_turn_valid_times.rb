@@ -14,14 +14,12 @@ class ReservationTurnValidTimes < ActiveInteraction::Base
     times = []
 
     while starts_at <= ends_at
-      times << Time.zone.parse("#{date} #{starts_at.strftime('%H:%M')}")
+      times << Time.zone.parse("#{date} #{starts_at.strftime("%H:%M")}")
 
       starts_at += turn.step.minutes
     end
 
-    if date.to_date == Time.zone.now.to_date
-      times = times.select { |time| time > Time.zone.now }
-    end
+    times = times.select { |time| time > Time.zone.now } if date.to_date == Time.zone.now.to_date
 
     times = delete_times_overlapping_with_weekly_holidays(times)
 

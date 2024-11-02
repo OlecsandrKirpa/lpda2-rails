@@ -115,9 +115,9 @@ RSpec.describe ReservationMailer do
         it do
           expect(mail.text_part.body.encoded).to include(
             I18n.t(
-              'reservation_mailer.remind_payment.body',
-              date: I18n.l(reservation.datetime, format: '%e %B %Y', locale: lang),
-              hour: reservation.datetime.strftime('%k:%M'),
+              "reservation_mailer.remind_payment.body",
+              date: I18n.l(reservation.datetime, format: "%e %B %Y", locale: lang),
+              hour: reservation.datetime.strftime("%k:%M"),
               people: reservation.people,
               locale: lang
             )

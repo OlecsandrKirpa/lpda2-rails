@@ -9,7 +9,7 @@ RSpec.describe "PATCH /v1/admin/contacts" do
   let(:params) { {} }
   let(:key) { "email" }
 
-  def req(k = key, p = params, h = headers)
+  def req(_k = key, p = params, h = headers)
     get "/v1/admin/contacts/#{key}", headers: h, params: p
   end
 
@@ -39,14 +39,14 @@ RSpec.describe "PATCH /v1/admin/contacts" do
 
     it do
       req
-      expect(json).to include(key: key, value: Contact::DEFAULTS.dig(key, :value))
+      expect(json).to include(key:, value: Contact::DEFAULTS.dig(key, :value))
     end
   end
 
   context "when contact does exist" do
     before { Contact.create_missing }
 
-    let(:contact) { Contact.find_by(key: key) }
+    let(:contact) { Contact.find_by(key:) }
 
     it { expect(Contact.count).to be_positive }
 

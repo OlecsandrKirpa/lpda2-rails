@@ -16,7 +16,7 @@ class ApplicationController < ActionController::API
   def render_endpoint_not_found
     render json: {
       message: "Endpoint not found"
-    }, status: 404
+    }, status: :not_found
   end
 
   def welcome

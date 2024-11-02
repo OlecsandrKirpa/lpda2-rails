@@ -7,7 +7,7 @@ RSpec.describe "POST /v1/profile/send_email_verification_otp" do
 
   let(:default_headers) { auth_headers }
   let(:email) { Faker::Internet.email }
-  let(:default_params) { { email: email } }
+  let(:default_params) { { email: } }
 
   def req(headers: default_headers, params: default_params)
     post "/v1/profile/send_email_verification_otp", headers:, params:

@@ -18,7 +18,9 @@ RSpec.describe "PATCH /v1/admin/holidays/<id>" do
   end
 
   let(:id) { holiday.id }
-  let!(:holiday) { create(:holiday, from_timestamp: 1.day.from_now.beginning_of_day, to_timestamp: 1.day.from_now.end_of_day) }
+  let!(:holiday) do
+    create(:holiday, from_timestamp: 1.day.from_now.beginning_of_day, to_timestamp: 1.day.from_now.end_of_day)
+  end
 
   let(:from_timestamp) { 1.day.from_now.strftime("%Y-%m-%d") }
   let(:to_timestamp) { nil }
@@ -48,19 +50,27 @@ RSpec.describe "PATCH /v1/admin/holidays/<id>" do
   end
 
   it "saves translated message in Italian" do
-    expect { req(params: { message: }) }.to change { I18n.with_locale(:it) { holiday.reload.message } }.from(nil).to("Vacanza!")
+    expect { req(params: { message: }) }.to change {
+                                              I18n.with_locale(:it) do
+                                                holiday.reload.message
+                                              end
+                                            }.from(nil).to("Vacanza!")
     expect(response).to have_http_status(:ok)
   end
 
   it "saves translated message in English" do
-    expect { req(params: { message: }) }.to change { I18n.with_locale(:en){ holiday.reload.message } }.from(nil).to("Holiday!")
+    expect { req(params: { message: }) }.to change {
+                                              I18n.with_locale(:en) do
+                                                holiday.reload.message
+                                              end
+                                            }.from(nil).to("Holiday!")
     expect(response).to have_http_status(:ok)
   end
 
   context "when updating a period holiday by adding weekday, should get 422" do
     let(:default_params) do
       {
-        weekday:,
+        weekday:
       }
     end
 

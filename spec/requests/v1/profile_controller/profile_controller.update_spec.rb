@@ -8,7 +8,7 @@ RSpec.describe "PATCH /v1/profile" do
   let(:default_headers) { auth_headers }
   let(:fullname) { "#{SecureRandom.hex} Mario Rossi" }
   let(:username) { "mario.rossi#{SecureRandom.hex}" }
-  let(:default_params) { { fullname: fullname, username: username } }
+  let(:default_params) { { fullname:, username: } }
 
   def req(headers: default_headers, params: default_params)
     patch "/v1/profile", headers:, params:
@@ -24,7 +24,7 @@ RSpec.describe "PATCH /v1/profile" do
   end
 
   context "when updating the fullname" do
-    let(:default_params) { { fullname: fullname } }
+    let(:default_params) { { fullname: } }
 
     it { expect { req }.to(change { current_user.reload.fullname }.to(fullname)) }
 
@@ -35,7 +35,7 @@ RSpec.describe "PATCH /v1/profile" do
   end
 
   context "when updating the username" do
-    let(:default_params) { { username: username } }
+    let(:default_params) { { username: } }
 
     it { expect { req }.to(change { current_user.reload.username }.to(username)) }
 

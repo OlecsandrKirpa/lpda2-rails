@@ -16,9 +16,7 @@ class CreatePreorderGroup < ActiveInteraction::Base
   interface :params, methods: %i[[] merge! fetch each has_key?], default: {}
 
   validate do
-    if params[:turns].present? && turn_ids.blank?
-      errors.add(:params, "turns are provided but blank: #{turn_ids}")
-    end
+    errors.add(:params, "turns are provided but blank: #{turn_ids}") if params[:turns].present? && turn_ids.blank?
   end
 
   def execute
@@ -31,9 +29,7 @@ class CreatePreorderGroup < ActiveInteraction::Base
       raise ActiveRecord::Rollback if errors.any?
     end
 
-    unless params.blank?
-      Rails.logger.warn("expected params to be blank at this point, got #{params.inspect}")
-    end
+    Rails.logger.warn("expected params to be blank at this point, got #{params.inspect}") if params.present?
 
     @group
   end

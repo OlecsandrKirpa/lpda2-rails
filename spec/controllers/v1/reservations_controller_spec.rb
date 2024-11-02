@@ -19,7 +19,7 @@ RSpec.describe V1::ReservationsController, type: :controller do
         email:,
         phone:,
         notes:,
-        lang:,
+        lang:
       }
     end
     let(:notes) { Faker::Lorem.sentence }
@@ -36,7 +36,8 @@ RSpec.describe V1::ReservationsController, type: :controller do
     let(:first_name) { Faker::Name.first_name }
     let(:lang) { :en }
     let!(:turn) do
-      create(:reservation_turn, starts_at: DateTime.parse("00:01"), ends_at: DateTime.parse("23:59"), weekday: Time.now.beginning_of_week.wday)
+      create(:reservation_turn, starts_at: DateTime.parse("00:01"), ends_at: DateTime.parse("23:59"),
+                                weekday: Time.now.beginning_of_week.wday)
     end
 
     it { expect(instance).to respond_to(:create) }
@@ -56,21 +57,23 @@ RSpec.describe V1::ReservationsController, type: :controller do
       { name: :tuesday, wday: 2 },
       { name: :wednesday, wday: 3 },
       { name: :friday, wday: 5 },
-      { name: :saturday, wday: 6 },
+      { name: :saturday, wday: 6 }
     ].each do |scenario|
       context "when providing a #{scenario[:name]} date, should create a reservation for turn with weekday=#{scenario[:wday]}" do
         let(:date) { Date.current.next_occurring(scenario[:name]) }
         let!(:turn) do
-          create(:reservation_turn, starts_at: DateTime.parse("00:01"), ends_at: DateTime.parse("23:59"), weekday: scenario[:wday])
+          create(:reservation_turn, starts_at: DateTime.parse("00:01"), ends_at: DateTime.parse("23:59"),
+                                    weekday: scenario[:wday])
         end
 
-        it { expect { req }.to change { Reservation.all.filter{|r| r.turn.weekday == scenario[:wday] }.count }.by(1) }
+        it { expect { req }.to change { Reservation.all.filter { |r| r.turn.weekday == scenario[:wday] }.count }.by(1) }
       end
     end
 
     context "when a 'once' Holiday exists" do
       let!(:holiday) do
-        create(:holiday, from_timestamp: 10.days.ago.strftime("%Y-%m-%d"), to_timestamp: 10.days.from_now.strftime("%Y-%m-%d")).tap do |h|
+        create(:holiday, from_timestamp: 10.days.ago.strftime("%Y-%m-%d"),
+                         to_timestamp: 10.days.from_now.strftime("%Y-%m-%d")).tap do |h|
           h.update!(message: "Some Message mario!")
         end
       end
@@ -92,12 +95,11 @@ RSpec.describe V1::ReservationsController, type: :controller do
     context "when a 'weekly' Holiday exists (whole day closed)" do
       let!(:holiday) do
         create(:holiday,
-          from_timestamp: 10.days.ago.strftime("%Y-%m-%d"),
-          to_timestamp: nil,
-          weekly_from: "00:00",
-          weekly_to: "23:59",
-          weekday: date.wday
-          ).tap do |h|
+               from_timestamp: 10.days.ago.strftime("%Y-%m-%d"),
+               to_timestamp: nil,
+               weekly_from: "00:00",
+               weekly_to: "23:59",
+               weekday: date.wday).tap do |h|
           h.update!(message: "Whole day closed mario!")
         end
       end
@@ -119,12 +121,11 @@ RSpec.describe V1::ReservationsController, type: :controller do
     context "when a 'weekly' Holiday exists (closed only on the morning while the reservation is made for the evening)" do
       let!(:holiday) do
         create(:holiday,
-          from_timestamp: 10.days.ago.strftime("%Y-%m-%d"),
-          to_timestamp: nil,
-          weekly_from: "10:00",
-          weekly_to: "15:59",
-          weekday: date.wday
-          ).tap do |h|
+               from_timestamp: 10.days.ago.strftime("%Y-%m-%d"),
+               to_timestamp: nil,
+               weekly_from: "10:00",
+               weekly_to: "15:59",
+               weekday: date.wday).tap do |h|
           h.update!(message: "Partially closed mario!")
         end
       end
@@ -158,12 +159,11 @@ RSpec.describe V1::ReservationsController, type: :controller do
     context "when a 'weekly' Holiday exists but is for another wday" do
       let!(:holiday) do
         create(:holiday,
-          from_timestamp: 10.days.ago.strftime("%Y-%m-%d"),
-          to_timestamp: nil,
-          weekly_from: "10:00",
-          weekly_to: "15:59",
-          weekday: (date.wday + 1) % 6
-          ).tap do |h|
+               from_timestamp: 10.days.ago.strftime("%Y-%m-%d"),
+               to_timestamp: nil,
+               weekly_from: "10:00",
+               weekly_to: "15:59",
+               weekday: (date.wday + 1) % 6).tap do |h|
           h.update!(message: "Whole day closed mario!")
         end
       end
@@ -181,6 +181,7 @@ RSpec.describe V1::ReservationsController, type: :controller do
       let(:lang) { nil }
 
       it { expect { req }.not_to(change { Reservation.count }) }
+
       it do
         req
         expect(json).to include(message: /ang/) # lang may have 'l' capitalized
@@ -239,7 +240,7 @@ RSpec.describe V1::ReservationsController, type: :controller do
 
     context "when nexi APIs return some kind of error" do
       before do
-        stub_request(:post, "#{Config.nexi_api_url}/#{Config.nexi_hpp_payment_path}").to_return do |request|
+        stub_request(:post, "#{Config.nexi_api_url}/#{Config.nexi_hpp_payment_path}").to_return do |_request|
           {
             status: 400, # is it correct here?
             body: {
@@ -273,6 +274,7 @@ RSpec.describe V1::ReservationsController, type: :controller do
         it { expect { req }.not_to(change { ReservationPayment.count }) }
         it { expect { req }.to(change { Nexi::HttpRequest.count }.by(1)) }
         it { expect { req }.to(change { Nexi::HttpRequest.where(http_code: 400).count }.by(1)) }
+
         it do
           req
           expect(json).to include(:message)
@@ -283,10 +285,12 @@ RSpec.describe V1::ReservationsController, type: :controller do
 
     context "when nexi APIs are working and we're authorized" do
       before do
-        stub_request(:post, "#{Config.nexi_api_url}/#{Config.nexi_hpp_payment_path}").to_return do |request|
+        stub_request(:post, "#{Config.nexi_api_url}/#{Config.nexi_hpp_payment_path}").to_return do |_request|
           {
             body: {
-              hostedPage: "https://xpaysandbox.nexigroup.com/monetaweb/page/hosted/2/html?paymentid=#{Array.new(18) { (0..9).to_a.sample }.join()}",
+              hostedPage: "https://xpaysandbox.nexigroup.com/monetaweb/page/hosted/2/html?paymentid=#{Array.new(18) do
+                                                                                                        (0..9).to_a.sample
+                                                                                                      end.join}",
               securityToken: SecureRandom.hex,
               warnings: []
             }.to_json
@@ -327,8 +331,8 @@ RSpec.describe V1::ReservationsController, type: :controller do
         end
 
         [
-          { lang: "it", code: "ita", },
-          { lang: "en", code: "eng", },
+          { lang: "it", code: "ita" },
+          { lang: "en", code: "eng" }
         ].each do |scenario|
           context "when lang is #{scenario[:lang].inspect}" do
             let(:lang) { scenario[:lang] }
@@ -361,7 +365,8 @@ RSpec.describe V1::ReservationsController, type: :controller do
           (0..6).each do |wday|
             next if ReservationTurn.where(weekday: wday).any?
 
-            create(:reservation_turn, starts_at: DateTime.parse("00:01"), ends_at: DateTime.parse("23:59"), weekday: wday)
+            create(:reservation_turn, starts_at: DateTime.parse("00:01"), ends_at: DateTime.parse("23:59"),
+                                      weekday: wday)
           end
 
           group
@@ -370,7 +375,7 @@ RSpec.describe V1::ReservationsController, type: :controller do
         [
           Time.now.beginning_of_week + 7.days,
           Time.now.beginning_of_week + 14.days,
-          Time.now.beginning_of_week + 70.days,
+          Time.now.beginning_of_week + 70.days
         ].each do |date0|
           context "when date is in the list: #{date0.inspect}" do
             let(:date) { date0 }
@@ -409,7 +414,7 @@ RSpec.describe V1::ReservationsController, type: :controller do
 
         [
           Time.now.beginning_of_week + 6.days,
-          Time.now.beginning_of_week + 8.days,
+          Time.now.beginning_of_week + 8.days
         ].each do |date0|
           context "when date is NOT in the list: #{date0.inspect}" do
             let(:date) { date0 }
@@ -422,7 +427,6 @@ RSpec.describe V1::ReservationsController, type: :controller do
               req
               expect(Nexi::HttpRequest.count).to eq 0
             end
-
 
             it do
               req
@@ -480,7 +484,8 @@ RSpec.describe V1::ReservationsController, type: :controller do
 
       context "when turn is not in that weekday" do
         let!(:turn) do
-          create(:reservation_turn, starts_at: DateTime.parse("00:01"), ends_at: DateTime.parse("23:59"), weekday: Time.now.beginning_of_week.wday + 1)
+          create(:reservation_turn, starts_at: DateTime.parse("00:01"), ends_at: DateTime.parse("23:59"),
+                                    weekday: Time.now.beginning_of_week.wday + 1)
         end
 
         it "returns 422" do
@@ -1087,7 +1092,7 @@ RSpec.describe V1::ReservationsController, type: :controller do
               "notes" => reservation.notes,
               "secret" => reservation.secret,
               "updated_at" => String,
-              "created_at" => String,
+              "created_at" => String
             )
           }
         end

@@ -8,13 +8,13 @@ RSpec.describe "POST /v1/admin/preorder_reservation_groups" do
   let(:headers) { auth_headers }
   let(:params) do
     {
-      title: title,
-      preorder_type: preorder_type,
-      payment_value: payment_value,
-      message: message,
-      dates: dates,
-      active_from: active_from,
-      active_to: active_to,
+      title:,
+      preorder_type:,
+      payment_value:,
+      message:,
+      dates:,
+      active_from:,
+      active_to:
     }
   end
   let(:active_from) { nil }
@@ -26,7 +26,7 @@ RSpec.describe "POST /v1/admin/preorder_reservation_groups" do
   let(:message_it) { Faker::Lorem.sentence }
   let(:message_en) { Faker::Lorem.sentence }
   let(:dates) do
-    [ { date: Date.current.next_occurring(:monday).to_s, turn_id: turn.id } ]
+    [{ date: Date.current.next_occurring(:monday).to_s, turn_id: turn.id }]
   end
 
   let(:turn) { create(:reservation_turn, weekday: 1) }
@@ -57,6 +57,7 @@ RSpec.describe "POST /v1/admin/preorder_reservation_groups" do
       it { expect(response).to be_successful }
       it { expect(json).not_to include(message: String) }
       it { expect(json).to be_a(Hash) }
+
       it do
         item = PreorderReservationGroup.last
         expect(json[:item].symbolize_keys).to include(
@@ -76,10 +77,17 @@ RSpec.describe "POST /v1/admin/preorder_reservation_groups" do
 
   context "when providing turns" do
     before { req(params.merge(turns:)) }
+
     let(:turns) { [create(:reservation_turn).id] }
 
     it { expect(json.dig(:item, :turns).length).to eq 1 }
-    it { expect(json.dig(:item, :turns)).to all(include(id: turns.first, name: String, starts_at: String, ends_at: String, weekday: Integer)) }
+
+    it {
+      expect(json.dig(:item,
+                      :turns)).to all(include(id: turns.first, name: String, starts_at: String, ends_at: String,
+                                              weekday: Integer))
+    }
+
     it do
       expect(PreorderReservationGroup.last.turns).to eq(ReservationTurn.where(id: turns))
     end
@@ -95,7 +103,7 @@ RSpec.describe "POST /v1/admin/preorder_reservation_groups" do
     end
 
     context "when trying to add same turn to a new group" do
-      let(:params) { super().merge(turns: turns, dates: nil) }
+      let(:params) { super().merge(turns:, dates: nil) }
 
       it do
         req
@@ -112,7 +120,7 @@ RSpec.describe "POST /v1/admin/preorder_reservation_groups" do
     end
 
     context "when trying to add same turn to a new group" do
-      let(:params) { super().merge(turns: nil, dates: dates) }
+      let(:params) { super().merge(turns: nil, dates:) }
 
       it do
         req
@@ -146,7 +154,7 @@ RSpec.describe "POST /v1/admin/preorder_reservation_groups" do
     it { expect(PreorderReservationGroup.all.last.dates.first.reservation_turn).to eq(turn) }
 
     context "when trying to add same turn to a new group" do
-      let(:params) { super().merge(turns: turns, dates: nil) }
+      let(:params) { super().merge(turns:, dates: nil) }
 
       it do
         req
@@ -163,7 +171,7 @@ RSpec.describe "POST /v1/admin/preorder_reservation_groups" do
     end
 
     context "when trying to add same turn to a new group" do
-      let(:params) { super().merge(turns: nil, dates: dates) }
+      let(:params) { super().merge(turns: nil, dates:) }
 
       it do
         req
@@ -186,7 +194,7 @@ RSpec.describe "POST /v1/admin/preorder_reservation_groups" do
         { date: Date.current.next_occurring(:monday).to_s, turn_id: turn.id },
         { date: (Date.current.next_occurring(:monday) + 7.days).to_s, turn_id: turn.id },
         { date: (Date.current.next_occurring(:monday) + 14.days).to_s, turn_id: turn.id },
-        { date: (Date.current.next_occurring(:monday) + 28.days).to_s, turn_id: turn.id },
+        { date: (Date.current.next_occurring(:monday) + 28.days).to_s, turn_id: turn.id }
       ]
     end
 
@@ -223,11 +231,11 @@ RSpec.describe "POST /v1/admin/preorder_reservation_groups" do
         { date: (Date.current.next_occurring(:monday) + 77.days).to_s, turn_id: turn.id },
 
         { date: Date.current.next_occurring(:monday).to_s, turn_id: turn2.id },
-        { date: (Date.current.next_occurring(:tuesday) + 28.days).to_s, turn_id: turn3.id },
+        { date: (Date.current.next_occurring(:tuesday) + 28.days).to_s, turn_id: turn3.id }
       ]
     end
 
-    let(:params) { super().merge(dates: dates, turns: [turn4.id]) }
+    let(:params) { super().merge(dates:, turns: [turn4.id]) }
 
     it { expect { req }.to(change { PreorderReservationGroup.count }.by(1)) }
     it { expect { req }.to(change { PreorderReservationDate.count }.by(5)) }
@@ -246,7 +254,7 @@ RSpec.describe "POST /v1/admin/preorder_reservation_groups" do
     it do
       req
       expect(json.dig(:item, :dates).length).to eq 5
-      expect(json.dig(:item, :dates).pluck(:reservation_turn_id).uniq).to match_array([turn.id, turn2.id, turn3.id])
+      expect(json.dig(:item, :dates).pluck(:reservation_turn_id).uniq).to contain_exactly(turn.id, turn2.id, turn3.id)
       expect(json.dig(:item, :turns).pluck(:id)).to eq([turn4.id])
     end
   end
@@ -290,7 +298,9 @@ RSpec.describe "POST /v1/admin/preorder_reservation_groups" do
 
     context "when adding some turn to the new group, should receive 422" do
       let(:some_turn) { turn }
-      let(:params) { super().merge(turns: [], dates: [{ date: Date.current.next_occurring(:monday).to_s, turn_id: some_turn.id }]) }
+      let(:params) do
+        super().merge(turns: [], dates: [{ date: Date.current.next_occurring(:monday).to_s, turn_id: some_turn.id }])
+      end
 
       it do
         req

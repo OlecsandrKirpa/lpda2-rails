@@ -6,7 +6,7 @@ RSpec.describe "GET /v1/admin/preorder_reservation_groups" do
   include_context REQUEST_AUTHENTICATION_CONTEXT
 
   let(:headers) { auth_headers }
-  let(:params) { { } }
+  let(:params) { {} }
 
   let(:groups) do
     create(:preorder_reservation_group).tap { |g| g.turns = [create(:reservation_turn, weekday: 1)] }
@@ -15,7 +15,7 @@ RSpec.describe "GET /v1/admin/preorder_reservation_groups" do
       weekday = Random.rand(3..5)
       g.dates.create!(
         date: Date.current.next_occurring(ReservationTurn::WEEKDAYS[weekday].to_sym),
-        reservation_turn: create(:reservation_turn, weekday: weekday)
+        reservation_turn: create(:reservation_turn, weekday:)
       )
     end
 
@@ -54,22 +54,31 @@ RSpec.describe "GET /v1/admin/preorder_reservation_groups" do
 
       before { record }
 
-      it { expect(item).to include(id: record.id, status: record.status, active_from: nil, active_to: nil, payment_value: record.payment_value, created_at: String, updated_at: String) }
+      it {
+        expect(item).to include(id: record.id, status: record.status, active_from: nil, active_to: nil,
+                                payment_value: record.payment_value, created_at: String, updated_at: String)
+      }
+
       it { expect(item).to include(turns: Array) }
       it { expect(item).to include(dates: Array) }
-      it { expect(item[:turns]).to all(include(id: Integer, name: String, starts_at: String, ends_at: String, weekday: Integer, step: Integer, created_at: String, updated_at: String)) }
+
+      it {
+        expect(item[:turns]).to all(include(id: Integer, name: String, starts_at: String, ends_at: String, weekday: Integer,
+                                            step: Integer, created_at: String, updated_at: String))
+      }
+
       it { expect(item[:dates]).to all(include(reservation_turn_id: Integer, reservation_turn: Hash, date: String)) }
 
-      it "should either have dates or turns" do
+      it "eithers have dates or turns" do
         expect(item[:turns].length + item[:dates].length).to be_positive
       end
 
       it "starts_at should not include date nor seconds" do
-        expect(item[:turns].map { |t| t[:starts_at] }).to all(match(/\A\d{1,2}:\d{1,2}\z/))
+        expect(item[:turns].pluck(:starts_at)).to all(match(/\A\d{1,2}:\d{1,2}\z/))
       end
-      
+
       it do
-        expect(item[:dates].map{|j| j[:reservation_turn]}.flatten.map { |t| t[:starts_at] }).to all(match(/\A\d{1,2}:\d{1,2}\z/))
+        expect(item[:dates].pluck(:reservation_turn).flatten.pluck(:starts_at)).to all(match(/\A\d{1,2}:\d{1,2}\z/))
       end
     end
   end
@@ -126,15 +135,15 @@ RSpec.describe "GET /v1/admin/preorder_reservation_groups" do
       let(:will_deactivate) { create(:preorder_reservation_group, active_to: 1.year.from_now) }
       let(:active_for_now) { create(:preorder_reservation_group, active_from: 1.year.ago, active_to: 1.year.from_now) }
       let(:active) { create(:preorder_reservation_group) }
-      let!(:all_active) {
+      let!(:all_active) do
         [will_deactivate, active_for_now, active]
-      }
+      end
 
       let(:will_activate) { create(:preorder_reservation_group, active_from: 1.year.from_now) }
       let(:inactive) { create(:preorder_reservation_group, status: :inactive) }
-      let!(:all_inactive) {
+      let!(:all_inactive) do
         [will_activate, inactive]
-      }
+      end
 
       before do
         req(params.merge(active_now: param_value))

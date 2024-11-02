@@ -51,14 +51,15 @@ RSpec.describe V1::Admin::ReservationTurnsController, type: :controller do
 
       [0, 1].each do |weekday_param|
         context "when filtering for weekday: #{weekday_param.inspect}" do
-        let!(:turns) do
-          [
-            create(:reservation_turn, weekday: 0),
-            create(:reservation_turn, weekday: 1)
-          ]
-        end
-
           subject { json }
+
+          let!(:turns) do
+            [
+              create(:reservation_turn, weekday: 0),
+              create(:reservation_turn, weekday: 1)
+            ]
+          end
+
           before { req(weekday: weekday_param) }
 
           it { expect(subject.dig(:metadata, :total_count)).to eq 1 }
@@ -265,7 +266,11 @@ RSpec.describe V1::Admin::ReservationTurnsController, type: :controller do
           context "when updating step from #{from_value} to #{to_value}" do
             before { reservation_turn.update(step: from_value) }
 
-            it { expect { req(reservation_turn.id, step: to_value) }.to change { reservation_turn.reload.step }.from(from_value).to(to_value) }
+            it {
+              expect { req(reservation_turn.id, step: to_value) }.to change {
+                                                                       reservation_turn.reload.step
+                                                                     }.from(from_value).to(to_value)
+            }
           end
         end
       end
