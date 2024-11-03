@@ -13,6 +13,20 @@ class ApplicationController < ActionController::API
     render_unauthorized unless @current_user
   end
 
+  def require_root
+    return if current_user.blank? || current_user.root?
+
+    render_error(
+      status: :forbidden,
+      message: I18n.t("errors.messages.root_required"),
+      details: {
+        root_required: true,
+        can_root: current_user.can_root?,
+        root_at: current_user.root_at
+      }
+    )
+  end
+
   def render_endpoint_not_found
     render json: {
       message: "Endpoint not found"

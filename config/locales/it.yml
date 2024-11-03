@@ -148,6 +148,9 @@ it:
   errors:
     format: "%{attribute} %{message}"
     messages:
+      invalid_password: "Password non valida"
+      root_required: "È richiesta l'autorizzazione di amministratore"
+      user_cannot_root: "Questo utente non ha i privilegi di amministratore."
       request_401: "Non autorizzato. Accedi per favore."
       invalid_email_or_password: "Email o password non validi"
       account_tmp_locked: "Il tuo account è temporaneamente bloccato. Riprova più tardi."

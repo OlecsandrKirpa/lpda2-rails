@@ -57,6 +57,7 @@ Rails.application.routes.draw do
 
       # v1/auth
       resource :auth, controller: "auth", only: [] do
+        post "root"
         post "login"
         post "refresh_token"
         post "logout"

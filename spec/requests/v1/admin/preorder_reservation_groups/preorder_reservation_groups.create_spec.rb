@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe "POST /v1/admin/preorder_reservation_groups" do
   include_context REQUEST_AUTHENTICATION_CONTEXT
+  let(:current_user_root_at) { Time.zone.now }
 
   let(:headers) { auth_headers }
   let(:params) do
@@ -41,6 +42,16 @@ RSpec.describe "POST /v1/admin/preorder_reservation_groups" do
     before { req }
 
     it { expect(response).to have_http_status(:unauthorized) }
+
+    it { expect(json).to include(message: String) }
+  end
+
+  context "when current user is not root" do
+    let(:current_user_root_at) { nil }
+
+    before { req }
+
+    it { expect(response).to have_http_status(:forbidden) }
 
     it { expect(json).to include(message: String) }
   end

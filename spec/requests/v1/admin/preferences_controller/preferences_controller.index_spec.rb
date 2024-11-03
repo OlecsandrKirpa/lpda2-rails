@@ -44,7 +44,7 @@ RSpec.describe "GET /v1/admin/preferences" do
       it { expect(json[:items]).to all(be_a(Hash)) }
 
       it do
-        expect(json[:items]).to all(include(:key, :value, :require_root, :updated_at, :updated_at))
+        expect(json[:items]).to all(include(:key, :value, :updated_at, :updated_at))
       end
     end
   end

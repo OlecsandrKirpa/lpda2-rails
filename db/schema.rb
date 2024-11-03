@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_01_135528) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_03_100539) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -316,7 +316,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_01_135528) do
     t.text "key", null: false
     t.text "value"
     t.bigint "user_id", null: false
-    t.boolean "require_root", default: true, null: false, comment: "Require user to be root to change this setting"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id", "key"], name: "index_preferences_on_user_id_and_key", unique: true
@@ -436,7 +435,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_01_135528) do
     t.text "key", null: false
     t.text "value"
     t.text "parser", comment: "How to parse the value. When nil, do nothing."
-    t.boolean "require_root", default: true, null: false, comment: "Require user to be root to change this setting"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["key"], name: "index_settings_on_key", unique: true

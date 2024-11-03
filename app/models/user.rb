@@ -43,7 +43,7 @@ class User < ApplicationRecord
   # ################################
   scope :visible, -> { where.not(status: "deleted") }
   scope :root, lambda {
-                 where(can_root: true).where.not(root_at: nil).where("root_at > ?", Time.current - Config.app[:root_duration])
+                 where(can_root: true).where("root_at > ?", Config.app.dig!(:root_duration).seconds.ago)
                }
 
   # ################################
@@ -82,11 +82,11 @@ class User < ApplicationRecord
     return false unless can_root?
     return false if root_at.blank?
 
-    root_at + Config.app[:root_duration] > Time.current
+    (root_at + Config.app.dig!(:root_duration).seconds) > Time.zone.now
   end
 
   def root!
-    can_root? && update!(root_at: Time.current)
+    can_root? && update!(root_at: Time.zone.now)
   end
 
   def status=(value)
@@ -152,4 +152,6 @@ class User < ApplicationRecord
   def generate_otp_key
     self.otp_key = SecureRandom.hex(16)
   end
+
+  
 end

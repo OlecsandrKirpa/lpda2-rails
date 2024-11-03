@@ -4,6 +4,7 @@ module V1::Admin
   # CRUD users
   class UsersController < ApplicationController
     before_action :find_item, only: %i[show destroy]
+    before_action :require_root, only: %i[create update_status destroy]
 
     def index
       call = ::SearchUsers.run(params:, current_user:)

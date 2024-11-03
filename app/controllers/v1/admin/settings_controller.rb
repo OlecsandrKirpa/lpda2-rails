@@ -4,6 +4,7 @@ module V1
   module Admin
     class SettingsController < ApplicationController
       before_action :find_item, only: %i[show update]
+      before_action :require_root, only: %i[update]
 
       # GET /v1/admin/settings
       def index

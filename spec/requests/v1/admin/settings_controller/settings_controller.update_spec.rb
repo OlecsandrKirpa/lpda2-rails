@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe "PATCH /v1/admin/settings/:key" do
   include_context REQUEST_AUTHENTICATION_CONTEXT
+  let(:current_user_root_at) { Time.zone.now }
 
   let(:headers) { auth_headers }
   let(:params) { { value: } }
@@ -29,6 +30,15 @@ RSpec.describe "PATCH /v1/admin/settings/:key" do
       req
       expect(json).to include(message: String)
     end
+  end
+
+  context "when current user is not root" do
+    let(:current_user_root_at) { nil }
+
+    before { req }
+
+    it { expect(response).to have_http_status(:forbidden) }
+    it { expect(json).to include(message: String) }
   end
 
   context "when authenticated" do
@@ -85,7 +95,7 @@ RSpec.describe "PATCH /v1/admin/settings/:key" do
 
       it do
         req
-        expect(json).to include(:key, :value, :require_root, :updated_at)
+        expect(json).to include(:key, :value, :updated_at)
       end
     end
 
@@ -114,7 +124,7 @@ RSpec.describe "PATCH /v1/admin/settings/:key" do
 
       it do
         req
-        expect(json).to include(:key, :value, :require_root, :updated_at)
+        expect(json).to include(:key, :value, :updated_at)
       end
     end
 

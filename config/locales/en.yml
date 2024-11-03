@@ -146,6 +146,9 @@ en:
   errors:
     format: "%{attribute} %{message}"
     messages:
+      invalid_password: "Invalid password"
+      root_required: "Administration privileges are required to perform this action."
+      user_cannot_root: "This user does not have Administration privileges."
       request_401: "Unauthorized. Please login."
       invalid_email_or_password: "Email or password invalid"
       account_tmp_locked: "Your account is temporarily locked. Please try again later."

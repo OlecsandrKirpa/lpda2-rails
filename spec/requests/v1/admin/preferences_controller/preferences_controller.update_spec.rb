@@ -72,7 +72,7 @@ RSpec.describe "PATCH /v1/admin/preferences/:key" do
 
       it do
         req
-        expect(json).to include(:key, :value, :require_root, :updated_at)
+        expect(json).to include(:key, :value, :updated_at)
       end
     end
 
@@ -105,7 +105,7 @@ RSpec.describe "PATCH /v1/admin/preferences/:key" do
 
       it do
         req
-        expect(json).to include(:key, :value, :require_root, :updated_at)
+        expect(json).to include(:key, :value, :updated_at)
       end
     end
 

@@ -2,7 +2,7 @@
 
 module V1
   class AuthController < ApplicationController
-    skip_before_action :authenticate_user, except: [:logout]
+    skip_before_action :authenticate_user, except: %i[logout root]
     before_action :try_authenticate_user, only: %i[require_reset_password reset_password]
 
     # POST /v1/auth/login
@@ -27,6 +27,31 @@ module V1
       # If you were able to login, you won't need to reset the password anymore.
       auth.result[:user].reset_password_secrets.delete_all
       render json: { jwt: auth.result[:jwt] }
+    end
+
+    # POST /v1/auth/root
+    def root
+      unless current_user.can_root?
+        return render_error status: 403,
+                            message: I18n.t("errors.messages.user_cannot_root")
+      end
+
+      unless current_user.authenticate(params[:password])
+        # Always add a delay when user fails to login.
+        # https://devblogs.microsoft.com/oldnewthing/20100323-00/?p=14513
+        sleep 5 unless Rails.env.test?
+
+        return render_error status: 401, message: I18n.t("errors.messages.invalid_password"), details: {
+          password: [I18n.t("errors.messages.invalid_password")]
+        }
+      end
+
+      current_user.root!
+      render json: {
+        sucess: true,
+        root_at: current_user.root_at,
+        duration: Config.app.dig!(:root_duration).to_i
+      }
     end
 
     def refresh_token

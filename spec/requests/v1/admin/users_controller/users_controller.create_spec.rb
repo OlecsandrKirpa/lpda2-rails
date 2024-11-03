@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe "POST /v1/admin/users" do
   include_context REQUEST_AUTHENTICATION_CONTEXT
+  let(:current_user_root_at) { Time.zone.now }
 
   let(:fullname) { Faker::Lorem.name }
   let(:email) { Faker::Internet.email }
@@ -17,6 +18,15 @@ RSpec.describe "POST /v1/admin/users" do
 
   it do
     expect { req }.to have_enqueued_mail(UserMailer, :welcome_staffer).once
+  end
+
+  context "when current user is not root" do
+    let(:current_user_root_at) { nil }
+
+    before { req }
+
+    it { expect(response).to have_http_status(:forbidden) }
+    it { expect(json).to include(message: String) }
   end
 
   describe "when making a basic request" do

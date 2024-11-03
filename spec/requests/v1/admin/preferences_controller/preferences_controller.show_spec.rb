@@ -40,7 +40,7 @@ RSpec.describe "GET /v1/admin/preferences/:key" do
       it { is_expected.to be_a(Hash) }
       it { is_expected.not_to be_empty }
 
-      it { expect(json).to include(:key, :value, :require_root, :updated_at, :updated_at) }
+      it { expect(json).to include(:key, :value, :updated_at, :updated_at) }
     end
 
     context "when user's preference { language: :en }" do

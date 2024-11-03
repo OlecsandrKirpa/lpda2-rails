@@ -70,7 +70,6 @@ RSpec.describe V1::Admin::PreferencesController, type: :controller do
       it { is_expected.to include(:updated_at) }
       it { is_expected.to include(:key) }
       it { is_expected.to include(:value) }
-      it { is_expected.to include(:require_root) }
       it { is_expected.not_to include(:id) }
 
       it { is_expected.to include(value: user.preference_value(key).to_s) }
