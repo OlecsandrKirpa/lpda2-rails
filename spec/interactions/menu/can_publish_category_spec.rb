@@ -41,10 +41,11 @@ RSpec.describe Menu::CanPublishCategory, type: :interaction do
       include_examples CANNOT_PUBLISH_CATEGORY, expected_reasons: %i[category_not_root]
     end
 
-    context "when category has 0 dishes" do
+    context "when category has 0 dishes and 0 categories" do
       let(:category) { create(:menu_category) }
 
       it { expect(category.dishes).to be_empty }
+      it { expect(category.children).to be_empty }
 
       include_examples CANNOT_PUBLISH_CATEGORY, expected_reasons: %i[missing_dishes]
     end
@@ -224,9 +225,7 @@ RSpec.describe Menu::CanPublishCategory, type: :interaction do
       create(:menu_dish, images: [create(:image, :with_attached_image)], price: 15)
     end
 
-    let(:ingredient) do
-      create(:menu_ingredient)
-    end
+    let(:ingredient) { create(:menu_ingredient) }
 
     before do
       dish.ingredients << ingredient
@@ -254,6 +253,42 @@ RSpec.describe Menu::CanPublishCategory, type: :interaction do
       it { expect(category.images).not_to be_empty }
       it { expect(category.dishes).to eq [dish] }
       it { expect(category.name).to be_present }
+    end
+
+    it { expect(subject.reasons.full_messages).to be_empty }
+  end
+
+  context "if menu has one category and that one has valid dish, can pubblish." do
+    let(:category) do
+      create(:menu_category, images: [create(:image, :with_attached_image)], visibility: nil)
+    end
+
+    let(:dish) do
+      create(:menu_dish, images: [create(:image, :with_attached_image)], price: 15)
+    end
+
+    let(:ingredient) { create(:menu_ingredient) }
+
+    let(:menu) do
+      create(:menu_category, images: [create(:image, :with_attached_image)])
+    end
+
+    before do
+      menu.children << category
+      dish.ingredients << ingredient
+      category.dishes << dish
+      category.reload
+
+      (Setting[:available_locales]).split(",").each do |locale|
+        Mobility.with_locale(locale) do
+          category.name = Faker::Lorem.sentence
+          dish.name = Faker::Lorem.sentence
+          menu.name = Faker::Lorem.sentence
+        end
+      end
+
+      category.save!
+      dish.save!
     end
 
     it { expect(subject.reasons.full_messages).to be_empty }
