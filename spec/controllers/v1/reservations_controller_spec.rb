@@ -71,13 +71,16 @@ RSpec.describe V1::ReservationsController, type: :controller do
     end
 
     context "when setting reservation_min_hours_in_advance" do
-      before do
-        Setting[:reservation_min_hours_in_advance] = 2
+      let!(:turn) do
         create(:reservation_turn, weekday: Time.zone.now.wday, starts_at: DateTime.parse("12:00"), ends_at: DateTime.parse("15:00"))
       end
 
+      before do
+        Setting[:reservation_min_hours_in_advance] = 2
+      end
+
       def doit
-        travel_to (Time.zone.now.beginning_of_day + 12.hours) do
+        travel_to(Time.zone.now.beginning_of_day + 12.hours) do
           req
         end
       end
