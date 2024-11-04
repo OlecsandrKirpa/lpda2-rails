@@ -6,7 +6,7 @@ module V1::Admin
     before_action :find_tag, only: %i[add_tag remove_tag]
 
     def index
-      call = ::SearchReservations.run(params:, current_user:)
+      call = ::SearchReservations.run(params:)
       unless call.valid?
         return render_error(status: 400, details: call.errors.as_json,
                             message: call.errors.full_messages.join(", "))
@@ -93,7 +93,7 @@ module V1::Admin
     end
 
     def export
-      search = ::SearchReservations.run(params:, current_user:)
+      search = ::SearchReservations.run(params:)
       unless search.valid?
         return render_error(status: 400, details: search.errors.as_json,
                             message: search.errors.full_messages.join(", "))

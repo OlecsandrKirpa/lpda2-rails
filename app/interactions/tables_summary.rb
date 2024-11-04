@@ -25,7 +25,7 @@ class TablesSummary < ActiveInteraction::Base
   def reservations
     return @reservations if defined?(@reservations)
 
-    call = ::SearchReservations.run(params:, current_user:)
+    call = ::SearchReservations.run(params:)
     errors.merge!(call.errors) if call.errors.any? || call.invalid?
 
     @reservations = call.result

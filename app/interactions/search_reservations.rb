@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class SearchReservations < ActiveInteraction::Base
-  record :current_user, class: User
   interface :params, methods: %i[[] merge! fetch each has_key?], default: {}
 
   def execute
