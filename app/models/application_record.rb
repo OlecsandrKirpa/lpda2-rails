@@ -5,7 +5,7 @@ class ApplicationRecord < ActiveRecord::Base
 
   class << self
     def log_table_info(args = {})
-      puts TableInfo.run!(args.merge(model: self))
+      puts Dev::TableInfo.run!(args.merge(model: self))
     end
 
     def ransackable_attributes(_auth_object = nil)
