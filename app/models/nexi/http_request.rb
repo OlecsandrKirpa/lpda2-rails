@@ -7,7 +7,6 @@ module Nexi
     # Validations
     # ###################################
     validates :request_body,
-              :response_body,
               :url,
               :http_code,
               :http_method,

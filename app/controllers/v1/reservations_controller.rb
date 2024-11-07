@@ -2,7 +2,7 @@
 
 module V1
   class ReservationsController < ApplicationController
-    before_action :find_item, only: %i[show cancel]
+    before_action :find_item, only: %i[show do_payment cancel]
     before_action :find_next_and_active_reservation, only: %i[resend_confirmation_email]
     skip_before_action :authenticate_user
 
@@ -11,6 +11,13 @@ module V1
       render json: {
         item: full_json(@item)
       }
+    end
+
+    # GET /v1/reservations/:secret/do_payment
+    def do_payment
+      return render html: @item.payment.html if @item.payment.html.present?
+
+      raise "Don't know how to render payment for reservation"
     end
 
     def create

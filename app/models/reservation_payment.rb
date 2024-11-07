@@ -14,8 +14,13 @@ class ReservationPayment < ApplicationRecord
 
   enum preorder_type: {
     # Will require a payment with nexi before reservation can be created.
-    # Will use Nexi HPP service.
-    nexi_payment: "nexi_payment"
+    # Will send user to nexi payment page. URL will be stored in hpp_url.
+    # url_nexi_payment: "url_nexi_payment",
+
+    # NEXI will give us an HTML form to be rendered in our page.
+    # The form will basically be a POST request to NEXI.
+    # We'll just serve the form to the user as NEXI gave it to us.
+    html_nexi_payment: "html_nexi_payment"
   }
 
   # ################################
@@ -29,5 +34,19 @@ class ReservationPayment < ApplicationRecord
   # ################################
   validates :status, presence: true
   validates :hpp_url, presence: true
+  validates :html, presence: true
+  validates :preorder_type, presence: true
+  validates :external_id, presence: true
   validates :value, presence: true, numericality: { only_integer: false, greater_than: 0 }
+
+  before_validation :gen_hpp_url, if: -> { html.present? }
+
+  def gen_hpp_url
+    return if reservation&.secret.blank?
+
+    self.hpp_url ||= Rails.application.routes.url_helpers.do_payment_reservations_url(
+      secret: reservation&.secret,
+      # host: "gigi"
+    )
+  end
 end

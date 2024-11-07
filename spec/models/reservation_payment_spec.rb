@@ -11,5 +11,4 @@ RSpec.describe ReservationPayment, type: :model do
   it { is_expected.to allow_value(100).for(:value) }
 
   it { is_expected.to validate_presence_of(:status) }
-  it { is_expected.to validate_presence_of(:hpp_url) }
 end

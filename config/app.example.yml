@@ -35,9 +35,9 @@ default: &default
   # After user completed payment, will be sent here:
   processed_payment_reservation_url: "{{frontend_base_url}}/#/r/{{secret}}/processed"
 
-  nexi_hpp_payment_path: api/phoenix-0.0/psp/api/v1/orders/hpp
+  nexi_simple_payment_path: ecomm/ecomm/DispatcherServlet
 
-  nexi_api_url: https://xpaysandbox.nexigroup.com
+  nexi_api_url: https://int-ecommerce.nexi.it
 
   restaurant_location_time_zone: "Europe/Rome"
 
@@ -99,7 +99,7 @@ test:
   cookie_same_site: "Lax"
 
   # Nexi sandbox api url
-  nexi_api_url: https://xpaysandbox.nexigroup.com
+  nexi_api_url: https://int-ecommerce.nexi.it
 
 production:
   <<: *default

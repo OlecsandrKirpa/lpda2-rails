@@ -8,10 +8,6 @@ RSpec.describe Nexi::HttpRequest, type: :model do
       it { is_expected.to validate_presence_of(:request_body) }
     end
 
-    context "response_body" do
-      it { is_expected.to validate_presence_of(:response_body) }
-    end
-
     context "url" do
       it { is_expected.to validate_presence_of(:url) }
     end

@@ -3,7 +3,7 @@
 module Nexi
   # Require nexi a payment link where redirect user
   # Usage:
-  # Nexi::CreateReservationPayment.run!(amount: 2000, reservation: Reservation.visible.last)
+  # Nexi::CreateReservationPayment.run!(amount: 20, reservation: Reservation.visible.last)
   class CreateReservationPayment < ActiveInteraction::Base
     record :reservation, class: Reservation
     float :amount
@@ -15,28 +15,20 @@ module Nexi
     attr_reader :call
 
     def execute
-      @call = OrderHpp.run(
-        amount:,
+      @call = SimplePayment.run(
         language: reservation.lang.lang_to_iso639_2,
-        order_id: "reservation_#{reservation.id}_#{Rails.env}",
+        amount:,
         result_url:,
         cancel_url:,
         request_purpose: "reservation_payment",
         request_record: reservation
       )
 
-      errors.merge!(call.errors)
+      errors.merge!(call.errors) if call.errors.any? || call.invalid?
 
-      return if errors.any?
+      return if errors.any? || invalid?
 
-      @payment = ::ReservationPayment.create!(
-        value: amount,
-        hpp_url: call.result["hostedPage"],
-        other: { order_hpp_call: call.result },
-        reservation:,
-        status: :todo,
-        preorder_type: :nexi_payment
-      )
+      create_payment
     end
 
     def cancel_url
@@ -49,6 +41,22 @@ module Nexi
       Mustache.render(
         Config.processed_payment_reservation_url, Config.hash.merge(secret: reservation.secret)
       ).gsub(%r{//$/}, "")
+    end
+
+    def create_payment
+      @payment = ::ReservationPayment.create(
+        value: amount,
+        html: call.client.html,
+        other: { order_hpp_call: call.result },
+        reservation:,
+        status: :todo,
+        external_id: call.cod_trans,
+        preorder_type: :html_nexi_payment
+      )
+
+      errors.merge!(@payment.errors) if @payment.invalid?
+
+      @payment
     end
   end
 end

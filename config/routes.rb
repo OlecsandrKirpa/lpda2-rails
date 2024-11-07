@@ -32,6 +32,7 @@ Rails.application.routes.draw do
           get "valid_dates"
 
           get ":secret", action: :show
+          get ":secret/do_payment", action: :do_payment, as: :do_payment
 
           # Two alternative ways to cancel a reservation.
           # First one is safer: secret is in the body of the request.

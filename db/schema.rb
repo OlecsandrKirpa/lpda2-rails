@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_03_100539) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_06_223642) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -298,7 +298,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_03_100539) do
 
   create_table "nexi_http_requests", force: :cascade do |t|
     t.jsonb "request_body", null: false
-    t.jsonb "response_body", null: false
+    t.jsonb "response_body"
     t.text "url", null: false
     t.integer "http_code", null: false
     t.string "http_method", null: false
@@ -309,6 +309,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_03_100539) do
     t.text "purpose", comment: "Specify the reason this request was made, optional"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "html_response"
     t.index ["record_type", "record_id"], name: "index_nexi_http_requests_on_record"
   end
 
@@ -380,6 +381,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_03_100539) do
     t.jsonb "other", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "html"
+    t.text "external_id"
     t.index ["hpp_url"], name: "index_reservation_payments_on_hpp_url", unique: true
     t.index ["reservation_id"], name: "index_reservation_payments_on_reservation_id", unique: true
   end

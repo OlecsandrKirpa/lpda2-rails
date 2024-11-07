@@ -297,21 +297,10 @@ RSpec.describe V1::ReservationsController, type: :controller do
 
     context "when nexi APIs return some kind of error" do
       before do
-        stub_request(:post, "#{Config.nexi_api_url}/#{Config.nexi_hpp_payment_path}").to_return do |_request|
+        stub_request(:post, "#{Config.app.dig!(:nexi_api_url)}/#{Config.app.dig!(:nexi_simple_payment_path)}").to_return do |_request|
           {
-            status: 400, # is it correct here?
-            body: {
-              # If you're asking yourself "what is this error? I don't provide trackId nor merchantTransactionCode...",
-              # well, I still don't know.
-              # This is some kind of error that Nexi APIs return when they're not working properly.
-              # But we need to handle it.
-              errors: [
-                {
-                  code: "PS0064",
-                  description: "Only one of trackId or merchantTransactionCode fields can be provided - 2941fe36-e1db-4797-a58f-8c8ca2364f69"
-                }
-              ]
-            }.to_json
+            status: 200,
+            body: File.read(Rails.root.join("spec", "fixtures", "nexi-error-page.html"))
           }
         end
       end
@@ -330,7 +319,7 @@ RSpec.describe V1::ReservationsController, type: :controller do
         it { expect { req }.not_to(change { Reservation.count }) }
         it { expect { req }.not_to(change { ReservationPayment.count }) }
         it { expect { req }.to(change { Nexi::HttpRequest.count }.by(1)) }
-        it { expect { req }.to(change { Nexi::HttpRequest.where(http_code: 400).count }.by(1)) }
+        it { expect { req }.to(change { Nexi::HttpRequest.where(http_code: 200).count }.by(1)) }
 
         it do
           req
@@ -342,17 +331,15 @@ RSpec.describe V1::ReservationsController, type: :controller do
 
     context "when nexi APIs are working and we're authorized" do
       before do
-        stub_request(:post, "#{Config.nexi_api_url}/#{Config.nexi_hpp_payment_path}").to_return do |_request|
+        stub_request(:post, "#{Config.app.dig!(:nexi_api_url)}/#{Config.app.dig!(:nexi_simple_payment_path)}").to_return do |_request|
           {
-            body: {
-              hostedPage: "https://xpaysandbox.nexigroup.com/monetaweb/page/hosted/2/html?paymentid=#{Array.new(18) do
-                                                                                                        (0..9).to_a.sample
-                                                                                                      end.join}",
-              securityToken: SecureRandom.hex,
-              warnings: []
-            }.to_json
+            body: html
           }
         end
+      end
+
+      let(:html) do
+        File.read(Rails.root.join("spec", "fixtures", "nexi-simple-payment-success-page.html"))
       end
 
       context "when a payment is always required for that turn" do
@@ -378,7 +365,8 @@ RSpec.describe V1::ReservationsController, type: :controller do
           expect(Nexi::HttpRequest.last.record_id).to eq(Reservation.last.id)
           expect(Nexi::HttpRequest.last.purpose).to eq("reservation_payment")
           expect(Nexi::HttpRequest.last.request_body).to be_present
-          expect(Nexi::HttpRequest.last.response_body).to be_present
+          expect(Nexi::HttpRequest.last.html_response).to be_present
+          expect(Nexi::HttpRequest.last.html_response).to eq(html)
         end
 
         it do
@@ -403,7 +391,11 @@ RSpec.describe V1::ReservationsController, type: :controller do
               req
               expect(json).to include(item: Hash)
               expect(response).to have_http_status(:ok)
-              expect(Nexi::HttpRequest.last.request_body.dig("paymentSession", "language")).to eq(scenario[:code])
+            end
+
+            it do
+              req
+              expect(Nexi::HttpRequest.last.request_body.dig("languageId")).to eq(scenario[:code])
             end
           end
         end
@@ -449,7 +441,7 @@ RSpec.describe V1::ReservationsController, type: :controller do
               expect(Nexi::HttpRequest.last.record_id).to eq(Reservation.last.id)
               expect(Nexi::HttpRequest.last.purpose).to eq("reservation_payment")
               expect(Nexi::HttpRequest.last.request_body).to be_present
-              expect(Nexi::HttpRequest.last.response_body).to be_present
+              expect(Nexi::HttpRequest.last.html_response).to be_present
             end
 
             it do

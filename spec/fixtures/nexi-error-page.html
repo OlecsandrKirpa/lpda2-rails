@@ -1,0 +1,160 @@
+
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        
+        
+        <link href="/ecomm/pages/nexi/css/error.css" rel="stylesheet" type="text/css">
+        <title>Errore</title>
+        
+    </head>
+
+<body>
+    
+        
+        
+            
+            
+
+
+
+
+
+<script>
+  dataLayer = [{
+      
+      
+      
+      
+      
+      
+      
+  }];
+</script>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-P76R79S');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P76R79S"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+<script>
+    function eventoUscita(sitoUscita, 
+                          metodoPagamento, 
+                          codiceTransazione, 
+                          retryNumber, 
+                          codiceOperatore){
+        dataLayer.push({
+            'sitoUscita': sitoUscita,
+            'metodoPagamento': metodoPagamento,
+            'codiceTransazione': codiceTransazione,
+            'retryNumber': retryNumber,
+            'codiceOperatore': codiceOperatore,
+            'event': 'uscitaEsterno'
+          });
+    }
+</script>
+
+<input type="hidden" id="merchantAlias" value=''/>
+<input type='hidden' id='orderId' value=''>
+<input type='hidden' id='retryNumber' value=''>
+
+
+        
+    
+    <div class="wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-8 col-md-5 form-center">
+                        <div class="logo-nexi text-center">
+                            <img src="/ecomm/payment/img/nexiWhite.svg">
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="row text-center error">
+                                    <div class="col-xs-12">
+                                        <img src="/ecomm/payment/img/error.svg">
+                                        <div class="p-t-15">
+                                            <div class="font-medium">
+                                                Il servizio e' momentaneamente non disponibile. Ci scusiamo per il disagio
+                                            </div>
+                                            
+                                            
+                                        </div>
+                                        
+                                        
+    
+    
+    
+    
+      
+      
+        <!-- Puoi chiudere questa finestra del browser -->
+      
+      
+      
+      
+      
+    
+
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        
+            <script>
+            window.onload = load;
+
+            function load(){
+                if(inIframe()){
+                    var height = document.body.scrollHeight;
+                    window.parent.postMessage(createPostMsg("graphics", "XPay_Graphics", {"height": height, "enableParent":true}) , "*");
+                }
+            }
+            function inIframe(){
+                try {
+                    return window.self !== window.top;
+                } catch (e) {
+                    return true;
+                }
+            }
+
+            function createPostMsg(tipo, triggeredEvent, msgSent){
+                var obj = {};
+                obj.type = tipo;
+
+                var message = {};
+                message.event = triggeredEvent;
+                message.payload = msgSent;
+
+                obj.message = message;
+
+                return JSON.stringify(obj);
+            }
+            </script>
+        
+</body>
+</html>
