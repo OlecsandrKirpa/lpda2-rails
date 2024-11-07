@@ -21,7 +21,11 @@ module Nexi
         result_url:,
         cancel_url:,
         request_purpose: "reservation_payment",
-        request_record: reservation
+        request_record: reservation,
+        additional_params: {
+          nome: reservation.fullname,
+          email: reservation.email
+        }
       )
 
       errors.merge!(call.errors) if call.errors.any? || call.invalid?
@@ -51,7 +55,9 @@ module Nexi
         reservation:,
         status: :todo,
         external_id: call.cod_trans,
-        preorder_type: :html_nexi_payment
+        preorder_type: :html_nexi_payment,
+        success_url: result_url,
+        failure_url: cancel_url
       )
 
       errors.merge!(@payment.errors) if @payment.invalid?

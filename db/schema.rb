@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_06_223642) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_07_182952) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -383,6 +383,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_06_223642) do
     t.datetime "updated_at", null: false
     t.text "html"
     t.text "external_id"
+    t.text "success_url"
+    t.text "failure_url"
     t.index ["hpp_url"], name: "index_reservation_payments_on_hpp_url", unique: true
     t.index ["reservation_id"], name: "index_reservation_payments_on_reservation_id", unique: true
   end

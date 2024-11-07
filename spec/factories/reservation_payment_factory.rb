@@ -2,8 +2,11 @@
 
 FactoryBot.define do
   factory :reservation_payment do
-    # hpp_url { "https://secure.payment-provider.example.com?id=#{SecureRandom.hex}" }
-    html { "<form action='https://secure.payment-provider.example.com' method='post'><input type='hidden' name='id' value='#{SecureRandom.hex}'></form>" }
+    html do
+      File.read(Rails.root.join("spec", "fixtures", "nexi-simple-payment-success-page.html"))
+    end
+    success_url { "https://my.website.com/success" }
+    failure_url { "https://my.website.com/failure" }
     value { 30 }
     status { "todo" }
     preorder_type { "html_nexi_payment" }

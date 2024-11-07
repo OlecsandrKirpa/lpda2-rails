@@ -11,6 +11,8 @@ module Nexi
     string :request_purpose
     interface :request_record, methods: %w[id persisted? update], default: nil # Object to associate to http request
 
+    interface :additional_params, methods: %w[each keys merge], default: {}
+
     attr_reader :client
 
     def execute
@@ -36,14 +38,14 @@ module Nexi
     end
 
     def params
-      @params ||= {
+      @params ||= (additional_params || {}).merge(
         importo: (amount * 100).to_i.to_s,
         divisa: "EUR", # The only supported rn
         codTrans: cod_trans,
         url: result_url,
         url_back: cancel_url,
         languageId: language
-      }
+      )
     end
 
     def validate_response

@@ -365,8 +365,18 @@ RSpec.describe V1::ReservationsController, type: :controller do
           expect(Nexi::HttpRequest.last.record_id).to eq(Reservation.last.id)
           expect(Nexi::HttpRequest.last.purpose).to eq("reservation_payment")
           expect(Nexi::HttpRequest.last.request_body).to be_present
+          expect(Nexi::HttpRequest.last.request_body).to include("nome" => Reservation.last.fullname)
+          expect(Nexi::HttpRequest.last.request_body).to include("email" => Reservation.last.email)
           expect(Nexi::HttpRequest.last.html_response).to be_present
           expect(Nexi::HttpRequest.last.html_response).to eq(html)
+          expect(ReservationPayment.last.success_url).to be_present
+          expect(ReservationPayment.last.success_url).to include(Reservation.last.secret)
+          expect(ReservationPayment.last.failure_url).to be_present
+          expect(ReservationPayment.last.failure_url).to include(Reservation.last.secret)
+          expect(Nexi::HttpRequest.last.request_body.dig!("url")).to be_present
+          expect(Nexi::HttpRequest.last.request_body.dig!("url")).to eq(ReservationPayment.last.success_url)
+          expect(Nexi::HttpRequest.last.request_body.dig!("url_back")).to be_present
+          expect(Nexi::HttpRequest.last.request_body.dig!("url_back")).to eq(ReservationPayment.last.failure_url)
         end
 
         it do
