@@ -18,8 +18,8 @@ module Nexi
     object :headers, class: Hash, default: {}
     string :url, default: -> { Config.nexi_api_url }
 
-    string :mac_key, default: -> { "UXPKFQJWQIZJJF188HYSZXGDGUR1Y43C" }
-    string :alias_merchant, default: -> { "ALIAS_WEB_00085266" }
+    string :mac_key, default: -> { Config.nexi_mac_key || raise("missing nexi_mac_key. update your credentials.") }
+    string :alias_merchant, default: -> { Config.nexi_alias_merchant || raise("missing nexi_alias_merchant. update your credentials.") }
 
     validates_presence_of :path, :http_verb
 
