@@ -74,10 +74,9 @@ RSpec.describe "GET /v1/admin/holidays" do
     it { expect(json).to include(message: String) }
   end
 
-  context "when making basic request", skip_db_cleaner: true do
-    before(:all) { populate_database }
-
+  context "when making basic request" do
     before do
+      populate_database
       req
     end
 
