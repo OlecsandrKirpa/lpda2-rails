@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "rails_helper"
-require "roo"
 
 RESERVATION_TEST_STRUCTURE = "RESERVATION_TEST_STRUCTURE"
 RSpec.shared_context RESERVATION_TEST_STRUCTURE do |options = {}|

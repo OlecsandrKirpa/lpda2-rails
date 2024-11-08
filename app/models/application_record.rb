@@ -28,6 +28,8 @@ class ApplicationRecord < ActiveRecord::Base
     res
   end
 
+  # Usage:
+  # dish.assign_translation(:name, { en: "Name", it: "Nome" })
   def assign_translation(attribute, value, args = {})
     value = JSON.parse(value) if value.is_a?(String) && value.valid_json?
 

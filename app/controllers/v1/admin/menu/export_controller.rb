@@ -3,6 +3,7 @@
 module V1::Admin::Menu
   # Export menu utils
   class ExportController < ApplicationController
+    # GET /v1/admin/menu/export
     def export
       @file = ::Menu::ExportMenu.run!
 
