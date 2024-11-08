@@ -52,7 +52,7 @@ RSpec.describe "POST /v1/auth/login" do
       req
       expect(current_user.reload.root?).to be(true)
 
-      travel_to(Time.current + 1.hour) do
+      travel_to(1.hour.from_now) do
         expect(current_user.reload.root?).to be(false)
       end
     end
@@ -81,7 +81,8 @@ RSpec.describe "POST /v1/auth/login" do
 
     it do
       req
-      expect(json.dig(:details, :password)).to be_present.and(be_a(Array)).and(include(I18n.t("errors.messages.invalid_password")))
+      expect(json.dig(:details,
+                      :password)).to be_present.and(be_a(Array)).and(include(I18n.t("errors.messages.invalid_password")))
     end
 
     it do
@@ -99,7 +100,7 @@ RSpec.describe "POST /v1/auth/login" do
 
     it do
       req
-      expect(response).to have_http_status(403)
+      expect(response).to have_http_status(:forbidden)
     end
 
     it do

@@ -152,6 +152,4 @@ class User < ApplicationRecord
   def generate_otp_key
     self.otp_key = SecureRandom.hex(16)
   end
-
-  
 end

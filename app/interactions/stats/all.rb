@@ -11,7 +11,7 @@ module Stats
     VALID_KEYS = %w[reservations-by-hour].freeze
 
     def execute
-      keys.map { |key| [key, process_key(key)] }.to_h
+      keys.index_with { |key| process_key(key) }
     end
 
     def keys
@@ -25,8 +25,8 @@ module Stats
 
     def process_key(key)
       case key
-      when 'reservations-by-hour'
-        return Stats::ReservationsByHour.run!(params:)
+      when "reservations-by-hour"
+        Stats::ReservationsByHour.run!(params:)
       else
         errors.add(:key, "Unknown key #{key}")
       end
@@ -35,7 +35,7 @@ module Stats
     def keys_all_valid?
       return if keys.all? { |key| VALID_KEYS.include?(key.to_s) }
 
-      errors.add(:keys, "must be a subset of #{VALID_KEYS.join(', ')}. got: #{keys.join(', ')}")
+      errors.add(:keys, "must be a subset of #{VALID_KEYS.join(", ")}. got: #{keys.join(", ")}")
     end
   end
 end

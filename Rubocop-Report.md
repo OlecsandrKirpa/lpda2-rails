@@ -1,30 +1,12 @@
 # RuboCop Inspection Report
 
-419 files inspected, 4680 offenses detected:
+427 files inspected, 4034 offenses detected:
 
-### Gemfile - (4 offenses)
+### Gemfile - (1 offense)
   * **Line # 1 - convention:** Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 
     ```rb
     source "https://rubygems.org"
-    ```
-
-  * **Line # 44 - convention:** Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `faraday` should appear before `sidekiq`.
-
-    ```rb
-    gem "faraday", "~> 1.10.3"
-    ```
-
-  * **Line # 45 - convention:** Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `faraday` should appear before `sidekiq-cron`.
-
-    ```rb
-    gem "faraday", "~> 1.10.3"
-    ```
-
-  * **Line # 46 - convention:** Bundler/OrderedGems: Gems should be sorted in an alphabetical order within their section of the Gemfile. Gem `faraday` should appear before `sidekiq-status`.
-
-    ```rb
-    gem "faraday", "~> 1.10.3"
     ```
 
 ### Guardfile - (2 offenses)
@@ -61,114 +43,41 @@
     module ApplicationCable
     ```
 
-### app/controllers/application_controller.rb - (7 offenses)
+### app/controllers/application_controller.rb - (6 offenses)
   * **Line # 3 - convention:** Style/Documentation: Missing top-level documentation comment for `class ApplicationController`.
 
     ```rb
     class ApplicationController < ActionController::API
     ```
 
-  * **Line # 19 - convention:** Rails/HttpStatus: Prefer `:not_found` over `404` to define HTTP status code.
-
-    ```rb
-        }, status: 404
-    ```
-
-  * **Line # 45 - convention:** Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+  * **Line # 59 - convention:** Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
 
     ```rb
           record.image_to_record.destroy! if record.image_to_record
     ```
 
-  * **Line # 79 - convention:** Metrics/AbcSize: Assignment Branch Condition size for json_metadata is too high. [<1, 21, 11> 23.73/17]
+  * **Line # 93 - convention:** Metrics/AbcSize: Assignment Branch Condition size for json_metadata is too high. [<1, 21, 11> 23.73/17]
 
     ```rb
       def json_metadata(resources) ...
     ```
 
-  * **Line # 79 - convention:** Metrics/CyclomaticComplexity: Cyclomatic complexity for json_metadata is too high. [9/7]
+  * **Line # 93 - convention:** Metrics/CyclomaticComplexity: Cyclomatic complexity for json_metadata is too high. [9/7]
 
     ```rb
       def json_metadata(resources) ...
     ```
 
-  * **Line # 79 - convention:** Metrics/MethodLength: Method has too many lines. [17/10]
+  * **Line # 93 - convention:** Metrics/MethodLength: Method has too many lines. [17/10]
 
     ```rb
       def json_metadata(resources) ...
     ```
 
-  * **Line # 79 - convention:** Metrics/PerceivedComplexity: Perceived complexity for json_metadata is too high. [9/8]
+  * **Line # 93 - convention:** Metrics/PerceivedComplexity: Perceived complexity for json_metadata is too high. [9/8]
 
     ```rb
       def json_metadata(resources) ...
-    ```
-
-### app/controllers/v1/admin/holidays_controller.rb - (11 offenses)
-  * **Line # 70 - convention:** Style/MultilineIfModifier: Favor a normal if-statement over a modifier clause in a multiline statement.
-
-    ```rb
-          return item_or_items.includes(:text_translations).map { |item| ...
-    ```
-
-  * **Line # 70 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-          return item_or_items.includes(:text_translations).map { |item|
-    ```
-
-  * **Line # 70 - convention:** Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
-
-    ```rb
-          return item_or_items.includes(:text_translations).map { |item| full_json(item) } if item_or_items.is_a?(ActiveRecord::Relation)
-    ```
-
-  * **Line # 70 - convention:** Layout/LineLength: Line is too long. [133/120]
-
-    ```rb
-          return item_or_items.includes(:text_translations).map { |item| full_json(item) } if item_or_items.is_a?(ActiveRecord::Relation)
-    ```
-
-  * **Line # 71 - convention:** Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-
-    ```rb
-     full_json(item)
-    ```
-
-  * **Line # 71 - convention:** Layout/IndentationWidth: Use 2 (not -11) spaces for indentation.
-
-    ```rb
-      full_json(item)
-    ```
-
-  * **Line # 71 - convention:** Layout/BlockEndNewline: Expression at 71, 18 should be on its own line.
-
-    ```rb
-     full_json(item) } if item_or_items.is_a?(ActiveRecord::Relation)
-    ```
-
-  * **Line # 72 - convention:** Layout/BlockAlignment: `}` at 72, 0 is not aligned with `item_or_items.includes(:text_translations).map { |item|` at 70, 13 or `return item_or_items.includes(:text_translations).map { |item|` at 70, 6.
-
-    ```rb
-    } if item_or_items.is_a?(ActiveRecord::Relation)
-    ```
-
-  * **Line # 74 - convention:** Layout/LineLength: Line is too long. [121/120]
-
-    ```rb
-          raise ArgumentError, "Invalid params. Holiday or ActiveRecord::Relation expected, but #{item_or_items.class} given"
-    ```
-
-  * **Line # 75 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          raise ArgumentError, 
-    ```
-
-  * **Line # 76 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    "Invalid params. Holiday or ActiveRecord::Relation expected, but #{item_or_items.class} given"
     ```
 
 ### app/controllers/v1/admin/menu/allergens_controller.rb - (4 offenses)
@@ -484,13 +393,13 @@
       class PreorderReservationGroupsController < ApplicationController
     ```
 
-  * **Line # 7 - convention:** Metrics/AbcSize: Assignment Branch Condition size for index is too high. [<4, 18, 2> 18.55/17]
+  * **Line # 8 - convention:** Metrics/AbcSize: Assignment Branch Condition size for index is too high. [<4, 18, 2> 18.55/17]
 
     ```rb
         def index ...
     ```
 
-  * **Line # 71 - convention:** Layout/LineLength: Line is too long. [123/120]
+  * **Line # 72 - convention:** Layout/LineLength: Line is too long. [123/120]
 
     ```rb
                 "Invalid params. PreorderReservationGroup or ActiveRecord::Relation expected, but #{item_or_items.class} given"
@@ -523,7 +432,7 @@
       class ReservationTurnsController < ApplicationController
     ```
 
-### app/controllers/v1/admin/reservations_controller.rb - (8 offenses)
+### app/controllers/v1/admin/reservations_controller.rb - (5 offenses)
   * **Line # 4 - convention:** Metrics/ClassLength: Class has too many lines. [122/100]
 
     ```rb
@@ -536,7 +445,7 @@
       class ReservationsController < ApplicationController
     ```
 
-  * **Line # 95 - convention:** Metrics/AbcSize: Assignment Branch Condition size for export is too high. [<2, 21, 2> 21.19/17]
+  * **Line # 95 - convention:** Metrics/AbcSize: Assignment Branch Condition size for export is too high. [<2, 20, 2> 20.2/17]
 
     ```rb
         def export ...
@@ -546,24 +455,6 @@
 
     ```rb
         def export ...
-    ```
-
-  * **Line # 108 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          send_file export.result, filename: "Prenotazioni.xlsx", 
-    ```
-
-  * **Line # 108 - convention:** Layout/LineLength: Line is too long. [135/120]
-
-    ```rb
-          send_file export.result, filename: "Prenotazioni.xlsx", type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    ```
-
-  * **Line # 109 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     ```
 
   * **Line # 131 - convention:** Metrics/MethodLength: Method has too many lines. [14/10]
@@ -579,7 +470,50 @@
         class SettingsController < ApplicationController
     ```
 
-### app/controllers/v1/auth_controller.rb - (18 offenses)
+### app/controllers/v1/admin/stats_controller.rb - (7 offenses)
+  * **Line # 10 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
+
+    ```rb
+            return render_error(status: :bad_request, message: call.errors.full_messages.join(','), details: call.errors.as_json)
+    ```
+
+  * **Line # 10 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
+
+    ```rb
+            return render_error(status: :bad_request, message: call.errors.full_messages.join(","), 
+    ```
+
+  * **Line # 10 - convention:** Layout/LineLength: Line is too long. [125/120]
+
+    ```rb
+            return render_error(status: :bad_request, message: call.errors.full_messages.join(','), details: call.errors.as_json)
+    ```
+
+  * **Line # 11 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+
+    ```rb
+    details: call.errors.as_json)
+    ```
+
+  * **Line # 11 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+
+    ```rb
+    details: call.errors.as_json)
+    ```
+
+  * **Line # 11 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+
+    ```rb
+                                                            details: call.errors.as_json)
+    ```
+
+  * **Line # 11 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+
+    ```rb
+                                                            details: call.errors.as_json)
+    ```
+
+### app/controllers/v1/auth_controller.rb - (14 offenses)
   * **Line # 4 - convention:** Style/Documentation: Missing top-level documentation comment for `class V1::AuthController`.
 
     ```rb
@@ -592,97 +526,73 @@
         def login ...
     ```
 
-  * **Line # 10 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
+  * **Line # 33 - convention:** Metrics/AbcSize: Assignment Branch Condition size for root is too high. [<0, 22, 3> 22.2/17]
 
     ```rb
-          auth = Auth::AuthenticateUser.run(username: params[:username].presence || params[:email], 
+        def root ...
     ```
 
-  * **Line # 10 - convention:** Layout/LineLength: Line is too long. [124/120]
+  * **Line # 33 - convention:** Metrics/MethodLength: Method has too many lines. [16/10]
 
     ```rb
-          auth = Auth::AuthenticateUser.run(username: params[:username].presence || params[:email], password: params[:password])
+        def root ...
     ```
 
-  * **Line # 11 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    password: params[:password])
-    ```
-
-  * **Line # 11 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    password: params[:password])
-    ```
-
-  * **Line # 11 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                                                                                    password: params[:password])
-    ```
-
-  * **Line # 11 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-                                                                                    password: params[:password])
-    ```
-
-  * **Line # 32 - convention:** Metrics/AbcSize: Assignment Branch Condition size for refresh_token is too high. [<2, 25, 1> 25.1/17]
+  * **Line # 57 - convention:** Metrics/AbcSize: Assignment Branch Condition size for refresh_token is too high. [<2, 25, 1> 25.1/17]
 
     ```rb
         def refresh_token ...
     ```
 
-  * **Line # 32 - convention:** Metrics/MethodLength: Method has too many lines. [14/10]
+  * **Line # 57 - convention:** Metrics/MethodLength: Method has too many lines. [14/10]
 
     ```rb
         def refresh_token ...
     ```
 
-  * **Line # 69 - convention:** Layout/LineLength: Line is too long. [122/120]
+  * **Line # 94 - convention:** Layout/LineLength: Line is too long. [122/120]
 
     ```rb
           # If you're logged in and you require reset password, something is wrong, so imma logout you to avoid complications.
     ```
 
-  * **Line # 74 - convention:** Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
+  * **Line # 99 - convention:** Style/SafeNavigation: Use safe navigation (`&.`) instead of checking if an object exists before calling the method.
 
     ```rb
           user.send_reset_password_email if user
     ```
 
-  * **Line # 81 - convention:** Layout/LineLength: Line is too long. [122/120]
+  * **Line # 106 - convention:** Layout/LineLength: Line is too long. [122/120]
 
     ```rb
         # - code / token / secret: the secret of the ResetPasswordSecret. Present in the email sent by require_reset_password.
     ```
 
-  * **Line # 84 - convention:** Layout/LineLength: Line is too long. [124/120]
+  * **Line # 109 - convention:** Layout/LineLength: Line is too long. [124/120]
 
     ```rb
         # TODO: somebody may bruteforce this endpoint to set a password for some user. May protect with ip / cookies / delay (?)
     ```
 
-  * **Line # 85 - convention:** Metrics/AbcSize: Assignment Branch Condition size for reset_password is too high. [<2, 35, 8> 35.96/17]
+  * **Line # 110 - convention:** Metrics/AbcSize: Assignment Branch Condition size for reset_password is too high. [<2, 35, 8> 35.96/17]
 
     ```rb
         def reset_password ...
     ```
 
-  * **Line # 85 - convention:** Metrics/CyclomaticComplexity: Cyclomatic complexity for reset_password is too high. [9/7]
+  * **Line # 110 - convention:** Metrics/CyclomaticComplexity: Cyclomatic complexity for reset_password is too high. [9/7]
 
     ```rb
         def reset_password ...
     ```
 
-  * **Line # 85 - convention:** Metrics/MethodLength: Method has too many lines. [13/10]
+  * **Line # 110 - convention:** Metrics/MethodLength: Method has too many lines. [13/10]
 
     ```rb
         def reset_password ...
     ```
 
-  * **Line # 85 - convention:** Metrics/PerceivedComplexity: Perceived complexity for reset_password is too high. [9/8]
+  * **Line # 110 - convention:** Metrics/PerceivedComplexity: Perceived complexity for reset_password is too high. [9/8]
 
     ```rb
         def reset_password ...
@@ -769,7 +679,7 @@
       class ProfileController < ApplicationController
     ```
 
-### app/controllers/v1/public_data_controller.rb - (5 offenses)
+### app/controllers/v1/public_data_controller.rb - (3 offenses)
   * **Line # 4 - convention:** Style/Documentation: Missing top-level documentation comment for `class V1::PublicDataController`.
 
     ```rb
@@ -788,19 +698,7 @@
         def index ...
     ```
 
-  * **Line # 18 - convention:** Style/TrailingCommaInHashLiteral: Avoid comma after the last item of a hash.
-
-    ```rb
-                  },
-    ```
-
-  * **Line # 24 - convention:** Style/TrailingCommaInHashLiteral: Avoid comma after the last item of a hash.
-
-    ```rb
-            contacts: Contact.public_formatted,
-    ```
-
-### app/controllers/v1/reservations_controller.rb - (14 offenses)
+### app/controllers/v1/reservations_controller.rb - (10 offenses)
   * **Line # 4 - convention:** Style/Documentation: Missing top-level documentation comment for `class V1::ReservationsController`.
 
     ```rb
@@ -855,34 +753,10 @@
         def valid_dates ...
     ```
 
-  * **Line # 60 - convention:** Style/RedundantParentheses: Don't use parentheses around a method call.
-
-    ```rb
-          from_date = params[:from_date].present? ? Date.parse(params[:from_date].to_s) : (Time.zone.now.to_date)
-    ```
-
   * **Line # 66 - convention:** Layout/LineLength: Line is too long. [190/120]
 
     ```rb
           if Setting.where(key: :reservation_max_days_in_advance).first.present? && (to_date > Time.zone.now.to_date + Setting.where(key: :reservation_max_days_in_advance).first.value.to_i.days)
-    ```
-
-  * **Line # 67 - convention:** Layout/IndentationWidth: Use 2 (not 4) spaces for indentation.
-
-    ```rb
-              to_date = Time.zone.now.to_date + Setting.where(key: :reservation_max_days_in_advance).first.value.to_i.days
-    ```
-
-  * **Line # 67 - convention:** Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
-
-    ```rb
-            if to_date > Time.zone.now.to_date + Setting.where(key: :reservation_max_days_in_advance).first.value.to_i.days
-    ```
-
-  * **Line # 68 - warning:** Layout/EndAlignment: `end` at 68, 8 is not aligned with `if` at 66, 6.
-
-    ```rb
-            end
     ```
 
 ### app/interactions/assign_translation.rb - (2 offenses)
@@ -898,17 +772,11 @@
       interface :value, methods: {}.methods & String.new.methods & ActionController::Parameters.new.methods,
     ```
 
-### app/interactions/auth/authenticate_user.rb - (2 offenses)
+### app/interactions/auth/authenticate_user.rb - (1 offense)
   * **Line # 35 - convention:** Metrics/MethodLength: Method has too many lines. [17/10]
 
     ```rb
         def find_user ...
-    ```
-
-  * **Line # 40 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-          @user = User.find_by(username: username) || User.find_by(email: username)
     ```
 
 ### app/interactions/auth/authorize_api_request.rb - (3 offenses)
@@ -1038,41 +906,17 @@
       def execute ...
     ```
 
-### app/interactions/create_preorder_group.rb - (8 offenses)
+### app/interactions/create_preorder_group.rb - (4 offenses)
   * **Line # 3 - convention:** Style/Documentation: Missing top-level documentation comment for `class CreatePreorderGroup`.
 
     ```rb
     class CreatePreorderGroup < ActiveInteraction::Base
     ```
 
-  * **Line # 19 - convention:** Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
-
-    ```rb
-        if params[:turns].present? && turn_ids.blank?
-    ```
-
   * **Line # 22 - convention:** Metrics/AbcSize: Assignment Branch Condition size for execute is too high. [<0, 18, 5> 18.68/17]
 
     ```rb
       def execute ...
-    ```
-
-  * **Line # 32 - convention:** Rails/Present: Use `if params.present?` instead of `unless params.blank?`.
-
-    ```rb
-        Rails.logger.warn("expected params to be blank at this point, got #{params.inspect}") unless params.blank?
-    ```
-
-  * **Line # 34 - convention:** Rails/Present: Use `if params.present?` instead of `unless params.blank?`.
-
-    ```rb
-        unless params.blank?
-    ```
-
-  * **Line # 34 - convention:** Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
-
-    ```rb
-        unless params.blank?
     ```
 
   * **Line # 37 - convention:** Metrics/AbcSize: Assignment Branch Condition size for create_group is too high. [<1, 23, 2> 23.11/17]
@@ -1211,7 +1055,7 @@
         def execute ...
     ```
 
-### app/interactions/dev/menu/import_categories.rb - (10 offenses)
+### app/interactions/dev/menu/import_categories.rb - (7 offenses)
   * **Line # 6 - convention:** Style/Documentation: Missing top-level documentation comment for `class Dev::Menu::ImportCategories`.
 
     ```rb
@@ -1242,24 +1086,6 @@
             if row["imageId"].present? && (image = Image.find_by(member_id: row["imageId"])) && !category.images.include?(image)
     ```
 
-  * **Line # 41 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          data = CSV.open(Rails.root.join("migration/menu/menuCategoryAssociation.csv"), headers: true, col_sep: ";", 
-    ```
-
-  * **Line # 41 - convention:** Layout/LineLength: Line is too long. [153/120]
-
-    ```rb
-          data = CSV.open(Rails.root.join("migration/menu/menuCategoryAssociation.csv"), headers: true, col_sep: ";", liberal_parsing: true).to_a.map(&:to_h)
-    ```
-
-  * **Line # 42 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    liberal_parsing: true).to_a.map(&:to_h)
-    ```
-
   * **Line # 42 - convention:** Layout/LineLength: Line is too long. [124/120]
 
     ```rb
@@ -1272,7 +1098,7 @@
           @categories = data.map { |j| [j["categoryId"], j["menuId"]] }.to_h
     ```
 
-### app/interactions/dev/menu/import_dishes.rb - (31 offenses)
+### app/interactions/dev/menu/import_dishes.rb - (19 offenses)
   * **Line # 6 - convention:** Style/Documentation: Missing top-level documentation comment for `class Dev::Menu::ImportDishes`.
 
     ```rb
@@ -1327,24 +1153,6 @@
             if row["imageId"].present? && (image = Image.find_by(member_id: row["imageId"])) && !dish.images.include?(image)
     ```
 
-  * **Line # 59 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          data = CSV.open(Rails.root.join("migration/menu/categoryItemAssociation.csv"), headers: true, col_sep: ";", 
-    ```
-
-  * **Line # 59 - convention:** Layout/LineLength: Line is too long. [153/120]
-
-    ```rb
-          data = CSV.open(Rails.root.join("migration/menu/categoryItemAssociation.csv"), headers: true, col_sep: ";", liberal_parsing: true).to_a.map(&:to_h)
-    ```
-
-  * **Line # 60 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    liberal_parsing: true).to_a.map(&:to_h)
-    ```
-
   * **Line # 60 - convention:** Layout/LineLength: Line is too long. [124/120]
 
     ```rb
@@ -1357,24 +1165,6 @@
           @menu_ids = data.map { |j| [j["foodItemId"], j["categoryId"]] }.to_h
     ```
 
-  * **Line # 68 - convention:** Layout/LineLength: Line is too long. [149/120]
-
-    ```rb
-          data = CSV.open(Rails.root.join("migration/menu/foodTagsAssociation.csv"), headers: true, col_sep: ";", liberal_parsing: true).to_a.map(&:to_h)
-    ```
-
-  * **Line # 69 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          data = CSV.open(Rails.root.join("migration/menu/foodTagsAssociation.csv"), headers: true, col_sep: ";", 
-    ```
-
-  * **Line # 70 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    liberal_parsing: true).to_a.map(&:to_h)
-    ```
-
   * **Line # 72 - convention:** Style/HashTransformValues: Prefer `transform_values` over `map {...}.to_h`.
 
     ```rb
@@ -1385,24 +1175,6 @@
 
     ```rb
           @tag_ids = data.group_by { |j| j["foodItemId"] }.map { |k, v| [k, v.map { |j| j["tagId"] }] }.to_h
-    ```
-
-  * **Line # 76 - convention:** Layout/LineLength: Line is too long. [154/120]
-
-    ```rb
-          data = CSV.open(Rails.root.join("migration/menu/foodAllergensAssociation.csv"), headers: true, col_sep: ";", liberal_parsing: true).to_a.map(&:to_h)
-    ```
-
-  * **Line # 78 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          data = CSV.open(Rails.root.join("migration/menu/foodAllergensAssociation.csv"), headers: true, col_sep: ";", 
-    ```
-
-  * **Line # 79 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    liberal_parsing: true).to_a.map(&:to_h)
     ```
 
   * **Line # 79 - convention:** Layout/LineLength: Line is too long. [125/120]
@@ -1421,24 +1193,6 @@
 
     ```rb
           @allergen_ids = data.group_by { |j| j["foodItemId"] }.map { |k, v| [k, v.map { |j| j["allergenId"] }] }.to_h
-    ```
-
-  * **Line # 84 - convention:** Layout/LineLength: Line is too long. [156/120]
-
-    ```rb
-          data = CSV.open(Rails.root.join("migration/menu/foodIngredientsAssociation.csv"), headers: true, col_sep: ";", liberal_parsing: true).to_a.map(&:to_h)
-    ```
-
-  * **Line # 87 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          data = CSV.open(Rails.root.join("migration/menu/foodIngredientsAssociation.csv"), headers: true, col_sep: ";", 
-    ```
-
-  * **Line # 88 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    liberal_parsing: true).to_a.map(&:to_h)
     ```
 
   * **Line # 88 - convention:** Layout/LineLength: Line is too long. [127/120]
@@ -1522,7 +1276,26 @@
         def execute ...
     ```
 
-### app/interactions/export_reservations.rb - (11 offenses)
+### app/interactions/dev/table_info.rb - (3 offenses)
+  * **Line # 14 - convention:** Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+
+    ```rb
+          puts log_table_info if output == "log"
+    ```
+
+  * **Line # 34 - convention:** Rails/NegateInclude: Use `.exclude?` and remove the negation part.
+
+    ```rb
+          elsif !PERMITTED_OUTPUT_OPTIONS.include?(output)
+    ```
+
+  * **Line # 52 - convention:** Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+
+    ```rb
+          puts table_info
+    ```
+
+### app/interactions/export_reservations.rb - (5 offenses)
   * **Line # 22 - convention:** Metrics/AbcSize: Assignment Branch Condition size for write_all is too high. [<2, 31, 4> 31.32/17]
 
     ```rb
@@ -1533,36 +1306,6 @@
 
     ```rb
       def write_all(sheet) ...
-    ```
-
-  * **Line # 24 - convention:** Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the first position after the preceding left parenthesis.
-
-    ```rb
-          id fullname datetime children adults
-    ```
-
-  * **Line # 25 - convention:** Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
-
-    ```rb
-          email phone table notes status secret
-    ```
-
-  * **Line # 26 - convention:** Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
-
-    ```rb
-          created_at updated_at
-    ```
-
-  * **Line # 27 - convention:** Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
-
-    ```rb
-          payment_hpp_url payment_value payment_status
-    ```
-
-  * **Line # 28 - convention:** Layout/FirstArrayElementIndentation: Indent the right bracket the same as the first position after the preceding left parenthesis.
-
-    ```rb
-        ])
     ```
 
   * **Line # 32 - convention:** Layout/LineLength: Line is too long. [151/120]
@@ -1581,12 +1324,6 @@
 
     ```rb
                      reservation.created_at.strftime("%e/%m/%Y %k:%M").strip, reservation.updated_at.strftime("%e/%m/%Y %k:%M").strip,
-    ```
-
-  * **Line # 36 - convention:** Layout/MultilineArrayBraceLayout: The closing array brace must be on the same line as the last array element when the opening brace is on the same line as the first array element.
-
-    ```rb
-                    ].flatten)
     ```
 
 ### app/interactions/generate_image_variants.rb - (1 offense)
@@ -2291,13 +2028,7 @@
           return items unless params.has_key?(:query)
     ```
 
-### app/interactions/nexi/client.rb - (8 offenses)
-  * **Line # 46 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-            url: url,
-    ```
-
+### app/interactions/nexi/client.rb - (5 offenses)
   * **Line # 83 - convention:** Metrics/AbcSize: Assignment Branch Condition size for validate_response is too high. [<6, 20, 6> 21.73/17]
 
     ```rb
@@ -2322,25 +2053,13 @@
               ["", "msg", "message", "spec", "code"].each do |spec|
     ```
 
-  * **Line # 94 - convention:** Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
-
-    ```rb
-                if json_str[key].present?
-    ```
-
   * **Line # 104 - convention:** Metrics/MethodLength: Method has too many lines. [11/10]
 
     ```rb
         def create_http_request ...
     ```
 
-  * **Line # 110 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-            url: url,
-    ```
-
-### app/interactions/nexi/create_reservation_payment.rb - (8 offenses)
+### app/interactions/nexi/create_reservation_payment.rb - (2 offenses)
   * **Line # 17 - convention:** Metrics/AbcSize: Assignment Branch Condition size for execute is too high. [<2, 25, 1> 25.1/17]
 
     ```rb
@@ -2353,49 +2072,7 @@
         def execute ...
     ```
 
-  * **Line # 25 - convention:** Style/TrailingCommaInArguments: Avoid comma after the last parameter of a method call.
-
-    ```rb
-            request_record: reservation,
-    ```
-
-  * **Line # 36 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-            reservation: reservation,
-    ```
-
-  * **Line # 45 - convention:** Style/PercentLiteralDelimiters: `%r`-literals should be delimited by `{` and `}`.
-
-    ```rb
-          ).gsub(%r(/\/$/), "")
-    ```
-
-  * **Line # 45 - convention:** Style/RedundantRegexpEscape: Redundant escape inside regexp literal
-
-    ```rb
-          ).gsub(%r(/\/$/), "")
-    ```
-
-  * **Line # 51 - convention:** Style/PercentLiteralDelimiters: `%r`-literals should be delimited by `{` and `}`.
-
-    ```rb
-          ).gsub(%r(/\/$/), "")
-    ```
-
-  * **Line # 51 - convention:** Style/RedundantRegexpEscape: Redundant escape inside regexp literal
-
-    ```rb
-          ).gsub(%r(/\/$/), "")
-    ```
-
-### app/interactions/nexi/order_hpp.rb - (5 offenses)
-  * **Line # 30 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-            request_record: request_record
-    ```
-
+### app/interactions/nexi/order_hpp.rb - (4 offenses)
   * **Line # 42 - convention:** Metrics/MethodLength: Method has too many lines. [13/10]
 
     ```rb
@@ -2427,7 +2104,7 @@
           # user.events << User::Event.new(event_type: :email_changed, data: { old_email: @old_email, new_email: user.email })
     ```
 
-### app/interactions/public_create_reservation.rb - (7 offenses)
+### app/interactions/public_create_reservation.rb - (6 offenses)
   * **Line # 3 - convention:** Metrics/ClassLength: Class has too many lines. [182/100]
 
     ```rb
@@ -2450,12 +2127,6 @@
 
     ```rb
       def execute ...
-    ```
-
-  * **Line # 140 - convention:** Style/CommentAnnotation: Annotation keywords like `TODO` should be all upper case, followed by a colon, and a space, then a note describing the problem.
-
-    ```rb
-          # TODO i18n is ok?
     ```
 
   * **Line # 207 - convention:** Metrics/AbcSize: Assignment Branch Condition size for datetime_format_is_valid is too high. [<0, 17, 3> 17.26/17]
@@ -2508,23 +2179,17 @@
             raise "Expected one group for turn #{matching_turns.first.id}, got #{matching_turns.first.preorder_reservation_groups.as_json}"
     ```
 
-### app/interactions/reservation_turn_valid_times.rb - (3 offenses)
-  * **Line # 11 - convention:** Metrics/AbcSize: Assignment Branch Condition size for execute is too high. [<9, 24, 7> 26.57/17]
+### app/interactions/reservation_turn_valid_times.rb - (2 offenses)
+  * **Line # 11 - convention:** Metrics/AbcSize: Assignment Branch Condition size for execute is too high. [<12, 24, 6> 27.5/17]
 
     ```rb
       def execute ...
     ```
 
-  * **Line # 17 - convention:** Style/StringLiteralsInInterpolation: Prefer double-quoted strings inside interpolations.
+  * **Line # 11 - convention:** Metrics/MethodLength: Method has too many lines. [14/10]
 
     ```rb
-          times << Time.zone.parse("#{date} #{starts_at.strftime('%H:%M')}")
-    ```
-
-  * **Line # 22 - convention:** Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
-
-    ```rb
-        if date.to_date == Time.zone.now.to_date
+      def execute ...
     ```
 
 ### app/interactions/search_holidays.rb - (2 offenses)
@@ -2554,7 +2219,7 @@
     ```
 
 ### app/interactions/search_reservations.rb - (15 offenses)
-  * **Line # 3 - convention:** Metrics/ClassLength: Class has too many lines. [102/100]
+  * **Line # 3 - convention:** Metrics/ClassLength: Class has too many lines. [101/100]
 
     ```rb
     class SearchReservations < ActiveInteraction::Base ...
@@ -2566,79 +2231,79 @@
     class SearchReservations < ActiveInteraction::Base
     ```
 
-  * **Line # 7 - convention:** Metrics/MethodLength: Method has too many lines. [11/10]
+  * **Line # 6 - convention:** Metrics/MethodLength: Method has too many lines. [11/10]
 
     ```rb
       def execute ...
     ```
 
-  * **Line # 23 - convention:** Metrics/AbcSize: Assignment Branch Condition size for order is too high. [<10, 43, 23> 49.78/17]
+  * **Line # 22 - convention:** Metrics/AbcSize: Assignment Branch Condition size for order is too high. [<10, 43, 23> 49.78/17]
 
     ```rb
       def order(items) ...
     ```
 
-  * **Line # 23 - convention:** Metrics/CyclomaticComplexity: Cyclomatic complexity for order is too high. [23/7]
+  * **Line # 22 - convention:** Metrics/CyclomaticComplexity: Cyclomatic complexity for order is too high. [23/7]
 
     ```rb
       def order(items) ...
     ```
 
-  * **Line # 23 - convention:** Metrics/MethodLength: Method has too many lines. [25/10]
+  * **Line # 22 - convention:** Metrics/MethodLength: Method has too many lines. [25/10]
 
     ```rb
       def order(items) ...
     ```
 
-  * **Line # 23 - convention:** Metrics/PerceivedComplexity: Perceived complexity for order is too high. [23/8]
+  * **Line # 22 - convention:** Metrics/PerceivedComplexity: Perceived complexity for order is too high. [23/8]
 
     ```rb
       def order(items) ...
     ```
 
-  * **Line # 43 - convention:** Style/RedundantArgument: Argument " " is redundant because it is implied by default.
+  * **Line # 42 - convention:** Style/RedundantArgument: Argument " " is redundant because it is implied by default.
 
     ```rb
         if order_by.is_a?(String) && order_by.present? && items.column_names.include?(order_by.split(" ").first)
     ```
 
-  * **Line # 53 - convention:** Performance/Casecmp: Use `direction.to_s.casecmp("desc").zero?` instead of `direction.to_s.downcase == "desc"`.
+  * **Line # 52 - convention:** Performance/Casecmp: Use `direction.to_s.casecmp("desc").zero?` instead of `direction.to_s.downcase == "desc"`.
 
     ```rb
             return items.order(attribute => direction.to_s.downcase == "desc" ? :desc : :asc)
     ```
 
-  * **Line # 85 - convention:** Metrics/AbcSize: Assignment Branch Condition size for datetime_range is too high. [<7, 32, 6> 33.3/17]
+  * **Line # 84 - convention:** Metrics/AbcSize: Assignment Branch Condition size for datetime_range is too high. [<7, 32, 6> 33.3/17]
 
     ```rb
       def datetime_range(options = params) ...
     ```
 
-  * **Line # 85 - convention:** Metrics/MethodLength: Method has too many lines. [12/10]
+  * **Line # 84 - convention:** Metrics/MethodLength: Method has too many lines. [12/10]
 
     ```rb
       def datetime_range(options = params) ...
     ```
 
-  * **Line # 105 - convention:** Naming/PredicateName: Rename `is_true?` to `true?`.
+  * **Line # 104 - convention:** Naming/PredicateName: Rename `is_true?` to `true?`.
 
     ```rb
       def is_true?(value)
     ```
 
-  * **Line # 123 - convention:** Layout/LineLength: Line is too long. [253/120]
+  * **Line # 122 - convention:** Layout/LineLength: Line is too long. [253/120]
 
     ```rb
           "lower(#{Reservation.table_name}.fullname) ILIKE ? OR lower(#{Reservation.table_name}.notes) ILIKE ? or lower(#{Reservation.table_name}.email) ILIKE ?", "%#{params[:query].downcase}%", "%#{params[:query].downcase}%", "%#{params[:query].downcase}%"
     ```
 
-  * **Line # 128 - convention:** Performance/MapMethodChain: Use `map { |x| x.downcase.strip }` instead of `map` method chain.
+  * **Line # 127 - convention:** Performance/MapMethodChain: Use `map { |x| x.downcase.strip }` instead of `map` method chain.
 
     ```rb
         statuses = status_params.map(&:downcase).map(&:strip).uniq.filter { |status| Reservation.statuses.key?(status) }
     ```
 
-  * **Line # 136 - convention:** Metrics/AbcSize: Assignment Branch Condition size for status_params is too high. [<0, 24, 4> 24.33/17]
+  * **Line # 135 - convention:** Metrics/AbcSize: Assignment Branch Condition size for status_params is too high. [<0, 24, 4> 24.33/17]
 
     ```rb
       def status_params ...
@@ -2655,6 +2320,80 @@
 
     ```rb
       def execute ...
+    ```
+
+### app/interactions/stats/all.rb - (8 offenses)
+  * **Line # 14 - convention:** Rails/IndexWith: Prefer `index_with` over `map { ... }.to_h`.
+
+    ```rb
+          keys.map { |key| [key, process_key(key)] }.to_h
+    ```
+
+  * **Line # 17 - convention:** Metrics/AbcSize: Assignment Branch Condition size for keys is too high. [<5, 17, 7> 19.05/17]
+
+    ```rb
+        def keys ...
+    ```
+
+  * **Line # 17 - convention:** Metrics/CyclomaticComplexity: Cyclomatic complexity for keys is too high. [8/7]
+
+    ```rb
+        def keys ...
+    ```
+
+  * **Line # 28 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
+
+    ```rb
+          when 'reservations-by-hour'
+    ```
+
+  * **Line # 29 - convention:** Style/RedundantReturn: Redundant `return` detected.
+
+    ```rb
+            return Stats::ReservationsByHour.run!(params:)
+    ```
+
+  * **Line # 36 - convention:** Style/ReturnNilInPredicateMethodDefinition: Return `false` instead of `nil` in predicate methods.
+
+    ```rb
+          return if keys.all? { |key| VALID_KEYS.include?(key.to_s) }
+    ```
+
+  * **Line # 38 - convention:** Style/StringLiteralsInInterpolation: Prefer double-quoted strings inside interpolations.
+
+    ```rb
+          errors.add(:keys, "must be a subset of #{VALID_KEYS.join(', ')}. got: #{keys.join(', ')}")
+    ```
+
+  * **Line # 38 - convention:** Style/StringLiteralsInInterpolation: Prefer double-quoted strings inside interpolations.
+
+    ```rb
+          errors.add(:keys, "must be a subset of #{VALID_KEYS.join(', ')}. got: #{keys.join(', ')}")
+    ```
+
+### app/interactions/stats/reservations_by_hour.rb - (4 offenses)
+  * **Line # 11 - convention:** Style/MultilineBlockChain: Avoid multi-line chains of blocks.
+
+    ```rb
+          end.transform_values { |rs| rs.map { |r| r.people }.sum }
+    ```
+
+  * **Line # 11 - convention:** Performance/Sum: Use `sum { ... }` instead of `map { ... }.sum`.
+
+    ```rb
+          end.transform_values { |rs| rs.map { |r| r.people }.sum }
+    ```
+
+  * **Line # 11 - convention:** Style/SymbolProc: Pass `&:people` as an argument to `map` instead of a block.
+
+    ```rb
+          end.transform_values { |rs| rs.map { |r| r.people }.sum }
+    ```
+
+  * **Line # 31 - convention:** Style/MapToHash: Pass a block to `to_h` instead of calling `map.to_h`.
+
+    ```rb
+          @reservation_filters ||= params.keys.filter { |key| key.start_with?("reservation") }.map do |key|
     ```
 
 ### app/interactions/string_to_duration.rb - (5 offenses)
@@ -2688,109 +2427,24 @@
         errors.add(:string, "should respect the format: 1 day") if clean_string.split(" ").count != 2
     ```
 
-### app/interactions/table_info.rb - (3 offenses)
-  * **Line # 13 - convention:** Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
-
-    ```rb
-        puts log_table_info if output == "log"
-    ```
-
-  * **Line # 33 - convention:** Rails/NegateInclude: Use `.exclude?` and remove the negation part.
-
-    ```rb
-        elsif !PERMITTED_OUTPUT_OPTIONS.include?(output)
-    ```
-
-  * **Line # 51 - convention:** Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
-
-    ```rb
-        puts table_info
-    ```
-
-### app/interactions/tables_summary.rb - (7 offenses)
-  * **Line # 46 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-        ActiveRecord::Base.connection.execute(summary_for_query(turn)).to_a.index_by { |j|
-    ```
-
-  * **Line # 46 - convention:** Layout/LineLength: Line is too long. [136/120]
-
-    ```rb
-        ActiveRecord::Base.connection.execute(summary_for_query(turn)).to_a.index_by { |j| j["people"] }.transform_values { |j| j["count"] }
-    ```
-
-  * **Line # 47 - convention:** Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-
-    ```rb
-     j["people"]
-    ```
-
-  * **Line # 47 - convention:** Layout/IndentationWidth: Use 2 (not -2) spaces for indentation.
-
-    ```rb
-      j["people"]
-    ```
-
-  * **Line # 47 - convention:** Layout/BlockEndNewline: Expression at 47, 14 should be on its own line.
-
-    ```rb
-     j["people"] }.transform_values { |j| j["count"] }
-    ```
-
-  * **Line # 48 - convention:** Layout/BlockAlignment: `}` at 48, 0 is not aligned with `ActiveRecord::Base.connection.execute(summary_for_query(turn)).to_a.index_by { |j|` at 46, 4.
-
-    ```rb
-    }.transform_values { |j| j["count"] }
-    ```
-
+### app/interactions/tables_summary.rb - (1 offense)
   * **Line # 48 - convention:** Style/MultilineBlockChain: Avoid multi-line chains of blocks.
 
     ```rb
         end.transform_values { |j| j["count"] }
     ```
 
-### app/interactions/update_preorder_group.rb - (25 offenses)
+### app/interactions/update_preorder_group.rb - (7 offenses)
   * **Line # 3 - convention:** Style/Documentation: Missing top-level documentation comment for `class UpdatePreorderGroup`.
 
     ```rb
     class UpdatePreorderGroup < ActiveInteraction::Base
     ```
 
-  * **Line # 20 - convention:** Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
-
-    ```rb
-        if params[:id].blank?
-    ```
-
-  * **Line # 24 - convention:** Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
-
-    ```rb
-        if group.nil?
-    ```
-
   * **Line # 25 - convention:** Metrics/AbcSize: Assignment Branch Condition size for execute is too high. [<0, 19, 5> 19.65/17]
 
     ```rb
       def execute ...
-    ```
-
-  * **Line # 35 - convention:** Rails/Present: Use `if params.present?` instead of `unless params.blank?`.
-
-    ```rb
-        Rails.logger.warn("expected params to be blank at this point, got #{params.inspect}") unless params.blank?
-    ```
-
-  * **Line # 39 - convention:** Rails/Present: Use `if params.present?` instead of `unless params.blank?`.
-
-    ```rb
-        unless params.blank?
-    ```
-
-  * **Line # 39 - convention:** Style/IfUnlessModifier: Favor modifier `unless` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
-
-    ```rb
-        unless params.blank?
     ```
 
   * **Line # 40 - convention:** Metrics/AbcSize: Assignment Branch Condition size for update_group is too high. [<2, 24, 3> 24.27/17]
@@ -2805,88 +2459,10 @@
       def update_group ...
     ```
 
-  * **Line # 41 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-        data = (params.keys.map(&:to_sym) & %i[title preorder_type payment_value active_from active_to 
-    ```
-
-  * **Line # 41 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-        data = (params.keys.map(&:to_sym) & %i[title preorder_type payment_value active_from active_to status]).index_with { |k|
-    ```
-
-  * **Line # 41 - convention:** Layout/LineLength: Line is too long. [124/120]
-
-    ```rb
-        data = (params.keys.map(&:to_sym) & %i[title preorder_type payment_value active_from active_to status]).index_with { |k|
-    ```
-
-  * **Line # 42 - convention:** Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
-
-    ```rb
-    status]).index_with { |k|
-    ```
-
-  * **Line # 42 - convention:** Layout/BlockEndNewline: Expression at 42, 19 should be on its own line.
-
-    ```rb
-     params.delete(k) }
-    ```
-
-  * **Line # 42 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-    status]).index_with { |k|
-    ```
-
-  * **Line # 43 - convention:** Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-
-    ```rb
-     params.delete(k)
-    ```
-
-  * **Line # 43 - convention:** Layout/IndentationWidth: Use 2 (not -2) spaces for indentation.
-
-    ```rb
-      params.delete(k)
-    ```
-
-  * **Line # 44 - convention:** Layout/BlockAlignment: `end` at 44, 0 is not aligned with `data = (params.keys.map(&:to_sym) & %i[title preorder_type payment_value active_from active_to` at 41, 4 or `status]).index_with do |k|` at 42, 43.
-
-    ```rb
-    end
-    ```
-
-  * **Line # 47 - convention:** Rails/IndexWith: Prefer `index_with` over `map { ... }.to_h`.
-
-    ```rb
-        data = (params.keys.map(&:to_sym) & %i[title preorder_type payment_value active_from active_to status]).map { |k| [k, params.delete(k)] }.to_h
-    ```
-
-  * **Line # 47 - convention:** Layout/LineLength: Line is too long. [146/120]
-
-    ```rb
-        data = (params.keys.map(&:to_sym) & %i[title preorder_type payment_value active_from active_to status]).map { |k| [k, params.delete(k)] }.to_h
-    ```
-
   * **Line # 60 - convention:** Style/PreferredHashMethods: Use `Hash#key?` instead of `Hash#has_key?`.
 
     ```rb
         return [] unless params.has_key?(:dates)
-    ```
-
-  * **Line # 68 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-        call = CreatePreorderDates.run(group: group, params: { dates: dates })
-    ```
-
-  * **Line # 68 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-        call = CreatePreorderDates.run(group: group, params: { dates: dates })
     ```
 
   * **Line # 70 - convention:** Metrics/AbcSize: Assignment Branch Condition size for update_turns is too high. [<4, 17, 5> 18.17/17]
@@ -2908,7 +2484,7 @@
     class ApplicationJob < ActiveJob::Base
     ```
 
-### app/mailers/application_mailer.rb - (7 offenses)
+### app/mailers/application_mailer.rb - (4 offenses)
   * **Line # 3 - convention:** Style/Documentation: Missing top-level documentation comment for `class ApplicationMailer`.
 
     ```rb
@@ -2927,28 +2503,10 @@
         delivered_email = params[:delivered_email] || Log::DeliveredEmail.find_by(id: params[:delivered_email_id]) || Log::DeliveredEmail.create!
     ```
 
-  * **Line # 33 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-            controller_path: controller_path,
-    ```
-
-  * **Line # 34 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-            action_name: action_name,
-    ```
-
   * **Line # 38 - convention:** Style/MapToHash: Pass a block to `to_h` instead of calling `map.to_h`.
 
     ```rb
             headers: mail.header.fields.map { |field| [field.name, field.value] }.to_h,
-    ```
-
-  * **Line # 40 - convention:** Style/TrailingCommaInHashLiteral: Avoid comma after the last item of a hash.
-
-    ```rb
-            record: detect_record,
     ```
 
 ### app/mailers/reservation_mailer.rb - (2 offenses)
@@ -2981,7 +2539,7 @@
   * **Line # 8 - convention:** Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
 
     ```rb
-          puts TableInfo.run!(args.merge(model: self))
+          puts Dev::TableInfo.run!(args.merge(model: self))
     ```
 
 ### app/models/concerns/has_image_attached.rb - (1 offense)
@@ -3011,60 +2569,11 @@
           user_id: $current_user_id,
     ```
 
-### app/models/contact.rb - (6 offenses)
-  * **Line # 15 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-      validates :key, presence: true, uniqueness: { case_sensitive: false }, 
-    ```
-
-  * **Line # 15 - convention:** Layout/LineLength: Line is too long. [147/120]
-
-    ```rb
-      validates :key, presence: true, uniqueness: { case_sensitive: false }, inclusion: { in: DEFAULTS.keys.map(&:to_s) + DEFAULTS.keys.map(&:to_sym) }
-    ```
-
-  * **Line # 16 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    inclusion: { in: DEFAULTS.keys.map(&:to_s) + DEFAULTS.keys.map(&:to_sym) }
-    ```
-
-  * **Line # 24 - convention:** Rails/IndexBy: Prefer `index_by` over `map { ... }.to_h`.
-
-    ```rb
-          all_list.map { |item| [item[:key], item] }.to_h.with_indifferent_access
-    ```
-
-  * **Line # 41 - convention:** Style/TrailingCommaInHashLiteral: Avoid comma after the last item of a hash.
-
-    ```rb
-            whatsapp_url: self[:whatsapp_number].present? ? "https://wa.me/#{self[:whatsapp_number]}" : nil,
-    ```
-
-  * **Line # 57 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-            where(key:).first_or_create!(data.as_json(only: %i[value]).merge(key: key))
-    ```
-
-### app/models/contact/DEFAULTS.rb - (3 offenses)
+### app/models/contact/DEFAULTS.rb - (1 offense)
   * **Line # 1 - convention:** Naming/FileName: The name of this source file (`DEFAULTS.rb`) should use snake_case.
 
     ```rb
     # frozen_string_literal: true
-    ```
-
-  * **Line # 6 - convention:** Style/TrailingCommaInHashLiteral: Avoid comma after the last item of a hash.
-
-    ```rb
-          value: "Riva del Vin San Polo 1097 San Polo, 30125 Venice Italy",
-    ```
-
-  * **Line # 32 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          value: "https://g.page/laportadacqua?share" 
     ```
 
 ### app/models/contact/key_value_validator.rb - (6 offenses)
@@ -3104,23 +2613,11 @@
         def can_run? ...
     ```
 
-### app/models/holiday.rb - (4 offenses)
+### app/models/holiday.rb - (2 offenses)
   * **Line # 17 - convention:** Layout/LineLength: Line is too long. [127/120]
 
     ```rb
     # So, if one of `weekly_from`, `weekly_to` and `weekday` is specified, all are required. If none is specified, they can be nil.
-    ```
-
-  * **Line # 49 - convention:** Style/Lambda: Use the `lambda` method for multiline lambdas.
-
-    ```rb
-      scope :active_at, ->(time) {
-    ```
-
-  * **Line # 52 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-        base = visible.where("from_timestamp <= :time AND (to_timestamp IS NULL OR to_timestamp >= :time)", time: time)
     ```
 
   * **Line # 54 - convention:** Layout/LineLength: Line is too long. [136/120]
@@ -3699,67 +3196,6 @@
     module Nexi
     ```
 
-### app/models/nexi/http_request.rb - (10 offenses)
-  * **Line # 9 - convention:** Rails/Validation: Prefer the new style validations `validates :column, presence: value` over `validates_presence_of`.
-
-    ```rb
-        validates_presence_of :request_body,
-    ```
-
-  * **Line # 10 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                              :response_body,
-    ```
-
-  * **Line # 11 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                              :url,
-    ```
-
-  * **Line # 12 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                              :http_code,
-    ```
-
-  * **Line # 13 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                              :http_method,
-    ```
-
-  * **Line # 14 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                              :started_at,
-    ```
-
-  * **Line # 15 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                              :ended_at, presence: true
-    ```
-
-  * **Line # 45 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-            Tempfile.new([filename, '.json']).tap do |temp_file|
-    ```
-
-  * **Line # 46 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-              temp_file.write(file.read.force_encoding('UTF-8'))
-    ```
-
-  * **Line # 57 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-          Tempfile.new([filename, '.json']).tap do |file|
-    ```
-
 ### app/models/preference/DEFAULTS.rb - (1 offense)
   * **Line # 1 - convention:** Naming/FileName: The name of this source file (`DEFAULTS.rb`) should use snake_case.
 
@@ -3786,14 +3222,7 @@
           array = record.value.to_s.split(",").map(&:strip).map(&:to_sym)
     ```
 
-### app/models/preorder_reservation_date.rb - (1 offense)
-  * **Line # 19 - convention:** Style/CommentAnnotation: Annotation keywords like `TODO` should be all upper case, followed by a colon, and a space, then a note describing the problem.
-
-    ```rb
-      # TODO check what happens if a turn is deleted or its weekday is changed.
-    ```
-
-### app/models/preorder_reservation_group.rb - (18 offenses)
+### app/models/preorder_reservation_group.rb - (5 offenses)
   * **Line # 8 - convention:** Layout/LineLength: Line is too long. [129/120]
 
     ```rb
@@ -3806,52 +3235,10 @@
       # - If a turn is associated to a group, cannot create dates with the same turn. In this way you can specify multiple dates for turns that you want to.
     ```
 
-  * **Line # 30 - convention:** Style/TrailingCommaInHashLiteral: Avoid comma after the last item of a hash.
-
-    ```rb
-        nexi_payment: "nexi_payment",
-    ```
-
-  * **Line # 44 - convention:** Style/Lambda: Use the `lambda` method for multiline lambdas.
-
-    ```rb
-      validates :payment_value, numericality: { more_than: 0 }, if: -> {
-    ```
-
-  * **Line # 44 - convention:** Layout/LineLength: Line is too long. [138/120]
-
-    ```rb
-      validates :payment_value, numericality: { more_than: 0 }, if: -> { PAYMENT_VALUE_MANDATORY_PREORDER_TYPES.include?(preorder_type.to_s) }
-    ```
-
-  * **Line # 45 - convention:** Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-
-    ```rb
-     PAYMENT_VALUE_MANDATORY_PREORDER_TYPES.include?(preorder_type.to_s)
-    ```
-
-  * **Line # 45 - convention:** Layout/IndentationWidth: Use 2 (not -62) spaces for indentation.
-
-    ```rb
-      PAYMENT_VALUE_MANDATORY_PREORDER_TYPES.include?(preorder_type.to_s)
-    ```
-
-  * **Line # 45 - convention:** Layout/BlockEndNewline: Expression at 45, 70 should be on its own line.
-
-    ```rb
-     PAYMENT_VALUE_MANDATORY_PREORDER_TYPES.include?(preorder_type.to_s) }
-    ```
-
   * **Line # 45 - convention:** Layout/LineLength: Line is too long. [133/120]
 
     ```rb
                                                                       PAYMENT_VALUE_MANDATORY_PREORDER_TYPES.include?(preorder_type.to_s)
-    ```
-
-  * **Line # 46 - convention:** Layout/BlockAlignment: `}` at 46, 0 is not aligned with `lambda {` at 44, 64 or `validates :payment_value, numericality: { more_than: 0 }, if: lambda {` at 44, 2.
-
-    ```rb
-    }
     ```
 
   * **Line # 62 - convention:** Rails/InverseOf: Specify an `:inverse_of` option.
@@ -3860,53 +3247,10 @@
       has_many :dates, class_name: "PreorderReservationDate", foreign_key: :group_id, dependent: :destroy
     ```
 
-  * **Line # 65 - convention:** Layout/LineLength: Line is too long. [156/120]
-
-    ```rb
-      scope :active_now, -> { active.where("active_from IS NULL or active_from < ?", Time.zone.now).where("active_to IS NULL or active_to > ?", Time.zone.now) }
-    ```
-
-  * **Line # 66 - convention:** Style/Lambda: Use the `lambda` method for multiline lambdas.
-
-    ```rb
-      scope :active_now, -> {
-    ```
-
-  * **Line # 67 - convention:** Layout/BlockEndNewline: Expression at 67, 131 should be on its own line.
-
-    ```rb
-     active.where("active_from IS NULL or active_from < ?", Time.zone.now).where("active_to IS NULL or active_to > ?", Time.zone.now) }
-    ```
-
-  * **Line # 68 - convention:** Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-
-    ```rb
-     active.where("active_from IS NULL or active_from < ?", Time.zone.now).where("active_to IS NULL or active_to > ?", Time.zone.now)
-    ```
-
-  * **Line # 68 - convention:** Layout/IndentationWidth: Use 2 (not -19) spaces for indentation.
-
-    ```rb
-      active.where("active_from IS NULL or active_from < ?", Time.zone.now).where("active_to IS NULL or active_to > ?", Time.zone.now)
-    ```
-
   * **Line # 68 - convention:** Layout/LineLength: Line is too long. [151/120]
 
     ```rb
                            active.where("active_from IS NULL or active_from < ?", Time.zone.now).where("active_to IS NULL or active_to > ?", Time.zone.now)
-    ```
-
-  * **Line # 69 - convention:** Layout/BlockAlignment: `}` at 69, 0 is not aligned with `lambda {` at 67, 21 or `scope :active_now, lambda {` at 67, 2.
-
-    ```rb
-    }
-    ```
-
-### app/models/preorder_reservation_groups_to_turn.rb - (1 offense)
-  * **Line # 15 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-        dates = PreorderReservationDate.where(reservation_turn: reservation_turn)
     ```
 
 ### app/models/refresh_token.rb - (2 offenses)
@@ -3922,7 +3266,7 @@
       validates :secret, presence: true, uniqueness: true
     ```
 
-### app/models/reservation.rb - (8 offenses)
+### app/models/reservation.rb - (4 offenses)
   * **Line # 3 - convention:** Style/Documentation: Missing top-level documentation comment for `class Reservation`.
 
     ```rb
@@ -3947,43 +3291,6 @@
       validates :secret, uniqueness: { case_sensitive: false }
     ```
 
-  * **Line # 81 - convention:** Style/Alias: Use `alias` instead of `alias_method` in a class body.
-
-    ```rb
-      alias_method :payment_required?, :requires_payment?
-    ```
-
-  * **Line # 81 - convention:** Style/Alias: Use `alias payment_required? requires_payment?` instead of `alias :payment_required? :requires_payment?`.
-
-    ```rb
-      alias :payment_required? :requires_payment?
-    ```
-
-  * **Line # 106 - convention:** Style/Alias: Use `alias` instead of `alias_method` in a class body.
-
-    ```rb
-      alias_method :turn, :reservation_turn
-    ```
-
-  * **Line # 106 - convention:** Style/Alias: Use `alias turn reservation_turn` instead of `alias :turn :reservation_turn`.
-
-    ```rb
-      alias :turn :reservation_turn
-    ```
-
-### app/models/reservation_payment.rb - (2 offenses)
-  * **Line # 12 - convention:** Style/TrailingCommaInHashLiteral: Avoid comma after the last item of a hash.
-
-    ```rb
-        paid: "paid",
-    ```
-
-  * **Line # 18 - convention:** Style/TrailingCommaInHashLiteral: Avoid comma after the last item of a hash.
-
-    ```rb
-        nexi_payment: "nexi_payment",
-    ```
-
 ### app/models/reservation_tag.rb - (1 offense)
   * **Line # 3 - convention:** Style/Documentation: Missing top-level documentation comment for `class ReservationTag`.
 
@@ -3991,17 +3298,11 @@
     class ReservationTag < ApplicationRecord
     ```
 
-### app/models/reservation_turn.rb - (10 offenses)
+### app/models/reservation_turn.rb - (9 offenses)
   * **Line # 61 - convention:** Metrics/MethodLength: Method has too many lines. [12/10]
 
     ```rb
       def preorder_reservation_groups ...
-    ```
-
-  * **Line # 66 - convention:** Style/TrailingCommaInArguments: Avoid comma after the last parameter of a method call.
-
-    ```rb
-            reservation_turn: self,
     ```
 
   * **Line # 100 - convention:** Metrics/AbcSize: Assignment Branch Condition size for starts_at_overlaps_other_turn is too high. [<2, 17, 4> 17.58/17]
@@ -4053,7 +3354,7 @@
     ```
 
 ### app/models/setting.rb - (1 offense)
-  * **Line # 64 - convention:** Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
+  * **Line # 70 - convention:** Rails/Output: Do not write to stdout. Use Rails's logger if you want to log.
 
     ```rb
         puts msg
@@ -4122,17 +3423,11 @@
     class TagInReservation < ApplicationRecord
     ```
 
-### app/models/user.rb - (4 offenses)
+### app/models/user.rb - (6 offenses)
   * **Line # 22 - convention:** Layout/LineLength: Line is too long. [143/120]
 
     ```rb
       validates :email, presence: true, format: { with: /\A[^@\s]+@[^@\s]+\z/, message: I18n.t("activerecord.errors.messages.not_a_valid_email") },
-    ```
-
-  * **Line # 46 - convention:** Layout/LineLength: Line is too long. [126/120]
-
-    ```rb
-                     where(can_root: true).where.not(root_at: nil).where("root_at > ?", Time.current - Config.app[:root_duration])
     ```
 
   * **Line # 103 - convention:** Rails/TimeZone: Do not use `Time.now` without zone. Use one of `Time.zone.now`, `Time.current`, `Time.now.in_time_zone`, `Time.now.utc`, `Time.now.getlocal`, `Time.now.xmlschema`, `Time.now.iso8601`, `Time.now.jisx0301`, `Time.now.rfc3339`, `Time.now.httpdate`, `Time.now.to_i`, `Time.now.to_f` instead.
@@ -4141,11 +3436,25 @@
         update!(locked_at: Time.now)
     ```
 
-  * **Line # 139 - convention:** Style/CommentAnnotation: Annotation keywords like `TODO` should be all upper case, followed by a colon, and a space, then a note describing the problem.
+  * **Line # 155 - convention:** Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body end.
 
     ```rb
-      # TODO this should not be here.
+     ...
     ```
+
+  * **Line # 156 - convention:** Layout/EmptyLines: Extra blank line detected.
+
+    ```rb
+     ...
+    ```
+
+  * **Line # 156 - convention:** Layout/EmptyLinesAroundClassBody: Extra empty line detected at class body end.
+
+    ```rb
+     ...
+    ```
+
+  * **Line # 156 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
 
 ### config.ru - (1 offense)
   * **Line # 1 - convention:** Style/FrozenStringLiteralComment: Missing frozen string literal comment.
@@ -4222,59 +3531,11 @@
     # Be sure to restart your server when you modify this file.
     ```
 
-### config/initializers/exception_notification.rb - (10 offenses)
-  * **Line # 3 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-    require 'exception_notification/rails'
-    ```
-
-  * **Line # 4 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-    require 'exception_notification/sidekiq'
-    ```
-
+### config/initializers/exception_notification.rb - (2 offenses)
   * **Line # 6 - convention:** Style/SingleArgumentDig: Use `Config.app[:exceptions_recipients]` instead of `Config.app.dig(:exceptions_recipients)`.
 
     ```rb
     recipients     = Config.app.dig(:exceptions_recipients) || []
-    ```
-
-  * **Line # 10 - convention:** Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
-
-    ```rb
-      raise "Config.app.dig(:emails, :default_from) is blank. Please check config/app.yml" if Config.app.dig(:emails, :default_from).blank?
-    ```
-
-  * **Line # 10 - convention:** Style/SoleNestedConditional: Consider merging nested conditions into outer `if` conditions.
-
-    ```rb
-      raise "Config.app.dig(:emails, :default_from) is blank. Please check config/app.yml" if Config.app.dig(:emails, :default_from).blank?
-    ```
-
-  * **Line # 10 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                                                                                                             :default_from).blank?
-    ```
-
-  * **Line # 10 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-      raise "Config.app.dig(:emails, :default_from) is blank. Please check config/app.yml" if Config.app.dig(:emails, 
-    ```
-
-  * **Line # 10 - convention:** Layout/LineLength: Line is too long. [135/120]
-
-    ```rb
-      raise "Config.app.dig(:emails, :default_from) is blank. Please check config/app.yml" if Config.app.dig(:emails, :default_from).blank?
-    ```
-
-  * **Line # 11 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    :default_from).blank?
     ```
 
   * **Line # 16 - convention:** Layout/LineLength: Line is too long. [157/120]
@@ -4303,113 +3564,11 @@
     class Hash
     ```
 
-### config/initializers/health_check.rb - (21 offenses)
-  * **Line # 4 - convention:** Layout/EmptyLinesAroundBlockBody: Extra empty line detected at block body beginning.
-
-    ```rb
-     ...
-    ```
-
-  * **Line # 6 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-      config.uri = 'health_check'
-    ```
-
-  * **Line # 9 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-      config.success = 'success'
-    ```
-
-  * **Line # 12 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-      config.failure = 'health_check failed'
-    ```
-
-  * **Line # 19 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-      config.log_level = 'info'
-    ```
-
-  * **Line # 39 - convention:** Style/WordArray: Use `%w` or `%W` for an array of words.
-
-    ```rb
-      config.standard_checks = ["database", "migrations", "custom"]
-    ```
-
-  * **Line # 40 - convention:** Style/WordArray: Use `%w` or `%W` for an array of words.
-
-    ```rb
-      config.standard_checks = [ 'database', 'migrations', 'custom' ]
-    ```
-
-  * **Line # 40 - convention:** Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
-
-    ```rb
-      config.standard_checks = [ 'database', 'migrations', 'custom' ]
-    ```
-
-  * **Line # 40 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-      config.standard_checks = [ 'database', 'migrations', 'custom' ]
-    ```
-
-  * **Line # 40 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-      config.standard_checks = [ 'database', 'migrations', 'custom' ]
-    ```
-
-  * **Line # 40 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-      config.standard_checks = [ 'database', 'migrations', 'custom' ]
-    ```
-
+### config/initializers/health_check.rb - (4 offenses)
   * **Line # 45 - convention:** Layout/LineLength: Line is too long. [121/120]
 
     ```rb
       # config.full_checks = ['database', 'migrations', 'custom', 'email', 'cache', 'redis', 'resque-redis', 'sidekiq-redis']
-    ```
-
-  * **Line # 46 - convention:** Style/WordArray: Use `%w` or `%W` for an array of words.
-
-    ```rb
-      config.full_checks = ["database", "migrations", "email", "cache"]
-    ```
-
-  * **Line # 47 - convention:** Style/WordArray: Use `%w` or `%W` for an array of words.
-
-    ```rb
-      config.full_checks = ['database', 'migrations', 'email', 'cache']
-    ```
-
-  * **Line # 47 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-      config.full_checks = ['database', 'migrations', 'email', 'cache']
-    ```
-
-  * **Line # 47 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-      config.full_checks = ['database', 'migrations', 'email', 'cache']
-    ```
-
-  * **Line # 47 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-      config.full_checks = ['database', 'migrations', 'email', 'cache']
-    ```
-
-  * **Line # 47 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-      config.full_checks = ['database', 'migrations', 'email', 'cache']
     ```
 
   * **Line # 71 - convention:** Layout/LineLength: Line is too long. [123/120]
@@ -4457,7 +3616,7 @@
       next unless required_configs.present?
     ```
 
-### config/initializers/string.rb - (3 offenses)
+### config/initializers/string.rb - (2 offenses)
   * **Line # 34 - convention:** Style/StringChars: Use `chars` instead of `split("")`.
 
     ```rb
@@ -4468,12 +3627,6 @@
 
     ```rb
       def lang_to_iso639_2
-    ```
-
-  * **Line # 48 - convention:** Style/TrailingCommaInHashLiteral: Avoid comma after the last item of a hash.
-
-    ```rb
-          "pt" => "por",
     ```
 
 ### config/puma.rb - (3 offenses)
@@ -4496,31 +3649,31 @@
     ```
 
 ### config/routes.rb - (5 offenses)
-  * **Line # 6 - convention:** Metrics/BlockLength: Block has too many lines. [149/25]
+  * **Line # 6 - convention:** Metrics/BlockLength: Block has too many lines. [151/25]
 
     ```rb
     Rails.application.routes.draw do ...
     ```
 
-  * **Line # 11 - convention:** Metrics/BlockLength: Block has too many lines. [141/25]
+  * **Line # 11 - convention:** Metrics/BlockLength: Block has too many lines. [143/25]
 
     ```rb
       defaults format: :json do ...
     ```
 
-  * **Line # 12 - convention:** Metrics/BlockLength: Block has too many lines. [139/25]
+  * **Line # 12 - convention:** Metrics/BlockLength: Block has too many lines. [141/25]
 
     ```rb
         scope module: :v1, path: "v1" do ...
     ```
 
-  * **Line # 78 - convention:** Metrics/BlockLength: Block has too many lines. [92/25]
+  * **Line # 79 - convention:** Metrics/BlockLength: Block has too many lines. [93/25]
 
     ```rb
           scope module: :admin, path: "admin" do ...
     ```
 
-  * **Line # 124 - convention:** Metrics/BlockLength: Block has too many lines. [51/25]
+  * **Line # 126 - convention:** Metrics/BlockLength: Block has too many lines. [51/25]
 
     ```rb
             scope module: :menu, path: "menu" do ...
@@ -4776,90 +3929,17 @@
     class CreatePublicMessages < ActiveRecord::Migration[7.0]
     ```
 
-### db/migrate/031_create_nexi_http_requests.rb - (3 offenses)
-  * **Line # 15 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          t.belongs_to :record, polymorphic: true, null: true, 
-    ```
-
-  * **Line # 15 - convention:** Layout/LineLength: Line is too long. [127/120]
-
-    ```rb
-          t.belongs_to :record, polymorphic: true, null: true, comment: %(Optionally specify a record this http request belongs to)
-    ```
-
-  * **Line # 16 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    comment: %(Optionally specify a record this http request belongs to)
-    ```
-
-### db/migrate/032_create_preorder_reservation_groups.rb - (12 offenses)
+### db/migrate/032_create_preorder_reservation_groups.rb - (3 offenses)
   * **Line # 3 - convention:** Style/Documentation: Missing top-level documentation comment for `class CreatePreorderReservationGroups`.
 
     ```rb
     class CreatePreorderReservationGroups < ActiveRecord::Migration[7.0]
     ```
 
-  * **Line # 8 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          t.datetime :active_from, null: true, 
-    ```
-
-  * **Line # 8 - convention:** Layout/LineLength: Line is too long. [131/120]
-
-    ```rb
-          t.datetime :active_from, null: true, comment: %(From when this case is enabled. When nil, is enabled from its creation date.)
-    ```
-
-  * **Line # 9 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    comment: %(From when this case is enabled. When nil, is enabled from its creation date.)
-    ```
-
-  * **Line # 10 - convention:** Layout/LineLength: Line is too long. [176/120]
-
-    ```rb
-          t.text :preorder_type, null: false, comment: %(What should ask the user to do. Will include provider name. May be something like 'paypal_payment', or 'nexi_card_hold'...)
-    ```
-
-  * **Line # 11 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          t.text :preorder_type, null: false, 
-    ```
-
-  * **Line # 11 - convention:** Layout/LineLength: Line is too long. [161/120]
-
-    ```rb
-          t.float :payment_value, null: true, comment: %(How much should people be required to pay if it's a payment. Since may be card hold, this field can be nil.)
-    ```
-
-  * **Line # 12 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    comment: %(What should ask the user to do. Will include provider name. May be something like 'paypal_payment', or 'nexi_card_hold'...)
-    ```
-
   * **Line # 12 - convention:** Layout/LineLength: Line is too long. [163/120]
 
     ```rb
                                  comment: %(What should ask the user to do. Will include provider name. May be something like 'paypal_payment', or 'nexi_card_hold'...)
-    ```
-
-  * **Line # 13 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          t.float :payment_value, null: true, 
-    ```
-
-  * **Line # 14 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    comment: %(How much should people be required to pay if it's a payment. Since may be card hold, this field can be nil.)
     ```
 
   * **Line # 14 - convention:** Layout/LineLength: Line is too long. [149/120]
@@ -4875,7 +3955,7 @@
     class CreatePreorderReservationDates < ActiveRecord::Migration[7.0]
     ```
 
-### db/migrate/034_create_reservation_payments.rb - (9 offenses)
+### db/migrate/034_create_reservation_payments.rb - (3 offenses)
   * **Line # 3 - convention:** Style/Documentation: Missing top-level documentation comment for `class CreateReservationPayments`.
 
     ```rb
@@ -4888,89 +3968,17 @@
           # when - and if - you'll need to support different payment types from hpp_url, create a migration removing presence constraint, but create checks.
     ```
 
-  * **Line # 7 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          t.text :hpp_url, null: false, index: { unique: true }, 
-    ```
-
-  * **Line # 7 - convention:** Layout/LineLength: Line is too long. [150/120]
-
-    ```rb
-          t.text :hpp_url, null: false, index: { unique: true }, comment: %(URL where user can complete the payment. HPP stands for "Hosted Payment Page")
-    ```
-
-  * **Line # 8 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    comment: %(URL where user can complete the payment. HPP stands for "Hosted Payment Page")
-    ```
-
-  * **Line # 11 - convention:** Layout/LineLength: Line is too long. [176/120]
-
-    ```rb
-          t.text :preorder_type, null: false, comment: %(What should ask the user to do. Will include provider name. May be something like 'paypal_payment', or 'nexi_card_hold'...)
-    ```
-
-  * **Line # 12 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          t.text :preorder_type, null: false, 
-    ```
-
-  * **Line # 13 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    comment: %(What should ask the user to do. Will include provider name. May be something like 'paypal_payment', or 'nexi_card_hold'...)
-    ```
-
   * **Line # 13 - convention:** Layout/LineLength: Line is too long. [163/120]
 
     ```rb
                                  comment: %(What should ask the user to do. Will include provider name. May be something like 'paypal_payment', or 'nexi_card_hold'...)
     ```
 
-### db/migrate/035_create_preorder_reservation_groups_to_turns.rb - (7 offenses)
+### db/migrate/035_create_preorder_reservation_groups_to_turns.rb - (1 offense)
   * **Line # 3 - convention:** Style/Documentation: Missing top-level documentation comment for `class CreatePreorderReservationGroupsToTurns`.
 
     ```rb
     class CreatePreorderReservationGroupsToTurns < ActiveRecord::Migration[7.0]
-    ```
-
-  * **Line # 6 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          t.references :reservation_turn, null: false, foreign_key: true, 
-    ```
-
-  * **Line # 6 - convention:** Layout/LineLength: Line is too long. [147/120]
-
-    ```rb
-          t.references :reservation_turn, null: false, foreign_key: true, index: { name: "preorder_reservation_groups_to_turns_turn_id", unique: true }
-    ```
-
-  * **Line # 7 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    index: { name: "preorder_reservation_groups_to_turns_turn_id", unique: true }
-    ```
-
-  * **Line # 7 - convention:** Layout/LineLength: Line is too long. [144/120]
-
-    ```rb
-          t.references :preorder_reservation_group, null: false, foreign_key: true, index: { name: "preorder_reservation_groups_to_turns_group_id" }
-    ```
-
-  * **Line # 8 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          t.references :preorder_reservation_group, null: false, foreign_key: true, 
-    ```
-
-  * **Line # 9 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    index: { name: "preorder_reservation_groups_to_turns_group_id" }
     ```
 
 ### db/migrate/20241009161438_add_lang_to_reservations.rb - (1 offense)
@@ -4980,29 +3988,11 @@
     class AddLangToReservations < ActiveRecord::Migration[7.0]
     ```
 
-### db/migrate/20241020145928_create_holidays.rb - (4 offenses)
+### db/migrate/20241020145928_create_holidays.rb - (1 offense)
   * **Line # 3 - convention:** Style/Documentation: Missing top-level documentation comment for `class CreateHolidays`.
 
     ```rb
     class CreateHolidays < ActiveRecord::Migration[7.0]
-    ```
-
-  * **Line # 8 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          t.time :weekly_from, 
-    ```
-
-  * **Line # 8 - convention:** Layout/LineLength: Line is too long. [133/120]
-
-    ```rb
-          t.time :weekly_from, comment: %(If present, the holiday is considered active until 'weekly_to', but only after from_timestamp.)
-    ```
-
-  * **Line # 9 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    comment: %(If present, the holiday is considered active until 'weekly_to', but only after from_timestamp.)
     ```
 
 ### db/migrate/20241031152941_add_controller_path_and_action_name_to_log_delivered_emails.rb - (2 offenses)
@@ -5025,7 +4015,21 @@
     class CreateContacts < ActiveRecord::Migration[7.0]
     ```
 
-### db/seeds.rb - (21 offenses)
+### db/migrate/20241103094436_remove_require_root_from_settings.rb - (1 offense)
+  * **Line # 3 - convention:** Style/Documentation: Missing top-level documentation comment for `class RemoveRequireRootFromSettings`.
+
+    ```rb
+    class RemoveRequireRootFromSettings < ActiveRecord::Migration[7.0]
+    ```
+
+### db/migrate/20241103100539_remove_require_root_from_preferences.rb - (1 offense)
+  * **Line # 3 - convention:** Style/Documentation: Missing top-level documentation comment for `class RemoveRequireRootFromPreferences`.
+
+    ```rb
+    class RemoveRequireRootFromPreferences < ActiveRecord::Migration[7.0]
+    ```
+
+### db/seeds.rb - (2 offenses)
   * **Line # 1 - convention:** Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 
     ```rb
@@ -5036,120 +4040,6 @@
 
     ```rb
       puts message
-    ```
-
-  * **Line # 44 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-      ReservationTurn.create!(name: "Pranzo (#{ReservationTurn::WEEKDAYS[weekday]})", weekday:, starts_at: "10:00", 
-    ```
-
-  * **Line # 44 - convention:** Layout/LineLength: Line is too long. [129/120]
-
-    ```rb
-      ReservationTurn.create!(name: "Pranzo (#{ReservationTurn::WEEKDAYS[weekday]})", weekday:, starts_at: "10:00", ends_at: "12:00")
-    ```
-
-  * **Line # 45 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    ends_at: "12:00")
-    ```
-
-  * **Line # 45 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    ends_at: "12:00")
-    ```
-
-  * **Line # 45 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                                                        ends_at: "12:00")
-    ```
-
-  * **Line # 45 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-                                                        ends_at: "12:00")
-    ```
-
-  * **Line # 45 - convention:** Layout/LineLength: Line is too long. [129/120]
-
-    ```rb
-      ReservationTurn.create!(name: "Cena 1 (#{ReservationTurn::WEEKDAYS[weekday]})", weekday:, starts_at: "16:00", ends_at: "17:59")
-    ```
-
-  * **Line # 46 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-      ReservationTurn.create!(name: "Cena 1 (#{ReservationTurn::WEEKDAYS[weekday]})", weekday:, starts_at: "16:00", 
-    ```
-
-  * **Line # 46 - convention:** Layout/LineLength: Line is too long. [129/120]
-
-    ```rb
-      ReservationTurn.create!(name: "Cena 2 (#{ReservationTurn::WEEKDAYS[weekday]})", weekday:, starts_at: "18:00", ends_at: "19:30")
-    ```
-
-  * **Line # 47 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    ends_at: "17:59")
-    ```
-
-  * **Line # 47 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    ends_at: "17:59")
-    ```
-
-  * **Line # 47 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                                                        ends_at: "17:59")
-    ```
-
-  * **Line # 47 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-                                                        ends_at: "17:59")
-    ```
-
-  * **Line # 48 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-      ReservationTurn.create!(name: "Cena 2 (#{ReservationTurn::WEEKDAYS[weekday]})", weekday:, starts_at: "18:00", 
-    ```
-
-  * **Line # 49 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    ends_at: "19:30")
-    ```
-
-  * **Line # 49 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    ends_at: "19:30")
-    ```
-
-  * **Line # 49 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                                                        ends_at: "19:30")
-    ```
-
-  * **Line # 49 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-                                                        ends_at: "19:30")
-    ```
-
-  * **Line # 92 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-        reservation_turn: ReservationTurn.where(weekday: weekday).sample
     ```
 
 ### lib/sidekiq_admin_constraint.rb - (2 offenses)
@@ -5229,7 +4119,7 @@
     ```
 
 ### spec/contexts/request_authentication_context.rb - (1 offense)
-  * **Line # 11 - convention:** RSpec/InstanceVariable: Avoid instance variables - use let, a method call, or a local variable (if possible).
+  * **Line # 12 - convention:** RSpec/InstanceVariable: Avoid instance variables - use let, a method call, or a local variable (if possible).
 
     ```rb
       let(:current_refresh_token) { @current_refresh_token || create(:refresh_token, user: current_user) }
@@ -12966,37 +11856,37 @@
     RSpec.describe V1::Admin::PreferencesController, type: :controller do
     ```
 
-  * **Line # 84 - convention:** RSpec/NamedSubject: Name your test subject if you need to reference it explicitly.
+  * **Line # 83 - convention:** RSpec/NamedSubject: Name your test subject if you need to reference it explicitly.
 
     ```rb
           expect(subject).to route(:patch, "/v1/admin/preferences/language").to(action: :update, key: "language",
     ```
 
-  * **Line # 98 - convention:** RSpec/ExampleLength: Example has too many lines. [7/5]
+  * **Line # 97 - convention:** RSpec/ExampleLength: Example has too many lines. [7/5]
 
     ```rb
         it "is able to update the value" do ...
     ```
 
-  * **Line # 98 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+  * **Line # 97 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
 
     ```rb
         it "is able to update the value" do
     ```
 
-  * **Line # 109 - convention:** RSpec/ExampleLength: Example has too many lines. [6/5]
+  * **Line # 108 - convention:** RSpec/ExampleLength: Example has too many lines. [6/5]
 
     ```rb
         it "returns 422 with error explanation if invalid value is provided" do ...
     ```
 
-  * **Line # 109 - convention:** RSpec/MultipleExpectations: Example has too many expectations [5/1].
+  * **Line # 108 - convention:** RSpec/MultipleExpectations: Example has too many expectations [5/1].
 
     ```rb
         it "returns 422 with error explanation if invalid value is provided" do
     ```
 
-  * **Line # 119 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+  * **Line # 118 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
 
     ```rb
         it "returns an error if invalid key is provided" do
@@ -13015,23 +11905,11 @@
     RSpec.describe V1::Admin::ReservationTagsController, type: :controller do
     ```
 
-### spec/controllers/v1/admin/reservation_turns_controller_spec.rb - (38 offenses)
+### spec/controllers/v1/admin/reservation_turns_controller_spec.rb - (13 offenses)
   * **Line # 5 - convention:** RSpec/Rails/InferredSpecType: Remove redundant spec type.
 
     ```rb
     RSpec.describe V1::Admin::ReservationTurnsController, type: :controller do
-    ```
-
-  * **Line # 54 - convention:** Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
-
-    ```rb
-            let!(:turns) do
-    ```
-
-  * **Line # 54 - convention:** RSpec/EmptyLineAfterSubject: Add an empty line after `subject`.
-
-    ```rb
-              subject { json }
     ```
 
   * **Line # 56 - convention:** RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
@@ -13040,82 +11918,10 @@
               let!(:turns) do
     ```
 
-  * **Line # 61 - convention:** Layout/IndentationConsistency: Inconsistent indentation detected.
-
-    ```rb
-            subject { json }
-    ```
-
-  * **Line # 61 - convention:** RSpec/LeadingSubject: Declare `subject` above any other `let!` declarations.
-
-    ```rb
-            subject { json }
-    ```
-
-  * **Line # 61 - convention:** Layout/IndentationConsistency: Inconsistent indentation detected.
-
-    ```rb
-              subject { json }
-    ```
-
-  * **Line # 61 - convention:** RSpec/EmptyLineAfterSubject: Add an empty line after `subject`.
-
-    ```rb
-              subject { json }
-    ```
-
-  * **Line # 61 - convention:** RSpec/LeadingSubject: Declare `subject` above any other `let!` declarations.
-
-    ```rb
-              subject { json }
-    ```
-
-  * **Line # 62 - convention:** Layout/EmptyLines: Extra blank line detected.
-
-    ```rb
-     ...
-    ```
-
-  * **Line # 62 - convention:** Layout/IndentationConsistency: Inconsistent indentation detected.
-
-    ```rb
-              before { req(weekday: weekday_param) }
-    ```
-
-  * **Line # 63 - convention:** Layout/IndentationConsistency: Inconsistent indentation detected.
-
-    ```rb
-            before { req(weekday: weekday_param) }
-    ```
-
-  * **Line # 64 - convention:** Layout/IndentationConsistency: Inconsistent indentation detected.
-
-    ```rb
-              it { expect(subject.dig(:metadata, :total_count)).to eq 1 }
-    ```
-
-  * **Line # 65 - convention:** Layout/IndentationConsistency: Inconsistent indentation detected.
-
-    ```rb
-            it { expect(subject.dig(:metadata, :total_count)).to eq 1 }
-    ```
-
-  * **Line # 65 - convention:** Layout/IndentationConsistency: Inconsistent indentation detected.
-
-    ```rb
-              it { expect(subject[:items]).to all(include(weekday: weekday_param)) }
-    ```
-
   * **Line # 65 - convention:** RSpec/NamedSubject: Name your test subject if you need to reference it explicitly.
 
     ```rb
               it { expect(subject.dig(:metadata, :total_count)).to eq 1 }
-    ```
-
-  * **Line # 66 - convention:** Layout/IndentationConsistency: Inconsistent indentation detected.
-
-    ```rb
-            it { expect(subject[:items]).to all(include(weekday: weekday_param)) }
     ```
 
   * **Line # 66 - convention:** RSpec/NamedSubject: Name your test subject if you need to reference it explicitly.
@@ -13166,72 +11972,6 @@
             it "contains all informations" do
     ```
 
-  * **Line # 268 - convention:** Layout/LineLength: Line is too long. [143/120]
-
-    ```rb
-                it { expect { req(reservation_turn.id, step: to_value) }.to change { reservation_turn.reload.step }.from(from_value).to(to_value) }
-    ```
-
-  * **Line # 269 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-                it { 
-    ```
-
-  * **Line # 269 - convention:** Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
-
-    ```rb
-                it { expect { req(reservation_turn.id, step: to_value) }.to change { ...
-    ```
-
-  * **Line # 270 - convention:** Layout/IndentationWidth: Use 2 (not 14) spaces for indentation.
-
-    ```rb
-                  expect { req(reservation_turn.id, step: to_value) }.to change {
-    ```
-
-  * **Line # 270 - convention:** Layout/IndentationWidth: Use 2 (not -10) spaces for indentation.
-
-    ```rb
-      expect { req(reservation_turn.id, step: to_value) }.to change {
-    ```
-
-  * **Line # 270 - convention:** Layout/BlockEndNewline: Expression at 270, 31 should be on its own line.
-
-    ```rb
-     reservation_turn.reload.step }.from(from_value).to(to_value) }
-    ```
-
-  * **Line # 270 - convention:** Layout/BlockEndNewline: Expression at 270, 63 should be on its own line.
-
-    ```rb
-     reservation_turn.reload.step }.from(from_value).to(to_value) }
-    ```
-
-  * **Line # 271 - convention:** Layout/IndentationWidth: Use 2 (not -56) spaces for indentation.
-
-    ```rb
-                 reservation_turn.reload.step ...
-    ```
-
-  * **Line # 272 - convention:** Layout/BlockAlignment: `}` at 272, 0 is not aligned with `change {` at 270, 69 or `expect { req(reservation_turn.id, step: to_value) }.to change {` at 270, 14.
-
-    ```rb
-    }.from(from_value).to(to_value)
-    ```
-
-  * **Line # 272 - convention:** Layout/BlockAlignment: `}` at 272, 69 is not aligned with `change {` at 270, 57 or `expect { req(reservation_turn.id, step: to_value) }.to change {` at 270, 2.
-
-    ```rb
-                                                                         }.from(from_value).to(to_value)
-    ```
-
-  * **Line # 273 - convention:** Layout/BlockAlignment: `}` at 273, 0 is not aligned with `it { ` at 269, 12.
-
-    ```rb
-    }
-    ```
-
   * **Line # 287 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
 
     ```rb
@@ -13244,7 +11984,7 @@
             it "contains all informations" do
     ```
 
-### spec/controllers/v1/admin/reservations_controller_spec.rb - (223 offenses)
+### spec/controllers/v1/admin/reservations_controller_spec.rb - (116 offenses)
   * **Line # 8 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
 
     ```rb
@@ -13293,24 +12033,6 @@
     RSpec.describe V1::Admin::ReservationsController, type: :controller do
     ```
 
-  * **Line # 99 - convention:** Layout/SpaceBeforeBlockBraces: Space missing to the left of {.
-
-    ```rb
-              it { expect(json[:items].filter{|j| j.keys.include?("payment") }.filter(&:present?).count).to eq(1) }
-    ```
-
-  * **Line # 99 - convention:** Layout/SpaceInsideBlockBraces: Space between { and | missing.
-
-    ```rb
-              it { expect(json[:items].filter{|j| j.keys.include?("payment") }.filter(&:present?).count).to eq(1) }
-    ```
-
-  * **Line # 99 - convention:** Layout/SpaceInsideBlockBraces: Space between { and | missing.
-
-    ```rb
-              it { expect(json[:items].filter {|j| j.keys.include?("payment") }.filter(&:present?).count).to eq(1) }
-    ```
-
   * **Line # 99 - convention:** Performance/InefficientHashSearch: Use `#key?` instead of `#keys.include?`.
 
     ```rb
@@ -13323,34 +12045,10 @@
               it { expect(json[:items].filter { |j| j.keys.include?("payment") }.filter(&:present?).count).to eq(1) }
     ```
 
-  * **Line # 100 - convention:** RSpec/EmptyLineAfterExample: Add an empty line after `it`.
-
-    ```rb
-              it { expect(json[:items].filter {|j| j.keys.include?("payment") }.first).to be_present }
-    ```
-
   * **Line # 100 - convention:** Performance/Detect: Use `find` instead of `filter.first`.
 
     ```rb
               it { expect(json[:items].filter { |j| j.keys.include?("payment") }.first).to be_present }
-    ```
-
-  * **Line # 100 - convention:** Layout/SpaceBeforeBlockBraces: Space missing to the left of {.
-
-    ```rb
-              it { expect(json[:items].filter{|j| j.keys.include?("payment") }.first).to be_present }
-    ```
-
-  * **Line # 100 - convention:** Layout/SpaceInsideBlockBraces: Space between { and | missing.
-
-    ```rb
-              it { expect(json[:items].filter{|j| j.keys.include?("payment") }.first).to be_present }
-    ```
-
-  * **Line # 100 - convention:** Layout/SpaceInsideBlockBraces: Space between { and | missing.
-
-    ```rb
-              it { expect(json[:items].filter {|j| j.keys.include?("payment") }.first).to be_present }
     ```
 
   * **Line # 100 - convention:** Performance/InefficientHashSearch: Use `#key?` instead of `#keys.include?`.
@@ -13359,112 +12057,16 @@
               it { expect(json[:items].filter { |j| j.keys.include?("payment") }.first).to be_present }
     ```
 
-  * **Line # 101 - convention:** Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
-
-    ```rb
-              it { expect(json[:items].filter {|j| ...
-    ```
-
-  * **Line # 101 - convention:** Layout/SpaceBeforeBlockBraces: Space missing to the left of {.
-
-    ```rb
-              it { expect(json[:items].filter{|j| j.keys.include?("payment") }.first["payment"].symbolize_keys).to include(hpp_url: String, status: payment_status) }
-    ```
-
-  * **Line # 101 - convention:** Layout/SpaceInsideBlockBraces: Space between { and | missing.
-
-    ```rb
-              it { expect(json[:items].filter{|j| j.keys.include?("payment") }.first["payment"].symbolize_keys).to include(hpp_url: String, status: payment_status) }
-    ```
-
-  * **Line # 101 - convention:** Layout/SpaceInsideBlockBraces: Space between { and | missing.
-
-    ```rb
-              it { expect(json[:items].filter {|j|
-    ```
-
-  * **Line # 101 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-              it { expect(json[:items].filter {|j|
-    ```
-
-  * **Line # 101 - convention:** Layout/LineLength: Line is too long. [161/120]
-
-    ```rb
-              it { expect(json[:items].filter{|j| j.keys.include?("payment") }.first["payment"].symbolize_keys).to include(hpp_url: String, status: payment_status) }
-    ```
-
-  * **Line # 102 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-              it { 
-    ```
-
-  * **Line # 102 - convention:** Layout/BlockEndNewline: Expression at 102, 29 should be on its own line.
-
-    ```rb
-     j.keys.include?("payment") }.first["payment"].symbolize_keys).to include(hpp_url: String, status: payment_status) }
-    ```
-
-  * **Line # 102 - convention:** Layout/BlockEndNewline: Expression at 102, 116 should be on its own line.
-
-    ```rb
-     j.keys.include?("payment") }.first["payment"].symbolize_keys).to include(hpp_url: String, status: payment_status) }
-    ```
-
-  * **Line # 103 - convention:** Layout/IndentationWidth: Use 2 (not 12) spaces for indentation.
-
-    ```rb
-                expect(json[:items].filter { |j|
-    ```
-
-  * **Line # 103 - convention:** Layout/IndentationWidth: Use 2 (not -8) spaces for indentation.
-
-    ```rb
-      expect(json[:items].filter do |j|
-    ```
-
   * **Line # 103 - convention:** Performance/Detect: Use `find` instead of `filter.first`.
 
     ```rb
                 expect(json[:items].filter do |j| ...
     ```
 
-  * **Line # 103 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-                expect(json[:items].filter { |j|
-    ```
-
-  * **Line # 104 - convention:** Layout/IndentationWidth: Use 2 (not -8) spaces for indentation.
-
-    ```rb
-               j.keys.include?("payment")
-    ```
-
   * **Line # 104 - convention:** Performance/InefficientHashSearch: Use `#key?` instead of `#keys.include?`.
 
     ```rb
                          j.keys.include?("payment")
-    ```
-
-  * **Line # 105 - convention:** Layout/BlockAlignment: `}` at 105, 0 is not aligned with `json[:items].filter { |j|` at 103, 19 or `expect(json[:items].filter { |j|` at 103, 12.
-
-    ```rb
-    }.first["payment"].symbolize_keys).to include(hpp_url: String, status: payment_status)
-    ```
-
-  * **Line # 105 - convention:** Layout/BlockAlignment: `end` at 105, 19 is not aligned with `json[:items].filter do |j|` at 103, 9 or `expect(json[:items].filter do |j|` at 103, 2.
-
-    ```rb
-                       end.first["payment"].symbolize_keys).to include(hpp_url: String, status: payment_status)
-    ```
-
-  * **Line # 106 - convention:** Layout/BlockAlignment: `}` at 106, 0 is not aligned with `it { ` at 102, 10.
-
-    ```rb
-    }
     ```
 
   * **Line # 144 - convention:** RSpec/ExampleLength: Example has too many lines. [12/5]
@@ -14019,496 +12621,10 @@
               before { req(date: Date.today.to_date) }
     ```
 
-  * **Line # 1430 - convention:** Layout/EmptyLinesAroundBlockBody: Extra empty line detected at block body beginning.
-
-    ```rb
-     ...
-    ```
-
-  * **Line # 1464 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                                                                                            format: :json)
-    ```
-
-  * **Line # 1464 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-                                                                                            format: :json)
-    ```
-
-  * **Line # 1493 - convention:** RSpec/EmptyLineAfterHook: Add an empty line after `before`.
-
-    ```rb
-            before { req }
-    ```
-
-  * **Line # 1493 - convention:** RSpec/EmptyLineAfterSubject: Add an empty line after `subject`.
-
-    ```rb
-            subject { file }
-    ```
-
-  * **Line # 1494 - convention:** RSpec/LeadingSubject: Declare `subject` above any other `before` declarations.
-
-    ```rb
-            subject { file }
-    ```
-
-  * **Line # 1496 - convention:** Layout/EmptyLines: Extra blank line detected.
-
-    ```rb
-     ...
-    ```
-
-  * **Line # 1496 - convention:** RSpec/MatchArray: Prefer `contain_exactly` when matching an array literal.
-
-    ```rb
-            it { expect(file.sheets).to match_array(["Prenotazioni"]) }
-    ```
-
-  * **Line # 1503 - convention:** RSpec/EmptyLineAfterExample: Add an empty line after `it`.
-
-    ```rb
-            it { expect(file.sheet("Prenotazioni").row(1)).to include("payment_hpp_url") }
-    ```
-
-  * **Line # 1503 - convention:** RSpec/MatchArray: Prefer `contain_exactly` when matching an array literal.
-
-    ```rb
-            it { expect(file.sheet("Prenotazioni").column(col_index("id"))).to match_array(["id", *reservations.map(&:id)]) }
-    ```
-
-  * **Line # 1503 - convention:** Layout/LineLength: Line is too long. [121/120]
-
-    ```rb
-            it { expect(file.sheet("Prenotazioni").column(col_index("id"))).to match_array(["id", *reservations.map(&:id)]) }
-    ```
-
-  * **Line # 1504 - convention:** Layout/LineLength: Line is too long. [138/120]
-
-    ```rb
-            it { expect(file.sheet("Prenotazioni").column(col_index("payment_hpp_url"))).to include(*ReservationPayment.all.pluck(:hpp_url)) }
-    ```
-
-  * **Line # 1505 - convention:** RSpec/EmptyLineAfterExample: Add an empty line after `it`.
-
-    ```rb
-     expect(file.sheet("Prenotazioni").column(col_index("id"))).to contain_exactly("id", *reservations.map(&:id)) }
-    ```
-
-  * **Line # 1505 - convention:** Layout/BlockEndNewline: Expression at 1505, 111 should be on its own line.
-
-    ```rb
-     expect(file.sheet("Prenotazioni").column(col_index("id"))).to contain_exactly("id", *reservations.map(&:id)) }
-    ```
-
-  * **Line # 1506 - convention:** Layout/SpaceBeforeBlockBraces: Space missing to the left of {.
-
-    ```rb
-            it { expect(col_values("datetime")).to match_array(Reservation.all.map{|r| r.datetime.strftime("%e/%m/%Y %k:%M").strip }) }
-    ```
-
-  * **Line # 1506 - convention:** Layout/SpaceInsideBlockBraces: Space between { and | missing.
-
-    ```rb
-            it { expect(col_values("datetime")).to match_array(Reservation.all.map{|r| r.datetime.strftime("%e/%m/%Y %k:%M").strip }) }
-    ```
-
-  * **Line # 1506 - convention:** Layout/LineLength: Line is too long. [131/120]
-
-    ```rb
-            it { expect(col_values("datetime")).to match_array(Reservation.all.map{|r| r.datetime.strftime("%e/%m/%Y %k:%M").strip }) }
-    ```
-
-  * **Line # 1507 - convention:** RSpec/EmptyLineAfterExample: Add an empty line after `it`.
-
-    ```rb
-     expect(file.sheet("Prenotazioni").column(col_index("payment_hpp_url"))).to include(*ReservationPayment.all.pluck(:hpp_url)) }
-    ```
-
-  * **Line # 1507 - convention:** Layout/SpaceBeforeBlockBraces: Space missing to the left of {.
-
-    ```rb
-            it { expect(col_values("created_at")).to match_array(Reservation.all.map{|r| r.created_at.strftime("%e/%m/%Y %k:%M").strip }) }
-    ```
-
-  * **Line # 1507 - convention:** Layout/SpaceInsideBlockBraces: Space between { and | missing.
-
-    ```rb
-            it { expect(col_values("created_at")).to match_array(Reservation.all.map{|r| r.created_at.strftime("%e/%m/%Y %k:%M").strip }) }
-    ```
-
-  * **Line # 1507 - convention:** Layout/LineLength: Line is too long. [135/120]
-
-    ```rb
-            it { expect(col_values("created_at")).to match_array(Reservation.all.map{|r| r.created_at.strftime("%e/%m/%Y %k:%M").strip }) }
-    ```
-
-  * **Line # 1507 - convention:** Layout/BlockEndNewline: Expression at 1507, 126 should be on its own line.
-
-    ```rb
-     expect(file.sheet("Prenotazioni").column(col_index("payment_hpp_url"))).to include(*ReservationPayment.all.pluck(:hpp_url)) }
-    ```
-
-  * **Line # 1508 - convention:** RSpec/EmptyLineAfterExample: Add an empty line after `it`.
-
-    ```rb
-            it { expect(file.sheet("Prenotazioni").column(col_index("payment_status"))).to include("todo", "paid") }
-    ```
-
-  * **Line # 1508 - convention:** Layout/SpaceBeforeBlockBraces: Space missing to the left of {.
-
-    ```rb
-            it { expect(col_values("updated_at")).to match_array(Reservation.all.map{|r| r.updated_at.strftime("%e/%m/%Y %k:%M").strip }) }
-    ```
-
-  * **Line # 1508 - convention:** Layout/SpaceInsideBlockBraces: Space between { and | missing.
-
-    ```rb
-            it { expect(col_values("updated_at")).to match_array(Reservation.all.map{|r| r.updated_at.strftime("%e/%m/%Y %k:%M").strip }) }
-    ```
-
-  * **Line # 1508 - convention:** Layout/LineLength: Line is too long. [135/120]
-
-    ```rb
-            it { expect(col_values("updated_at")).to match_array(Reservation.all.map{|r| r.updated_at.strftime("%e/%m/%Y %k:%M").strip }) }
-    ```
-
-  * **Line # 1509 - convention:** Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
-
-    ```rb
-            it { expect(col_values("datetime")).to match_array(Reservation.all.map {|r| ...
-    ```
-
-  * **Line # 1509 - convention:** Layout/SpaceInsideBlockBraces: Space between { and | missing.
-
-    ```rb
-            it { expect(col_values("datetime")).to match_array(Reservation.all.map {|r|
-    ```
-
-  * **Line # 1509 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-            it { expect(col_values("datetime")).to match_array(Reservation.all.map {|r|
-    ```
-
-  * **Line # 1510 - convention:** Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-
-    ```rb
-     expect(file.sheet("Prenotazioni").column(col_index("id"))).to contain_exactly("id", *reservations.map(&:id))
-    ```
-
-  * **Line # 1510 - convention:** RSpec/EmptyLineAfterExample: Add an empty line after `it`.
-
-    ```rb
-     r.datetime.strftime("%e/%m/%Y %k:%M").strip }) }
-    ```
-
-  * **Line # 1510 - convention:** Layout/IndentationWidth: Use 2 (not -6) spaces for indentation.
-
-    ```rb
-      expect(file.sheet("Prenotazioni").column(col_index("id"))).to contain_exactly("id", *reservations.map(&:id))
-    ```
-
-  * **Line # 1510 - convention:** Layout/BlockEndNewline: Expression at 1510, 46 should be on its own line.
-
-    ```rb
-     r.datetime.strftime("%e/%m/%Y %k:%M").strip }) }
-    ```
-
-  * **Line # 1510 - convention:** Layout/BlockEndNewline: Expression at 1510, 49 should be on its own line.
-
-    ```rb
-     r.datetime.strftime("%e/%m/%Y %k:%M").strip }) }
-    ```
-
-  * **Line # 1511 - convention:** Layout/BlockAlignment: `}` at 1511, 0 is not aligned with `it {` at 1509, 8.
-
-    ```rb
-    }
-    ```
-
-  * **Line # 1511 - convention:** Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
-
-    ```rb
-            it { expect(col_values("created_at")).to match_array(Reservation.all.map {|r| ...
-    ```
-
-  * **Line # 1511 - convention:** Layout/SpaceInsideBlockBraces: Space between { and | missing.
-
-    ```rb
-            it { expect(col_values("created_at")).to match_array(Reservation.all.map {|r|
-    ```
-
-  * **Line # 1511 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-            it { expect(col_values("created_at")).to match_array(Reservation.all.map {|r|
-    ```
-
-  * **Line # 1512 - convention:** RSpec/EmptyLineAfterExample: Add an empty line after `it`.
-
-    ```rb
-     r.created_at.strftime("%e/%m/%Y %k:%M").strip }) }
-    ```
-
-  * **Line # 1512 - convention:** Layout/BlockEndNewline: Expression at 1512, 48 should be on its own line.
-
-    ```rb
-     r.created_at.strftime("%e/%m/%Y %k:%M").strip }) }
-    ```
-
-  * **Line # 1512 - convention:** Layout/BlockEndNewline: Expression at 1512, 51 should be on its own line.
-
-    ```rb
-     r.created_at.strftime("%e/%m/%Y %k:%M").strip }) }
-    ```
-
-  * **Line # 1513 - convention:** Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
-
-    ```rb
-            it { expect(col_values("updated_at")).to match_array(Reservation.all.map {|r| ...
-    ```
-
-  * **Line # 1513 - convention:** Layout/SpaceInsideBlockBraces: Space between { and | missing.
-
-    ```rb
-            it { expect(col_values("updated_at")).to match_array(Reservation.all.map {|r|
-    ```
-
-  * **Line # 1513 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-            it { expect(col_values("updated_at")).to match_array(Reservation.all.map {|r|
-    ```
-
-  * **Line # 1514 - convention:** Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-
-    ```rb
-     expect(file.sheet("Prenotazioni").column(col_index("payment_hpp_url"))).to include(*ReservationPayment.all.pluck(:hpp_url))
-    ```
-
-  * **Line # 1514 - convention:** Layout/IndentationWidth: Use 2 (not -6) spaces for indentation.
-
-    ```rb
-      expect(file.sheet("Prenotazioni").column(col_index("payment_hpp_url"))).to include(*ReservationPayment.all.pluck(:hpp_url))
-    ```
-
-  * **Line # 1514 - convention:** Layout/BlockEndNewline: Expression at 1514, 48 should be on its own line.
-
-    ```rb
-     r.updated_at.strftime("%e/%m/%Y %k:%M").strip }) }
-    ```
-
-  * **Line # 1514 - convention:** Layout/BlockEndNewline: Expression at 1514, 51 should be on its own line.
-
-    ```rb
-     r.updated_at.strftime("%e/%m/%Y %k:%M").strip }) }
-    ```
-
   * **Line # 1514 - convention:** Layout/LineLength: Line is too long. [133/120]
 
     ```rb
               expect(file.sheet("Prenotazioni").column(col_index("payment_hpp_url"))).to include(*ReservationPayment.all.pluck(:hpp_url))
-    ```
-
-  * **Line # 1515 - convention:** Layout/BlockAlignment: `}` at 1515, 0 is not aligned with `it {` at 1513, 8.
-
-    ```rb
-    }
-    ```
-
-  * **Line # 1519 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-            it { 
-    ```
-
-  * **Line # 1520 - convention:** Layout/IndentationWidth: Use 2 (not 10) spaces for indentation.
-
-    ```rb
-              expect(col_values("datetime")).to match_array(Reservation.all.map { |r|
-    ```
-
-  * **Line # 1520 - convention:** Layout/IndentationWidth: Use 2 (not -6) spaces for indentation.
-
-    ```rb
-      expect(col_values("datetime")).to match_array(Reservation.all.map do |r|
-    ```
-
-  * **Line # 1520 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-              expect(col_values("datetime")).to match_array(Reservation.all.map { |r|
-    ```
-
-  * **Line # 1521 - convention:** Layout/IndentationWidth: Use 2 (not -47) spaces for indentation.
-
-    ```rb
-             r.datetime.strftime("%e/%m/%Y %k:%M").strip ...
-    ```
-
-  * **Line # 1522 - convention:** Layout/BlockAlignment: `}` at 1522, 0 is not aligned with `Reservation.all.map { |r|` at 1520, 56 or `expect(col_values("datetime")).to match_array(Reservation.all.map { |r|` at 1520, 10.
-
-    ```rb
-    })
-    ```
-
-  * **Line # 1522 - convention:** Layout/BlockAlignment: `end` at 1522, 56 is not aligned with `Reservation.all.map do |r|` at 1520, 48 or `expect(col_values("datetime")).to match_array(Reservation.all.map do |r|` at 1520, 2.
-
-    ```rb
-                                                            end)
-    ```
-
-  * **Line # 1523 - convention:** Layout/BlockAlignment: `}` at 1523, 0 is not aligned with `it { ` at 1519, 8.
-
-    ```rb
-    }
-    ```
-
-  * **Line # 1525 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-            it { 
-    ```
-
-  * **Line # 1526 - convention:** Layout/IndentationWidth: Use 2 (not 10) spaces for indentation.
-
-    ```rb
-              expect(col_values("created_at")).to match_array(Reservation.all.map { |r|
-    ```
-
-  * **Line # 1526 - convention:** Layout/IndentationWidth: Use 2 (not -6) spaces for indentation.
-
-    ```rb
-      expect(col_values("created_at")).to match_array(Reservation.all.map do |r|
-    ```
-
-  * **Line # 1526 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-              expect(col_values("created_at")).to match_array(Reservation.all.map { |r|
-    ```
-
-  * **Line # 1527 - convention:** Layout/IndentationWidth: Use 2 (not -49) spaces for indentation.
-
-    ```rb
-             r.created_at.strftime("%e/%m/%Y %k:%M").strip ...
-    ```
-
-  * **Line # 1528 - convention:** Layout/BlockAlignment: `}` at 1528, 0 is not aligned with `Reservation.all.map { |r|` at 1526, 58 or `expect(col_values("created_at")).to match_array(Reservation.all.map { |r|` at 1526, 10.
-
-    ```rb
-    })
-    ```
-
-  * **Line # 1528 - convention:** Layout/BlockAlignment: `end` at 1528, 58 is not aligned with `Reservation.all.map do |r|` at 1526, 50 or `expect(col_values("created_at")).to match_array(Reservation.all.map do |r|` at 1526, 2.
-
-    ```rb
-                                                              end)
-    ```
-
-  * **Line # 1529 - convention:** Layout/BlockAlignment: `}` at 1529, 0 is not aligned with `it { ` at 1525, 8.
-
-    ```rb
-    }
-    ```
-
-  * **Line # 1531 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-            it { 
-    ```
-
-  * **Line # 1532 - convention:** Layout/IndentationWidth: Use 2 (not 10) spaces for indentation.
-
-    ```rb
-              expect(col_values("updated_at")).to match_array(Reservation.all.map { |r|
-    ```
-
-  * **Line # 1532 - convention:** Layout/IndentationWidth: Use 2 (not -6) spaces for indentation.
-
-    ```rb
-      expect(col_values("updated_at")).to match_array(Reservation.all.map do |r|
-    ```
-
-  * **Line # 1532 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-              expect(col_values("updated_at")).to match_array(Reservation.all.map { |r|
-    ```
-
-  * **Line # 1533 - convention:** Layout/IndentationWidth: Use 2 (not -49) spaces for indentation.
-
-    ```rb
-             r.updated_at.strftime("%e/%m/%Y %k:%M").strip ...
-    ```
-
-  * **Line # 1534 - convention:** Layout/BlockAlignment: `}` at 1534, 0 is not aligned with `Reservation.all.map { |r|` at 1532, 58 or `expect(col_values("updated_at")).to match_array(Reservation.all.map { |r|` at 1532, 10.
-
-    ```rb
-    })
-    ```
-
-  * **Line # 1534 - convention:** Layout/BlockAlignment: `end` at 1534, 58 is not aligned with `Reservation.all.map do |r|` at 1532, 50 or `expect(col_values("updated_at")).to match_array(Reservation.all.map do |r|` at 1532, 2.
-
-    ```rb
-                                                              end)
-    ```
-
-  * **Line # 1535 - convention:** Layout/BlockAlignment: `}` at 1535, 0 is not aligned with `it { ` at 1531, 8.
-
-    ```rb
-    }
-    ```
-
-  * **Line # 1540 - convention:** Rails/DurationArithmetic: Do not add or subtract duration.
-
-    ```rb
-              create(:reservation, datetime: Time.zone.now - 2.months),
-    ```
-
-  * **Line # 1541 - convention:** Rails/DurationArithmetic: Do not add or subtract duration.
-
-    ```rb
-              create(:reservation, datetime: Time.zone.now - 1.day),
-    ```
-
-  * **Line # 1542 - convention:** Rails/DurationArithmetic: Do not add or subtract duration.
-
-    ```rb
-              create(:reservation, datetime: Time.zone.now + 1.day),
-    ```
-
-  * **Line # 1542 - convention:** Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
-
-    ```rb
-              create(:reservation, datetime: Time.zone.now + 1.day),
-    ```
-
-  * **Line # 1547 - convention:** RSpec/EmptyLineAfterHook: Add an empty line after `before`.
-
-    ```rb
-            before { req }
-    ```
-
-  * **Line # 1555 - convention:** RSpec/EmptyLineAfterHook: Add an empty line after `before`.
-
-    ```rb
-            before { req }
-    ```
-
-  * **Line # 1564 - convention:** RSpec/EmptyLineAfterHook: Add an empty line after `before`.
-
-    ```rb
-            before { req }
-    ```
-
-  * **Line # 1573 - convention:** RSpec/EmptyLineAfterHook: Add an empty line after `before`.
-
-    ```rb
-            before { req }
     ```
 
   * **Line # 1582 - convention:** RSpec/MissingExampleGroupArgument: The first argument to `context` should not be empty.
@@ -14527,24 +12643,6 @@
 
     ```rb
           context do ...
-    ```
-
-  * **Line # 1602 - convention:** RSpec/MatchArray: Prefer `contain_exactly` when matching an array literal.
-
-    ```rb
-            it { expect(col_values("id")).to match_array([@middle.id]) }
-    ```
-
-  * **Line # 1611 - convention:** RSpec/MatchArray: Prefer `contain_exactly` when matching an array literal.
-
-    ```rb
-            it { expect(col_values("id")).to match_array([@middle.id, @new.id]) }
-    ```
-
-  * **Line # 1620 - convention:** RSpec/MatchArray: Prefer `contain_exactly` when matching an array literal.
-
-    ```rb
-            it { expect(col_values("id")).to match_array([@old.id, @middle.id, @new.id]) }
     ```
 
   * **Line # 1633 - convention:** RSpec/InstanceVariable: Avoid instance variables - use let, a method call, or a local variable (if possible).
@@ -17014,60 +15112,54 @@
             I18n.locale = @initial_lang
     ```
 
-### spec/controllers/v1/public_data_controller_spec.rb - (3 offenses)
+### spec/controllers/v1/public_data_controller_spec.rb - (6 offenses)
   * **Line # 5 - convention:** RSpec/Rails/InferredSpecType: Remove redundant spec type.
 
     ```rb
     RSpec.describe V1::PublicDataController, type: :controller do
     ```
 
-  * **Line # 28 - convention:** RSpec/AnyInstance: Avoid stubbing using `allow_any_instance_of`.
+  * **Line # 32 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
+
+    ```rb
+          %w[address email phone whatsapp_number facebook_url instagram_url tripadvisor_url homepage_url 
+    ```
+
+  * **Line # 32 - convention:** Layout/LineLength: Line is too long. [126/120]
+
+    ```rb
+          %w[address email phone whatsapp_number facebook_url instagram_url tripadvisor_url homepage_url google_url].each do |key|
+    ```
+
+  * **Line # 33 - convention:** Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
+
+    ```rb
+    google_url].each do |key|
+    ```
+
+  * **Line # 90 - convention:** RSpec/AnyInstance: Avoid stubbing using `allow_any_instance_of`.
 
     ```rb
             allow_any_instance_of(ActionDispatch::Request).to receive(:cookies).and_return(Reservation::PUBLIC_CREATE_COOKIE => secret)
     ```
 
-  * **Line # 28 - convention:** Layout/LineLength: Line is too long. [131/120]
+  * **Line # 90 - convention:** Layout/LineLength: Line is too long. [131/120]
 
     ```rb
             allow_any_instance_of(ActionDispatch::Request).to receive(:cookies).and_return(Reservation::PUBLIC_CREATE_COOKIE => secret)
     ```
 
-### spec/controllers/v1/reservations_controller_spec.rb - (179 offenses)
+### spec/controllers/v1/reservations_controller_spec.rb - (140 offenses)
   * **Line # 5 - convention:** RSpec/Rails/InferredSpecType: Remove redundant spec type.
 
     ```rb
     RSpec.describe V1::ReservationsController, type: :controller do
     ```
 
-  * **Line # 22 - convention:** Style/TrailingCommaInHashLiteral: Avoid comma after the last item of a hash.
-
-    ```rb
-            lang:,
-    ```
-
   * **Line # 34 - convention:** Rails/TimeZone: Do not use `Time.now` without zone. Use one of `Time.zone.now`, `Time.current`, `Time.now.in_time_zone`, `Time.now.utc`, `Time.now.getlocal`, `Time.now.xmlschema`, `Time.now.iso8601`, `Time.now.jisx0301`, `Time.now.rfc3339`, `Time.now.httpdate`, `Time.now.to_i`, `Time.now.to_f` instead.
 
     ```rb
         let(:date) { Time.now.beginning_of_week + 7.days }
-    ```
-
-  * **Line # 39 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          create(:reservation_turn, starts_at: DateTime.parse("00:01"), ends_at: DateTime.parse("23:59"), 
-    ```
-
-  * **Line # 39 - convention:** Layout/LineLength: Line is too long. [143/120]
-
-    ```rb
-          create(:reservation_turn, starts_at: DateTime.parse("00:01"), ends_at: DateTime.parse("23:59"), weekday: Time.now.beginning_of_week.wday)
-    ```
-
-  * **Line # 40 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    weekday: Time.now.beginning_of_week.wday)
     ```
 
   * **Line # 40 - convention:** Rails/TimeZone: Do not use `Time.now` without zone. Use one of `Time.zone.now`, `Time.current`, `Time.now.in_time_zone`, `Time.now.utc`, `Time.now.getlocal`, `Time.now.xmlschema`, `Time.now.iso8601`, `Time.now.jisx0301`, `Time.now.rfc3339`, `Time.now.httpdate`, `Time.now.to_i`, `Time.now.to_f` instead.
@@ -17082,12 +15174,6 @@
           expect(subject).to route(:post, "/v1/reservations").to(format: :json, action: :create,
     ```
 
-  * **Line # 59 - convention:** Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
-
-    ```rb
-          { name: :saturday, wday: 6 },
-    ```
-
   * **Line # 62 - convention:** Layout/LineLength: Line is too long. [129/120]
 
     ```rb
@@ -17100,1019 +15186,815 @@
             let!(:turn) do
     ```
 
-  * **Line # 64 - convention:** Layout/LineLength: Line is too long. [131/120]
+  * **Line # 74 - convention:** RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
 
     ```rb
-              create(:reservation_turn, starts_at: DateTime.parse("00:01"), ends_at: DateTime.parse("23:59"), weekday: scenario[:wday])
-    ```
-
-  * **Line # 65 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-              create(:reservation_turn, starts_at: DateTime.parse("00:01"), ends_at: DateTime.parse("23:59"), 
-    ```
-
-  * **Line # 66 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    weekday: scenario[:wday])
-    ```
-
-  * **Line # 67 - convention:** Layout/SpaceBeforeBlockBraces: Space missing to the left of {.
-
-    ```rb
-            it { expect { req }.to change { Reservation.all.filter{|r| r.turn.weekday == scenario[:wday] }.count }.by(1) }
-    ```
-
-  * **Line # 67 - convention:** Layout/SpaceInsideBlockBraces: Space between { and | missing.
-
-    ```rb
-            it { expect { req }.to change { Reservation.all.filter{|r| r.turn.weekday == scenario[:wday] }.count }.by(1) }
-    ```
-
-  * **Line # 69 - convention:** Layout/SpaceInsideBlockBraces: Space between { and | missing.
-
-    ```rb
-            it { expect { req }.to change { Reservation.all.filter {|r| r.turn.weekday == scenario[:wday] }.count }.by(1) }
-    ```
-
-  * **Line # 73 - convention:** Layout/LineLength: Line is too long. [138/120]
-
-    ```rb
-            create(:holiday, from_timestamp: 10.days.ago.strftime("%Y-%m-%d"), to_timestamp: 10.days.from_now.strftime("%Y-%m-%d")).tap do |h|
+          let!(:turn) do
     ```
 
   * **Line # 75 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
 
     ```rb
-            create(:holiday, from_timestamp: 10.days.ago.strftime("%Y-%m-%d"), 
+            create(:reservation_turn, weekday: Time.zone.now.wday, starts_at: DateTime.parse("12:00"), 
+    ```
+
+  * **Line # 75 - convention:** Layout/LineLength: Line is too long. [132/120]
+
+    ```rb
+            create(:reservation_turn, weekday: Time.zone.now.wday, starts_at: DateTime.parse("12:00"), ends_at: DateTime.parse("15:00"))
     ```
 
   * **Line # 76 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
 
     ```rb
-    to_timestamp: 10.days.from_now.strftime("%Y-%m-%d")).tap do |h|
+    ends_at: DateTime.parse("15:00"))
     ```
 
-  * **Line # 88 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+  * **Line # 88 - convention:** RSpec/ScatteredLet: Group all let/let! blocks in the example group together.
 
     ```rb
-          it do
+          let(:datetime) { "#{date.to_date} #{time}" }
     ```
 
-  * **Line # 95 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+  * **Line # 89 - convention:** RSpec/ScatteredLet: Group all let/let! blocks in the example group together.
 
     ```rb
-              from_timestamp: 10.days.ago.strftime("%Y-%m-%d"), ...
+          let(:date) { Time.zone.now }
     ```
 
-  * **Line # 100 - convention:** Layout/ClosingParenthesisIndentation: Indent `)` to column 8 (not 10)
+  * **Line # 90 - convention:** RSpec/ScatteredLet: Group all let/let! blocks in the example group together.
 
     ```rb
-              ).tap do |h|
+          let(:time) { "12:00" }
     ```
 
-  * **Line # 100 - convention:** Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the same line as the last argument when opening brace is on the same line as the first argument.
-
-    ```rb
-              ).tap do |h|
-    ```
-
-  * **Line # 114 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
-
-    ```rb
-          it do
-    ```
-
-  * **Line # 121 - convention:** Layout/LineLength: Line is too long. [122/120]
-
-    ```rb
-        context "when a 'weekly' Holiday exists (closed only on the morning while the reservation is made for the evening)" do
-    ```
-
-  * **Line # 122 - convention:** RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
-
-    ```rb
-          let!(:holiday) do
-    ```
-
-  * **Line # 122 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-              from_timestamp: 10.days.ago.strftime("%Y-%m-%d"), ...
-    ```
-
-  * **Line # 127 - convention:** Layout/ClosingParenthesisIndentation: Indent `)` to column 8 (not 10)
-
-    ```rb
-              ).tap do |h|
-    ```
-
-  * **Line # 127 - convention:** Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the same line as the last argument when opening brace is on the same line as the first argument.
-
-    ```rb
-              ).tap do |h|
-    ```
-
-  * **Line # 135 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
-
-    ```rb
-          it do
-    ```
-
-  * **Line # 150 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
-
-    ```rb
-              it do
-    ```
-
-  * **Line # 160 - convention:** RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
-
-    ```rb
-          let!(:holiday) do
-    ```
-
-  * **Line # 161 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-              from_timestamp: 10.days.ago.strftime("%Y-%m-%d"), ...
-    ```
-
-  * **Line # 166 - convention:** Layout/ClosingParenthesisIndentation: Indent `)` to column 8 (not 10)
-
-    ```rb
-              ).tap do |h|
-    ```
-
-  * **Line # 166 - convention:** Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the same line as the last argument when opening brace is on the same line as the first argument.
-
-    ```rb
-              ).tap do |h|
-    ```
-
-  * **Line # 173 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
-
-    ```rb
-          it do
-    ```
-
-  * **Line # 183 - convention:** RSpec/EmptyLineAfterExample: Add an empty line after `it`.
-
-    ```rb
-          it { expect { req }.not_to(change { Reservation.count }) }
-    ```
-
-  * **Line # 183 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
-
-    ```rb
-          it { expect { req }.not_to(change { Reservation.count }) }
-    ```
-
-  * **Line # 185 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
-
-    ```rb
-          it do
-    ```
-
-  * **Line # 196 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
-
-    ```rb
-            it { expect { req }.to(change { Reservation.count }.by(1)) }
-    ```
-
-  * **Line # 199 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
-
-    ```rb
-            it do
-    ```
-
-  * **Line # 211 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
-
-    ```rb
-            it { expect { req }.not_to(change { Reservation.count }) }
-    ```
-
-  * **Line # 213 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
-
-    ```rb
-            it do
-    ```
-
-  * **Line # 230 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
-
-    ```rb
-            it { expect { req }.to change { Reservation.count }.by(1) }
-    ```
-
-  * **Line # 232 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
-
-    ```rb
-            it do
-    ```
-
-  * **Line # 242 - warning:** Lint/UnusedBlockArgument: Unused block argument - `request`. You can omit the argument if you don't care about it.
-
-    ```rb
-            stub_request(:post, "#{Config.nexi_api_url}/#{Config.nexi_hpp_payment_path}").to_return do |request|
-    ```
-
-  * **Line # 254 - convention:** Layout/LineLength: Line is too long. [141/120]
-
-    ```rb
-                      description: "Only one of trackId or merchantTransactionCode fields can be provided - 2941fe36-e1db-4797-a58f-8c8ca2364f69"
-    ```
-
-  * **Line # 273 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
-
-    ```rb
-            it { expect { req }.not_to(change { Reservation.count }) }
-    ```
-
-  * **Line # 274 - convention:** RSpec/ExpectChange: Prefer `change(ReservationPayment, :count)`.
-
-    ```rb
-            it { expect { req }.not_to(change { ReservationPayment.count }) }
-    ```
-
-  * **Line # 275 - convention:** RSpec/EmptyLineAfterExample: Add an empty line after `it`.
-
-    ```rb
-            it { expect { req }.to(change { Nexi::HttpRequest.where(http_code: 400).count }.by(1)) }
-    ```
-
-  * **Line # 275 - convention:** RSpec/ExpectChange: Prefer `change(Nexi::HttpRequest, :count)`.
-
-    ```rb
-            it { expect { req }.to(change { Nexi::HttpRequest.count }.by(1)) }
-    ```
-
-  * **Line # 278 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
-
-    ```rb
-            it do
-    ```
-
-  * **Line # 286 - warning:** Lint/UnusedBlockArgument: Unused block argument - `request`. You can omit the argument if you don't care about it.
-
-    ```rb
-            stub_request(:post, "#{Config.nexi_api_url}/#{Config.nexi_hpp_payment_path}").to_return do |request|
-    ```
-
-  * **Line # 289 - convention:** Layout/LineLength: Line is too long. [148/120]
-
-    ```rb
-                  hostedPage: "https://xpaysandbox.nexigroup.com/monetaweb/page/hosted/2/html?paymentid=#{Array.new(18) { (0..9).to_a.sample }.join()}",
-    ```
-
-  * **Line # 289 - convention:** Style/MethodCallWithoutArgsParentheses: Do not use parentheses for method calls with no arguments.
-
-    ```rb
-                  hostedPage: "https://xpaysandbox.nexigroup.com/monetaweb/page/hosted/2/html?paymentid=#{Array.new(18) { (0..9).to_a.sample }.join()}",
-    ```
-
-  * **Line # 291 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-                  hostedPage: "https://xpaysandbox.nexigroup.com/monetaweb/page/hosted/2/html?paymentid=#{Array.new(18) {
-    ```
-
-  * **Line # 292 - convention:** Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-
-    ```rb
-     (0..9).to_a.sample
-    ```
-
-  * **Line # 292 - convention:** Layout/IndentationWidth: Use 2 (not -100) spaces for indentation.
-
-    ```rb
-      (0..9).to_a.sample ...
-    ```
-
-  * **Line # 292 - convention:** Layout/BlockEndNewline: Expression at 292, 21 should be on its own line.
-
-    ```rb
-     (0..9).to_a.sample }.join}",
-    ```
-
-  * **Line # 292 - convention:** Layout/LineLength: Line is too long. [122/120]
-
-    ```rb
-                                                                                                            (0..9).to_a.sample
-    ```
-
-  * **Line # 293 - convention:** Layout/BlockAlignment: `}` at 293, 0 is not aligned with `Array.new(18) {` at 291, 102 or `hostedPage: "https://xpaysandbox.nexigroup.com/monetaweb/page/hosted/2/html?paymentid=#{Array.new(18) {` at 291, 14.
-
-    ```rb
-    }.join}",
-    ```
-
-  * **Line # 312 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
-
-    ```rb
-            it { expect { req }.to(change { Reservation.count }.by(1)) }
-    ```
-
-  * **Line # 313 - convention:** RSpec/ExpectChange: Prefer `change(ReservationPayment, :count)`.
-
-    ```rb
-            it { expect { req }.to(change { ReservationPayment.count }.by(1)) }
-    ```
-
-  * **Line # 314 - convention:** RSpec/ExpectChange: Prefer `change(Nexi::HttpRequest, :count)`.
-
-    ```rb
-            it { expect { req }.to(change { Nexi::HttpRequest.count }.by(1)) }
-    ```
-
-  * **Line # 316 - convention:** RSpec/ExampleLength: Example has too many lines. [8/5]
-
-    ```rb
-            it do ...
-    ```
-
-  * **Line # 316 - convention:** RSpec/MultipleExpectations: Example has too many expectations [7/1].
-
-    ```rb
-            it do
-    ```
-
-  * **Line # 327 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
-
-    ```rb
-            it do
-    ```
-
-  * **Line # 330 - convention:** Style/TrailingCommaInHashLiteral: Avoid comma after the last item of a hash.
-
-    ```rb
-              { lang: "it", code: "ita", },
-    ```
-
-  * **Line # 331 - convention:** Style/TrailingCommaInHashLiteral: Avoid comma after the last item of a hash.
-
-    ```rb
-              { lang: "en", code: "eng", },
-    ```
-
-  * **Line # 331 - convention:** Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
-
-    ```rb
-              { lang: "en", code: "eng", },
-    ```
-
-  * **Line # 340 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
-
-    ```rb
-                it { expect { req }.to(change { Reservation.count }.by(1)) }
-    ```
-
-  * **Line # 343 - convention:** RSpec/ExpectChange: Prefer `change(Nexi::HttpRequest, :count)`.
-
-    ```rb
-                it { expect { req }.to(change { Nexi::HttpRequest.count }.by(1)) }
-    ```
-
-  * **Line # 345 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
-
-    ```rb
-                it do
-    ```
-
-  * **Line # 358 - convention:** Rails/TimeZone: Do not use `Time.now` without zone. Use one of `Time.zone.now`, `Time.current`, `Time.now.in_time_zone`, `Time.now.utc`, `Time.now.getlocal`, `Time.now.xmlschema`, `Time.now.iso8601`, `Time.now.jisx0301`, `Time.now.rfc3339`, `Time.now.httpdate`, `Time.now.to_i`, `Time.now.to_f` instead.
-
-    ```rb
-                grp.dates.create(reservation_turn: turn, date: Time.now.beginning_of_week + 7.days)
-    ```
-
-  * **Line # 359 - convention:** Rails/TimeZone: Do not use `Time.now` without zone. Use one of `Time.zone.now`, `Time.current`, `Time.now.in_time_zone`, `Time.now.utc`, `Time.now.getlocal`, `Time.now.xmlschema`, `Time.now.iso8601`, `Time.now.jisx0301`, `Time.now.rfc3339`, `Time.now.httpdate`, `Time.now.to_i`, `Time.now.to_f` instead.
-
-    ```rb
-                grp.dates.create(reservation_turn: turn, date: Time.now.beginning_of_week + 14.days)
-    ```
-
-  * **Line # 360 - convention:** Rails/TimeZone: Do not use `Time.now` without zone. Use one of `Time.zone.now`, `Time.current`, `Time.now.in_time_zone`, `Time.now.utc`, `Time.now.getlocal`, `Time.now.xmlschema`, `Time.now.iso8601`, `Time.now.jisx0301`, `Time.now.rfc3339`, `Time.now.httpdate`, `Time.now.to_i`, `Time.now.to_f` instead.
-
-    ```rb
-                grp.dates.create(reservation_turn: turn, date: Time.now.beginning_of_week + 70.days)
-    ```
-
-  * **Line # 364 - convention:** Layout/LineLength: Line is too long. [122/120]
-
-    ```rb
-                create(:reservation_turn, starts_at: DateTime.parse("00:01"), ends_at: DateTime.parse("23:59"), weekday: wday)
-    ```
-
-  * **Line # 367 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-                create(:reservation_turn, starts_at: DateTime.parse("00:01"), ends_at: DateTime.parse("23:59"), 
-    ```
-
-  * **Line # 368 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    weekday: wday)
-    ```
-
-  * **Line # 373 - convention:** Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
-
-    ```rb
-              Time.now.beginning_of_week + 70.days,
-    ```
-
-  * **Line # 376 - convention:** Rails/TimeZone: Do not use `Time.now` without zone. Use one of `Time.zone.now`, `Time.current`, `Time.now.in_time_zone`, `Time.now.utc`, `Time.now.getlocal`, `Time.now.xmlschema`, `Time.now.iso8601`, `Time.now.jisx0301`, `Time.now.rfc3339`, `Time.now.httpdate`, `Time.now.to_i`, `Time.now.to_f` instead.
-
-    ```rb
-              Time.now.beginning_of_week + 7.days,
-    ```
-
-  * **Line # 377 - convention:** Rails/TimeZone: Do not use `Time.now` without zone. Use one of `Time.zone.now`, `Time.current`, `Time.now.in_time_zone`, `Time.now.utc`, `Time.now.getlocal`, `Time.now.xmlschema`, `Time.now.iso8601`, `Time.now.jisx0301`, `Time.now.rfc3339`, `Time.now.httpdate`, `Time.now.to_i`, `Time.now.to_f` instead.
-
-    ```rb
-              Time.now.beginning_of_week + 14.days,
-    ```
-
-  * **Line # 378 - convention:** Rails/TimeZone: Do not use `Time.now` without zone. Use one of `Time.zone.now`, `Time.current`, `Time.now.in_time_zone`, `Time.now.utc`, `Time.now.getlocal`, `Time.now.xmlschema`, `Time.now.iso8601`, `Time.now.jisx0301`, `Time.now.rfc3339`, `Time.now.httpdate`, `Time.now.to_i`, `Time.now.to_f` instead.
-
-    ```rb
-              Time.now.beginning_of_week + 70.days
-    ```
-
-  * **Line # 383 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
-
-    ```rb
-                it { expect { req }.to(change { Reservation.count }.by(1)) }
-    ```
-
-  * **Line # 384 - convention:** RSpec/ExpectChange: Prefer `change(ReservationPayment, :count)`.
-
-    ```rb
-                it { expect { req }.to(change { ReservationPayment.count }.by(1)) }
-    ```
-
-  * **Line # 385 - convention:** RSpec/ExpectChange: Prefer `change(Nexi::HttpRequest, :count)`.
-
-    ```rb
-                it { expect { req }.to(change { Nexi::HttpRequest.count }.by(1)) }
-    ```
-
-  * **Line # 387 - convention:** RSpec/ExampleLength: Example has too many lines. [8/5]
-
-    ```rb
-                it do ...
-    ```
-
-  * **Line # 387 - convention:** RSpec/MultipleExpectations: Example has too many expectations [7/1].
-
-    ```rb
-                it do
-    ```
-
-  * **Line # 398 - convention:** RSpec/ExampleLength: Example has too many lines. [6/5]
-
-    ```rb
-                it do ...
-    ```
-
-  * **Line # 398 - convention:** RSpec/MultipleExpectations: Example has too many expectations [5/1].
-
-    ```rb
-                it do
-    ```
-
-  * **Line # 407 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
-
-    ```rb
-                it do
-    ```
-
-  * **Line # 412 - convention:** Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
-
-    ```rb
-              Time.now.beginning_of_week + 8.days,
-    ```
-
-  * **Line # 416 - convention:** Rails/TimeZone: Do not use `Time.now` without zone. Use one of `Time.zone.now`, `Time.current`, `Time.now.in_time_zone`, `Time.now.utc`, `Time.now.getlocal`, `Time.now.xmlschema`, `Time.now.iso8601`, `Time.now.jisx0301`, `Time.now.rfc3339`, `Time.now.httpdate`, `Time.now.to_i`, `Time.now.to_f` instead.
-
-    ```rb
-              Time.now.beginning_of_week + 6.days,
-    ```
-
-  * **Line # 417 - convention:** Rails/TimeZone: Do not use `Time.now` without zone. Use one of `Time.zone.now`, `Time.current`, `Time.now.in_time_zone`, `Time.now.utc`, `Time.now.getlocal`, `Time.now.xmlschema`, `Time.now.iso8601`, `Time.now.jisx0301`, `Time.now.rfc3339`, `Time.now.httpdate`, `Time.now.to_i`, `Time.now.to_f` instead.
-
-    ```rb
-              Time.now.beginning_of_week + 8.days
-    ```
-
-  * **Line # 422 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
-
-    ```rb
-                it { expect { req }.to(change { Reservation.count }.by(1)) }
-    ```
-
-  * **Line # 423 - convention:** RSpec/ExpectChange: Prefer `change(ReservationPayment, :count)`.
-
-    ```rb
-                it { expect { req }.not_to(change { ReservationPayment.count }) }
-    ```
-
-  * **Line # 424 - convention:** RSpec/ExpectChange: Prefer `change(Nexi::HttpRequest, :count)`.
-
-    ```rb
-                it { expect { req }.not_to(change { Nexi::HttpRequest.count }) }
-    ```
-
-  * **Line # 426 - convention:** Layout/EmptyLines: Extra blank line detected.
+  * **Line # 92 - convention:** Layout/EmptyLines: Extra blank line detected.
 
     ```rb
      ...
     ```
 
-  * **Line # 436 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+  * **Line # 145 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+
+    ```rb
+          it do
+    ```
+
+  * **Line # 171 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+
+    ```rb
+          it do
+    ```
+
+  * **Line # 178 - convention:** Layout/LineLength: Line is too long. [122/120]
+
+    ```rb
+        context "when a 'weekly' Holiday exists (closed only on the morning while the reservation is made for the evening)" do
+    ```
+
+  * **Line # 179 - convention:** RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
+
+    ```rb
+          let!(:holiday) do
+    ```
+
+  * **Line # 192 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+
+    ```rb
+          it do
+    ```
+
+  * **Line # 207 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+
+    ```rb
+              it do
+    ```
+
+  * **Line # 217 - convention:** RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
+
+    ```rb
+          let!(:holiday) do
+    ```
+
+  * **Line # 230 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+
+    ```rb
+          it do
+    ```
+
+  * **Line # 240 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
+
+    ```rb
+          it { expect { req }.not_to(change { Reservation.count }) }
+    ```
+
+  * **Line # 242 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+
+    ```rb
+          it do
+    ```
+
+  * **Line # 253 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
+
+    ```rb
+            it { expect { req }.to(change { Reservation.count }.by(1)) }
+    ```
+
+  * **Line # 256 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+
+    ```rb
+            it do
+    ```
+
+  * **Line # 268 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
+
+    ```rb
+            it { expect { req }.not_to(change { Reservation.count }) }
+    ```
+
+  * **Line # 270 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+
+    ```rb
+            it do
+    ```
+
+  * **Line # 287 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
+
+    ```rb
+            it { expect { req }.to change { Reservation.count }.by(1) }
+    ```
+
+  * **Line # 289 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
+
+    ```rb
+            it do
+    ```
+
+  * **Line # 311 - convention:** Layout/LineLength: Line is too long. [141/120]
+
+    ```rb
+                      description: "Only one of trackId or merchantTransactionCode fields can be provided - 2941fe36-e1db-4797-a58f-8c8ca2364f69"
+    ```
+
+  * **Line # 330 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
+
+    ```rb
+            it { expect { req }.not_to(change { Reservation.count }) }
+    ```
+
+  * **Line # 331 - convention:** RSpec/ExpectChange: Prefer `change(ReservationPayment, :count)`.
+
+    ```rb
+            it { expect { req }.not_to(change { ReservationPayment.count }) }
+    ```
+
+  * **Line # 332 - convention:** RSpec/ExpectChange: Prefer `change(Nexi::HttpRequest, :count)`.
+
+    ```rb
+            it { expect { req }.to(change { Nexi::HttpRequest.count }.by(1)) }
+    ```
+
+  * **Line # 335 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+
+    ```rb
+            it do
+    ```
+
+  * **Line # 349 - convention:** Layout/LineLength: Line is too long. [122/120]
+
+    ```rb
+                                                                                                            (0..9).to_a.sample
+    ```
+
+  * **Line # 369 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
+
+    ```rb
+            it { expect { req }.to(change { Reservation.count }.by(1)) }
+    ```
+
+  * **Line # 370 - convention:** RSpec/ExpectChange: Prefer `change(ReservationPayment, :count)`.
+
+    ```rb
+            it { expect { req }.to(change { ReservationPayment.count }.by(1)) }
+    ```
+
+  * **Line # 371 - convention:** RSpec/ExpectChange: Prefer `change(Nexi::HttpRequest, :count)`.
+
+    ```rb
+            it { expect { req }.to(change { Nexi::HttpRequest.count }.by(1)) }
+    ```
+
+  * **Line # 373 - convention:** RSpec/ExampleLength: Example has too many lines. [8/5]
+
+    ```rb
+            it do ...
+    ```
+
+  * **Line # 373 - convention:** RSpec/MultipleExpectations: Example has too many expectations [7/1].
+
+    ```rb
+            it do
+    ```
+
+  * **Line # 384 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+
+    ```rb
+            it do
+    ```
+
+  * **Line # 397 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
+
+    ```rb
+                it { expect { req }.to(change { Reservation.count }.by(1)) }
+    ```
+
+  * **Line # 400 - convention:** RSpec/ExpectChange: Prefer `change(Nexi::HttpRequest, :count)`.
+
+    ```rb
+                it { expect { req }.to(change { Nexi::HttpRequest.count }.by(1)) }
+    ```
+
+  * **Line # 402 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
 
     ```rb
                 it do
     ```
 
-  * **Line # 456 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+  * **Line # 415 - convention:** Rails/TimeZone: Do not use `Time.now` without zone. Use one of `Time.zone.now`, `Time.current`, `Time.now.in_time_zone`, `Time.now.utc`, `Time.now.getlocal`, `Time.now.xmlschema`, `Time.now.iso8601`, `Time.now.jisx0301`, `Time.now.rfc3339`, `Time.now.httpdate`, `Time.now.to_i`, `Time.now.to_f` instead.
+
+    ```rb
+                grp.dates.create(reservation_turn: turn, date: Time.now.beginning_of_week + 7.days)
+    ```
+
+  * **Line # 416 - convention:** Rails/TimeZone: Do not use `Time.now` without zone. Use one of `Time.zone.now`, `Time.current`, `Time.now.in_time_zone`, `Time.now.utc`, `Time.now.getlocal`, `Time.now.xmlschema`, `Time.now.iso8601`, `Time.now.jisx0301`, `Time.now.rfc3339`, `Time.now.httpdate`, `Time.now.to_i`, `Time.now.to_f` instead.
+
+    ```rb
+                grp.dates.create(reservation_turn: turn, date: Time.now.beginning_of_week + 14.days)
+    ```
+
+  * **Line # 417 - convention:** Rails/TimeZone: Do not use `Time.now` without zone. Use one of `Time.zone.now`, `Time.current`, `Time.now.in_time_zone`, `Time.now.utc`, `Time.now.getlocal`, `Time.now.xmlschema`, `Time.now.iso8601`, `Time.now.jisx0301`, `Time.now.rfc3339`, `Time.now.httpdate`, `Time.now.to_i`, `Time.now.to_f` instead.
+
+    ```rb
+                grp.dates.create(reservation_turn: turn, date: Time.now.beginning_of_week + 70.days)
+    ```
+
+  * **Line # 433 - convention:** Rails/TimeZone: Do not use `Time.now` without zone. Use one of `Time.zone.now`, `Time.current`, `Time.now.in_time_zone`, `Time.now.utc`, `Time.now.getlocal`, `Time.now.xmlschema`, `Time.now.iso8601`, `Time.now.jisx0301`, `Time.now.rfc3339`, `Time.now.httpdate`, `Time.now.to_i`, `Time.now.to_f` instead.
+
+    ```rb
+              Time.now.beginning_of_week + 7.days,
+    ```
+
+  * **Line # 434 - convention:** Rails/TimeZone: Do not use `Time.now` without zone. Use one of `Time.zone.now`, `Time.current`, `Time.now.in_time_zone`, `Time.now.utc`, `Time.now.getlocal`, `Time.now.xmlschema`, `Time.now.iso8601`, `Time.now.jisx0301`, `Time.now.rfc3339`, `Time.now.httpdate`, `Time.now.to_i`, `Time.now.to_f` instead.
+
+    ```rb
+              Time.now.beginning_of_week + 14.days,
+    ```
+
+  * **Line # 435 - convention:** Rails/TimeZone: Do not use `Time.now` without zone. Use one of `Time.zone.now`, `Time.current`, `Time.now.in_time_zone`, `Time.now.utc`, `Time.now.getlocal`, `Time.now.xmlschema`, `Time.now.iso8601`, `Time.now.jisx0301`, `Time.now.rfc3339`, `Time.now.httpdate`, `Time.now.to_i`, `Time.now.to_f` instead.
+
+    ```rb
+              Time.now.beginning_of_week + 70.days
+    ```
+
+  * **Line # 440 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
+
+    ```rb
+                it { expect { req }.to(change { Reservation.count }.by(1)) }
+    ```
+
+  * **Line # 441 - convention:** RSpec/ExpectChange: Prefer `change(ReservationPayment, :count)`.
+
+    ```rb
+                it { expect { req }.to(change { ReservationPayment.count }.by(1)) }
+    ```
+
+  * **Line # 442 - convention:** RSpec/ExpectChange: Prefer `change(Nexi::HttpRequest, :count)`.
+
+    ```rb
+                it { expect { req }.to(change { Nexi::HttpRequest.count }.by(1)) }
+    ```
+
+  * **Line # 444 - convention:** RSpec/ExampleLength: Example has too many lines. [8/5]
+
+    ```rb
+                it do ...
+    ```
+
+  * **Line # 444 - convention:** RSpec/MultipleExpectations: Example has too many expectations [7/1].
+
+    ```rb
+                it do
+    ```
+
+  * **Line # 455 - convention:** RSpec/ExampleLength: Example has too many lines. [6/5]
+
+    ```rb
+                it do ...
+    ```
+
+  * **Line # 455 - convention:** RSpec/MultipleExpectations: Example has too many expectations [5/1].
+
+    ```rb
+                it do
+    ```
+
+  * **Line # 464 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+
+    ```rb
+                it do
+    ```
+
+  * **Line # 473 - convention:** Rails/TimeZone: Do not use `Time.now` without zone. Use one of `Time.zone.now`, `Time.current`, `Time.now.in_time_zone`, `Time.now.utc`, `Time.now.getlocal`, `Time.now.xmlschema`, `Time.now.iso8601`, `Time.now.jisx0301`, `Time.now.rfc3339`, `Time.now.httpdate`, `Time.now.to_i`, `Time.now.to_f` instead.
+
+    ```rb
+              Time.now.beginning_of_week + 6.days,
+    ```
+
+  * **Line # 474 - convention:** Rails/TimeZone: Do not use `Time.now` without zone. Use one of `Time.zone.now`, `Time.current`, `Time.now.in_time_zone`, `Time.now.utc`, `Time.now.getlocal`, `Time.now.xmlschema`, `Time.now.iso8601`, `Time.now.jisx0301`, `Time.now.rfc3339`, `Time.now.httpdate`, `Time.now.to_i`, `Time.now.to_f` instead.
+
+    ```rb
+              Time.now.beginning_of_week + 8.days
+    ```
+
+  * **Line # 479 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
+
+    ```rb
+                it { expect { req }.to(change { Reservation.count }.by(1)) }
+    ```
+
+  * **Line # 480 - convention:** RSpec/ExpectChange: Prefer `change(ReservationPayment, :count)`.
+
+    ```rb
+                it { expect { req }.not_to(change { ReservationPayment.count }) }
+    ```
+
+  * **Line # 481 - convention:** RSpec/ExpectChange: Prefer `change(Nexi::HttpRequest, :count)`.
+
+    ```rb
+                it { expect { req }.not_to(change { Nexi::HttpRequest.count }) }
+    ```
+
+  * **Line # 493 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+
+    ```rb
+                it do
+    ```
+
+  * **Line # 513 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
 
     ```rb
           it "creates a reservation" do
     ```
 
-  * **Line # 465 - convention:** Layout/LineLength: Line is too long. [121/120]
+  * **Line # 522 - convention:** Layout/LineLength: Line is too long. [121/120]
 
     ```rb
                                                                              "deliver_now", params: anything, args: anything)
     ```
 
-  * **Line # 483 - convention:** Layout/LineLength: Line is too long. [151/120]
-
-    ```rb
-              create(:reservation_turn, starts_at: DateTime.parse("00:01"), ends_at: DateTime.parse("23:59"), weekday: Time.now.beginning_of_week.wday + 1)
-    ```
-
-  * **Line # 486 - convention:** RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
+  * **Line # 543 - convention:** RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
 
     ```rb
             let!(:turn) do
     ```
 
-  * **Line # 486 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-              create(:reservation_turn, starts_at: DateTime.parse("00:01"), ends_at: DateTime.parse("23:59"), 
-    ```
-
-  * **Line # 487 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    weekday: Time.now.beginning_of_week.wday + 1)
-    ```
-
-  * **Line # 488 - convention:** Rails/TimeZone: Do not use `Time.now` without zone. Use one of `Time.zone.now`, `Time.current`, `Time.now.in_time_zone`, `Time.now.utc`, `Time.now.getlocal`, `Time.now.xmlschema`, `Time.now.iso8601`, `Time.now.jisx0301`, `Time.now.rfc3339`, `Time.now.httpdate`, `Time.now.to_i`, `Time.now.to_f` instead.
+  * **Line # 545 - convention:** Rails/TimeZone: Do not use `Time.now` without zone. Use one of `Time.zone.now`, `Time.current`, `Time.now.in_time_zone`, `Time.now.utc`, `Time.now.getlocal`, `Time.now.xmlschema`, `Time.now.iso8601`, `Time.now.jisx0301`, `Time.now.rfc3339`, `Time.now.httpdate`, `Time.now.to_i`, `Time.now.to_f` instead.
 
     ```rb
                                         weekday: Time.now.beginning_of_week.wday + 1)
     ```
 
-  * **Line # 491 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
+  * **Line # 548 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
 
     ```rb
             it "returns 422" do
     ```
 
-  * **Line # 502 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
+  * **Line # 559 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
 
     ```rb
             it "returns 422" do
     ```
 
-  * **Line # 513 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
+  * **Line # 570 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
 
     ```rb
             it { expect { req }.to(change { Reservation.count }.by(1)) }
     ```
 
-  * **Line # 530 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
+  * **Line # 587 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
 
     ```rb
             it { expect { req }.to(change { Reservation.count }.by(1)) }
     ```
 
-  * **Line # 557 - convention:** RSpec/MultipleExpectations: Example has too many expectations [4/1].
+  * **Line # 614 - convention:** RSpec/MultipleExpectations: Example has too many expectations [4/1].
 
     ```rb
                 it "returns 422" do
     ```
 
-  * **Line # 581 - convention:** RSpec/MultipleExpectations: Example has too many expectations [4/1].
+  * **Line # 638 - convention:** RSpec/MultipleExpectations: Example has too many expectations [4/1].
 
     ```rb
                 it "returns 422" do
     ```
 
-  * **Line # 596 - convention:** RSpec/MultipleExpectations: Example has too many expectations [4/1].
+  * **Line # 653 - convention:** RSpec/MultipleExpectations: Example has too many expectations [4/1].
 
     ```rb
             it "returns 422" do
     ```
 
-  * **Line # 609 - convention:** RSpec/MultipleExpectations: Example has too many expectations [4/1].
+  * **Line # 666 - convention:** RSpec/MultipleExpectations: Example has too many expectations [4/1].
 
     ```rb
             it "returns 422" do
     ```
 
-  * **Line # 621 - convention:** RSpec/MultipleExpectations: Example has too many expectations [4/1].
+  * **Line # 678 - convention:** RSpec/MultipleExpectations: Example has too many expectations [4/1].
 
     ```rb
             it "returns 422" do
     ```
 
-  * **Line # 634 - convention:** RSpec/MultipleExpectations: Example has too many expectations [4/1].
+  * **Line # 691 - convention:** RSpec/MultipleExpectations: Example has too many expectations [4/1].
 
     ```rb
             it "returns 422" do
     ```
 
-  * **Line # 646 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
+  * **Line # 703 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
 
     ```rb
             it "returns 422" do
     ```
 
-  * **Line # 657 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
+  * **Line # 714 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
 
     ```rb
             it "returns 422" do
     ```
 
-  * **Line # 668 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
+  * **Line # 725 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
 
     ```rb
             it "returns 422" do
     ```
 
-  * **Line # 679 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
+  * **Line # 736 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
 
     ```rb
             it "returns 422" do
     ```
 
-  * **Line # 690 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
+  * **Line # 747 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
 
     ```rb
             it "returns 422" do
     ```
 
-  * **Line # 701 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
+  * **Line # 758 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
 
     ```rb
             it "returns 422" do
     ```
 
-  * **Line # 712 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
+  * **Line # 769 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
 
     ```rb
             it { expect { req }.to change { Reservation.count }.by(1) }
     ```
 
-  * **Line # 714 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+  * **Line # 771 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
 
     ```rb
             it "returns 200 and create record" do
     ```
 
-  * **Line # 724 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
+  * **Line # 781 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
 
     ```rb
             it { expect { req }.to change { Reservation.count }.by(1) }
     ```
 
-  * **Line # 726 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+  * **Line # 783 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
 
     ```rb
             it "returns 200 and create record" do
     ```
 
-  * **Line # 736 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
+  * **Line # 793 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
 
     ```rb
             it { expect { req }.to change { Reservation.count }.by(1) }
     ```
 
-  * **Line # 738 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+  * **Line # 795 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
 
     ```rb
             it "returns 200 and create record" do
     ```
 
-  * **Line # 745 - convention:** Layout/LineLength: Line is too long. [129/120]
+  * **Line # 802 - convention:** Layout/LineLength: Line is too long. [129/120]
 
     ```rb
           context 'should create a reservation with "<firstname> <lastname>" as fullname and save the detail in the "other" field' do
     ```
 
-  * **Line # 749 - convention:** RSpec/MultipleExpectations: Example has too many expectations [4/1].
+  * **Line # 806 - convention:** RSpec/MultipleExpectations: Example has too many expectations [4/1].
 
     ```rb
             it "creates a reservation" do
     ```
 
-  * **Line # 762 - convention:** RSpec/MultipleExpectations: Example has too many expectations [4/1].
+  * **Line # 819 - convention:** RSpec/MultipleExpectations: Example has too many expectations [4/1].
 
     ```rb
             it "creates a reservation" do
     ```
 
-  * **Line # 775 - convention:** RSpec/MultipleExpectations: Example has too many expectations [4/1].
+  * **Line # 832 - convention:** RSpec/MultipleExpectations: Example has too many expectations [4/1].
 
     ```rb
             it "creates a reservation" do
     ```
 
-  * **Line # 784 - convention:** RSpec/RepeatedExampleGroupBody: Repeated context block body on line(s) [846]
+  * **Line # 841 - convention:** RSpec/RepeatedExampleGroupBody: Repeated context block body on line(s) [903]
 
     ```rb
           context "when email is empty" do ...
     ```
 
-  * **Line # 784 - convention:** RSpec/RepeatedExampleGroupDescription: Repeated context block description on line(s) [846]
+  * **Line # 841 - convention:** RSpec/RepeatedExampleGroupDescription: Repeated context block description on line(s) [903]
 
     ```rb
           context "when email is empty" do ...
     ```
 
-  * **Line # 787 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
+  * **Line # 844 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
 
     ```rb
             it { expect { req }.not_to(change { Reservation.count }) }
     ```
 
-  * **Line # 789 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
+  * **Line # 846 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
 
     ```rb
             it "returns 422" do
     ```
 
-  * **Line # 797 - convention:** RSpec/RepeatedExampleGroupBody: Repeated context block body on line(s) [859]
+  * **Line # 854 - convention:** RSpec/RepeatedExampleGroupBody: Repeated context block body on line(s) [916]
 
     ```rb
           context "when email is nil" do ...
     ```
 
-  * **Line # 797 - convention:** RSpec/RepeatedExampleGroupDescription: Repeated context block description on line(s) [859]
+  * **Line # 854 - convention:** RSpec/RepeatedExampleGroupDescription: Repeated context block description on line(s) [916]
 
     ```rb
           context "when email is nil" do ...
     ```
 
-  * **Line # 800 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
+  * **Line # 857 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
 
     ```rb
             it { expect { req }.not_to(change { Reservation.count }) }
     ```
 
-  * **Line # 802 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
+  * **Line # 859 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
 
     ```rb
             it "returns 422" do
     ```
 
-  * **Line # 810 - convention:** RSpec/RepeatedExampleGroupBody: Repeated context block body on line(s) [872]
+  * **Line # 867 - convention:** RSpec/RepeatedExampleGroupBody: Repeated context block body on line(s) [929]
 
     ```rb
           context "when email is invalid" do ...
     ```
 
-  * **Line # 810 - convention:** RSpec/RepeatedExampleGroupDescription: Repeated context block description on line(s) [872]
+  * **Line # 867 - convention:** RSpec/RepeatedExampleGroupDescription: Repeated context block description on line(s) [929]
 
     ```rb
           context "when email is invalid" do ...
     ```
 
-  * **Line # 820 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
+  * **Line # 877 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
 
     ```rb
                 it { expect { req }.not_to(change { Reservation.count }) }
     ```
 
-  * **Line # 822 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
+  * **Line # 879 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
 
     ```rb
                 it "returns 422" do
     ```
 
-  * **Line # 833 - convention:** RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
+  * **Line # 890 - convention:** RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
 
     ```rb
             let!(:reservation) { create(:reservation, datetime:, email:) }
     ```
 
-  * **Line # 835 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
+  * **Line # 892 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
 
     ```rb
             it { expect { req }.not_to(change { Reservation.count }) }
     ```
 
-  * **Line # 837 - convention:** RSpec/MultipleExpectations: Example has too many expectations [4/1].
+  * **Line # 894 - convention:** RSpec/MultipleExpectations: Example has too many expectations [4/1].
 
     ```rb
             it "returns 422" do
     ```
 
-  * **Line # 846 - convention:** RSpec/RepeatedExampleGroupBody: Repeated context block body on line(s) [784]
+  * **Line # 903 - convention:** RSpec/RepeatedExampleGroupBody: Repeated context block body on line(s) [841]
 
     ```rb
           context "when email is empty" do ...
     ```
 
-  * **Line # 846 - convention:** RSpec/RepeatedExampleGroupDescription: Repeated context block description on line(s) [784]
+  * **Line # 903 - convention:** RSpec/RepeatedExampleGroupDescription: Repeated context block description on line(s) [841]
 
     ```rb
           context "when email is empty" do ...
     ```
 
-  * **Line # 849 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
+  * **Line # 906 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
 
     ```rb
             it { expect { req }.not_to(change { Reservation.count }) }
     ```
 
-  * **Line # 851 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
+  * **Line # 908 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
 
     ```rb
             it "returns 422" do
     ```
 
-  * **Line # 859 - convention:** RSpec/RepeatedExampleGroupBody: Repeated context block body on line(s) [797]
+  * **Line # 916 - convention:** RSpec/RepeatedExampleGroupBody: Repeated context block body on line(s) [854]
 
     ```rb
           context "when email is nil" do ...
     ```
 
-  * **Line # 859 - convention:** RSpec/RepeatedExampleGroupDescription: Repeated context block description on line(s) [797]
+  * **Line # 916 - convention:** RSpec/RepeatedExampleGroupDescription: Repeated context block description on line(s) [854]
 
     ```rb
           context "when email is nil" do ...
     ```
 
-  * **Line # 862 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
+  * **Line # 919 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
 
     ```rb
             it { expect { req }.not_to(change { Reservation.count }) }
     ```
 
-  * **Line # 864 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
+  * **Line # 921 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
 
     ```rb
             it "returns 422" do
     ```
 
-  * **Line # 872 - convention:** RSpec/RepeatedExampleGroupBody: Repeated context block body on line(s) [810]
+  * **Line # 929 - convention:** RSpec/RepeatedExampleGroupBody: Repeated context block body on line(s) [867]
 
     ```rb
           context "when email is invalid" do ...
     ```
 
-  * **Line # 872 - convention:** RSpec/RepeatedExampleGroupDescription: Repeated context block description on line(s) [810]
+  * **Line # 929 - convention:** RSpec/RepeatedExampleGroupDescription: Repeated context block description on line(s) [867]
 
     ```rb
           context "when email is invalid" do ...
     ```
 
-  * **Line # 882 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
+  * **Line # 939 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
 
     ```rb
                 it { expect { req }.not_to(change { Reservation.count }) }
     ```
 
-  * **Line # 884 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
+  * **Line # 941 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
 
     ```rb
                 it "returns 422" do
     ```
 
-  * **Line # 897 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
+  * **Line # 954 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
 
     ```rb
             it { expect { req }.not_to(change { Reservation.count }) }
     ```
 
-  * **Line # 899 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
+  * **Line # 956 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
 
     ```rb
             it "returns 422" do
-    ```
-
-  * **Line # 910 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
-
-    ```rb
-            it { expect { req }.not_to(change { Reservation.count }) }
-    ```
-
-  * **Line # 912 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
-
-    ```rb
-            it "returns 422" do
-    ```
-
-  * **Line # 932 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
-
-    ```rb
-                it { expect { req }.not_to(change { Reservation.count }) }
-    ```
-
-  * **Line # 934 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
-
-    ```rb
-                it "returns 422" do
     ```
 
   * **Line # 967 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
 
     ```rb
+            it { expect { req }.not_to(change { Reservation.count }) }
+    ```
+
+  * **Line # 969 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
+
+    ```rb
+            it "returns 422" do
+    ```
+
+  * **Line # 989 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
+
+    ```rb
+                it { expect { req }.not_to(change { Reservation.count }) }
+    ```
+
+  * **Line # 991 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
+
+    ```rb
+                it "returns 422" do
+    ```
+
+  * **Line # 1024 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
+
+    ```rb
                 it { expect { req }.to change { Reservation.count }.by(1) }
     ```
 
-  * **Line # 975 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+  * **Line # 1032 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
 
     ```rb
                 it "returns 200" do
     ```
 
-  * **Line # 993 - convention:** RSpec/NamedSubject: Name your test subject if you need to reference it explicitly.
+  * **Line # 1050 - convention:** RSpec/NamedSubject: Name your test subject if you need to reference it explicitly.
 
     ```rb
           expect(subject).to route(:patch, "/v1/reservations/cancel").to(format: :json, action: :cancel,
     ```
 
-  * **Line # 1003 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+  * **Line # 1060 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
 
     ```rb
             it do
     ```
 
-  * **Line # 1035 - convention:** RSpec/AnyInstance: Avoid stubbing using `allow_any_instance_of`.
+  * **Line # 1092 - convention:** RSpec/AnyInstance: Avoid stubbing using `allow_any_instance_of`.
 
     ```rb
               allow_any_instance_of(Reservation).to receive(:cancelled!).and_return(false)
     ```
 
-  * **Line # 1038 - convention:** RSpec/AnyInstance: Avoid stubbing using `allow_any_instance_of`.
+  * **Line # 1095 - convention:** RSpec/AnyInstance: Avoid stubbing using `allow_any_instance_of`.
 
     ```rb
               allow_any_instance_of(Reservation).to receive(:errors).and_return(errors)
     ```
 
-  * **Line # 1044 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+  * **Line # 1101 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
 
     ```rb
             it "renders errors" do
     ```
 
-  * **Line # 1060 - convention:** RSpec/NamedSubject: Name your test subject if you need to reference it explicitly.
+  * **Line # 1117 - convention:** RSpec/NamedSubject: Name your test subject if you need to reference it explicitly.
 
     ```rb
           expect(subject).to route(:get, "/v1/reservations/supersecret").to(format: :json, action: :show, controller: "v1/reservations",
     ```
 
-  * **Line # 1060 - convention:** Layout/LineLength: Line is too long. [132/120]
+  * **Line # 1117 - convention:** Layout/LineLength: Line is too long. [132/120]
 
     ```rb
           expect(subject).to route(:get, "/v1/reservations/supersecret").to(format: :json, action: :show, controller: "v1/reservations",
     ```
 
-  * **Line # 1070 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+  * **Line # 1127 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
 
     ```rb
             it do
     ```
 
-  * **Line # 1083 - convention:** RSpec/ExampleLength: Example has too many lines. [13/5]
+  * **Line # 1140 - convention:** RSpec/ExampleLength: Example has too many lines. [13/5]
 
     ```rb
               it { ...
     ```
 
-  * **Line # 1084 - convention:** RSpec/NamedSubject: Name your test subject if you need to reference it explicitly.
+  * **Line # 1141 - convention:** RSpec/NamedSubject: Name your test subject if you need to reference it explicitly.
 
     ```rb
                 expect(subject).to include(
     ```
 
-  * **Line # 1090 - convention:** Style/TrailingCommaInArguments: Avoid comma after the last parameter of a method call.
+### spec/coverage_helper.rb - (1 offense)
+  * **Line # 26 - convention:** Performance/Count: Use `count` instead of `reject...count`.
 
     ```rb
-                  "created_at" => String,
-    ```
-
-### spec/factories/holiday_factory.rb - (1 offense)
-  * **Line # 6 - convention:** Rails/PluralizationGrammar: Prefer `10.days`.
-
-    ```rb
-        to_timestamp { 10.day.from_now.end_of_day }
+        uncommented_lines = source_file.lines.reject { |line| line.src.match?(/^\s*#/) }.count
     ```
 
 ### spec/factories/image_factory.rb - (1 offense)
@@ -18297,13 +16179,6 @@
 
     ```rb
         datetime { (Time.now + 1.week).strftime("%Y-%m-%d %H:%M") }
-    ```
-
-### spec/factories/reservation_turn_factory.rb - (1 offense)
-  * **Line # 13 - warning:** Lint/AmbiguousOperatorPrecedence: Wrap expressions with varying precedence with parentheses to avoid ambiguity.
-
-    ```rb
-        Time.zone.now.beginning_of_day + ((n * 2 + 1) % ((24 * 60) - 1)).minutes
     ```
 
 ### spec/interactions/copy_image_spec.rb - (23 offenses)
@@ -18494,7 +16369,7 @@
               it { expect(subject.errors).to be_empty }
     ```
 
-### spec/interactions/menu/can_publish_category_spec.rb - (10 offenses)
+### spec/interactions/menu/can_publish_category_spec.rb - (11 offenses)
   * **Line # 10 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
 
     ```rb
@@ -18519,37 +16394,43 @@
       it { expect(call.result).to eq false }
     ```
 
-  * **Line # 193 - convention:** RSpec/AnyInstance: Avoid stubbing using `allow_any_instance_of`.
+  * **Line # 194 - convention:** RSpec/AnyInstance: Avoid stubbing using `allow_any_instance_of`.
 
     ```rb
             allow_any_instance_of(Menu::Dish).to receive(:validate).and_return(false)
     ```
 
-  * **Line # 194 - convention:** RSpec/AnyInstance: Avoid stubbing using `allow_any_instance_of`.
+  * **Line # 195 - convention:** RSpec/AnyInstance: Avoid stubbing using `allow_any_instance_of`.
 
     ```rb
             allow_any_instance_of(Menu::Dish).to receive(:valid?).and_return(false)
     ```
 
-  * **Line # 208 - convention:** RSpec/AnyInstance: Avoid stubbing using `allow_any_instance_of`.
+  * **Line # 209 - convention:** RSpec/AnyInstance: Avoid stubbing using `allow_any_instance_of`.
 
     ```rb
             allow_any_instance_of(Menu::Category).to receive(:validate).and_return(false)
     ```
 
-  * **Line # 209 - convention:** RSpec/AnyInstance: Avoid stubbing using `allow_any_instance_of`.
+  * **Line # 210 - convention:** RSpec/AnyInstance: Avoid stubbing using `allow_any_instance_of`.
 
     ```rb
             allow_any_instance_of(Menu::Category).to receive(:valid?).and_return(false)
     ```
 
-  * **Line # 212 - convention:** RSpec/Rails/NegationBeValid: Use `expect(...).not_to be_valid`.
+  * **Line # 213 - convention:** RSpec/Rails/NegationBeValid: Use `expect(...).not_to be_valid`.
 
     ```rb
           it { expect(category).to be_invalid }
     ```
 
-  * **Line # 259 - convention:** RSpec/NamedSubject: Name your test subject if you need to reference it explicitly.
+  * **Line # 258 - convention:** RSpec/NamedSubject: Name your test subject if you need to reference it explicitly.
+
+    ```rb
+        it { expect(subject.reasons.full_messages).to be_empty }
+    ```
+
+  * **Line # 294 - convention:** RSpec/NamedSubject: Name your test subject if you need to reference it explicitly.
 
     ```rb
         it { expect(subject.reasons.full_messages).to be_empty }
@@ -21914,42 +19795,11 @@
           it { expect { subject }.not_to(change { ImageToRecord.count }) }
     ```
 
-### spec/interactions/remind_reservation_payments_spec.rb - (2 offenses)
-  * **Line # 49 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-            create(:reservation_payment, reservation: reservation)
-    ```
-
-  * **Line # 53 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-            create(:reservation_payment, reservation: reservation)
-    ```
-
-### spec/interactions/remind_reservations_mail_spec.rb - (9 offenses)
-  * **Line # 6 - convention:** Layout/EmptyLinesAroundBlockBody: Extra empty line detected at block body beginning.
-
-    ```rb
-     ...
-    ```
-
-  * **Line # 7 - convention:** Layout/EmptyLines: Extra blank line detected.
-
-    ```rb
-     ...
-    ```
-
+### spec/interactions/remind_reservations_mail_spec.rb - (6 offenses)
   * **Line # 31 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
 
     ```rb
         it do
-    ```
-
-  * **Line # 38 - convention:** RSpec/MetadataStyle: Use symbol style for metadata.
-
-    ```rb
-        context "when actually calling mailer", perform_enqueued_jobs: true do
     ```
 
   * **Line # 46 - convention:** RSpec/ExpectChange: Prefer `change(Log::DeliveredEmail, :count)`.
@@ -21989,86 +19839,14 @@
       def parse_params ...
     ```
 
-### spec/mailers/reservation_mailer/reservation_mailer.confirmation_spec.rb - (13 offenses)
-  * **Line # 46 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-            reservation.update!(lang: lang)
-    ```
-
-  * **Line # 47 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-            expect(mail.subject).to eq I18n.t("reservation_mailer.confirmation.subject", fullname: reservation.fullname, 
-    ```
-
-  * **Line # 47 - convention:** Layout/LineLength: Line is too long. [130/120]
-
-    ```rb
-            expect(mail.subject).to eq I18n.t("reservation_mailer.confirmation.subject", fullname: reservation.fullname, locale: lang)
-    ```
-
-  * **Line # 48 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    locale: lang)
-    ```
-
-  * **Line # 52 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-              reservation.update!(lang: lang)
-    ```
-
-  * **Line # 53 - convention:** Layout/LineLength: Line is too long. [141/120]
-
-    ```rb
-              expect(mail.text_part.body.encoded).to include I18n.t("reservation_mailer.greetings", fullname: reservation.fullname, locale: lang)
-    ```
-
-  * **Line # 54 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-              expect(mail.text_part.body.encoded).to include I18n.t("reservation_mailer.greetings", 
-    ```
-
-  * **Line # 55 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    fullname: reservation.fullname, locale: lang)
-    ```
-
-  * **Line # 57 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-              reservation.update!(lang: lang)
-    ```
-
-  * **Line # 58 - convention:** Layout/LineLength: Line is too long. [157/120]
-
-    ```rb
-              expect(mail.html_part.body.encoded).to include CGI.escapeHTML(I18n.t("reservation_mailer.greetings", fullname: reservation.fullname, locale: lang))
-    ```
-
-  * **Line # 60 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-              expect(mail.html_part.body.encoded).to include CGI.escapeHTML(I18n.t("reservation_mailer.greetings", 
-    ```
-
-  * **Line # 61 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    fullname: reservation.fullname, locale: lang))
-    ```
-
+### spec/mailers/reservation_mailer/reservation_mailer.confirmation_spec.rb - (1 offense)
   * **Line # 61 - convention:** Layout/LineLength: Line is too long. [125/120]
 
     ```rb
                                                                                    fullname: reservation.fullname, locale: lang))
     ```
 
-### spec/mailers/reservation_mailer/reservation_mailer.remind_payment_spec.rb - (8 offenses)
+### spec/mailers/reservation_mailer/reservation_mailer.remind_payment_spec.rb - (5 offenses)
   * **Line # 66 - convention:** Performance/Detect: Use `reverse.find` instead of `filter.last`.
 
     ```rb
@@ -22093,113 +19871,17 @@
             it do ...
     ```
 
-  * **Line # 118 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-                  'reservation_mailer.remind_payment.body',
-    ```
-
-  * **Line # 119 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-                  date: I18n.l(reservation.datetime, format: '%e %B %Y', locale: lang),
-    ```
-
-  * **Line # 120 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-                  hour: reservation.datetime.strftime('%k:%M'),
-    ```
-
   * **Line # 139 - convention:** Layout/LineLength: Line is too long. [125/120]
 
     ```rb
                                                                                    fullname: reservation.fullname, locale: lang))
     ```
 
-### spec/mailers/reservation_mailer/reservation_mailer.reminder_spec.rb - (15 offenses)
-  * **Line # 37 - convention:** Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
-
-    ```rb
-        nil,
-    ```
-
+### spec/mailers/reservation_mailer/reservation_mailer.reminder_spec.rb - (2 offenses)
   * **Line # 66 - convention:** Performance/Detect: Use `reverse.find` instead of `filter.last`.
 
     ```rb
           mail_to = mail.to_s.split("\n").flatten.filter { |j| j.starts_with?("To:") }.last
-    ```
-
-  * **Line # 66 - convention:** Layout/SpaceBeforeBlockBraces: Space missing to the left of {.
-
-    ```rb
-          mail_to = mail.to_s.split("\n").flatten.filter{|j| j.starts_with?("To:") }.last
-    ```
-
-  * **Line # 66 - convention:** Layout/SpaceInsideBlockBraces: Space between { and | missing.
-
-    ```rb
-          mail_to = mail.to_s.split("\n").flatten.filter{|j| j.starts_with?("To:") }.last
-    ```
-
-  * **Line # 66 - convention:** Layout/SpaceInsideBlockBraces: Space between { and | missing.
-
-    ```rb
-          mail_to = mail.to_s.split("\n").flatten.filter {|j| j.starts_with?("To:") }.last
-    ```
-
-  * **Line # 89 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-            expect(mail.subject).to eq I18n.t("reservation_mailer.reminder.subject", fullname: reservation.fullname, 
-    ```
-
-  * **Line # 89 - convention:** Layout/LineLength: Line is too long. [126/120]
-
-    ```rb
-            expect(mail.subject).to eq I18n.t("reservation_mailer.reminder.subject", fullname: reservation.fullname, locale: lang)
-    ```
-
-  * **Line # 90 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    locale: lang)
-    ```
-
-  * **Line # 95 - convention:** Layout/LineLength: Line is too long. [141/120]
-
-    ```rb
-              expect(mail.text_part.body.encoded).to include I18n.t("reservation_mailer.greetings", fullname: reservation.fullname, locale: lang)
-    ```
-
-  * **Line # 96 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-              expect(mail.text_part.body.encoded).to include I18n.t("reservation_mailer.greetings", 
-    ```
-
-  * **Line # 97 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    fullname: reservation.fullname, locale: lang)
-    ```
-
-  * **Line # 100 - convention:** Layout/LineLength: Line is too long. [157/120]
-
-    ```rb
-              expect(mail.html_part.body.encoded).to include CGI.escapeHTML(I18n.t("reservation_mailer.greetings", fullname: reservation.fullname, locale: lang))
-    ```
-
-  * **Line # 102 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-              expect(mail.html_part.body.encoded).to include CGI.escapeHTML(I18n.t("reservation_mailer.greetings", 
-    ```
-
-  * **Line # 103 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    fullname: reservation.fullname, locale: lang))
     ```
 
   * **Line # 103 - convention:** Layout/LineLength: Line is too long. [125/120]
@@ -22208,67 +19890,7 @@
                                                                                    fullname: reservation.fullname, locale: lang))
     ```
 
-### spec/mailers/user_mailer/user_mailer.email_updated_spec.rb - (13 offenses)
-  * **Line # 24 - convention:** Style/WordArray: Use `%w` or `%W` for an array of words.
-
-    ```rb
-        [ ...
-    ```
-
-  * **Line # 36 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          expect(I18n.t("user_mailer.email_updated.subject", 
-    ```
-
-  * **Line # 36 - convention:** Layout/LineLength: Line is too long. [140/120]
-
-    ```rb
-          expect(I18n.t("user_mailer.email_updated.subject", locale: "it")).not_to eq(I18n.t("user_mailer.email_updated.subject", locale: "en"))
-    ```
-
-  * **Line # 37 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    locale: "it")).not_to eq(I18n.t("user_mailer.email_updated.subject", locale: "en"))
-    ```
-
-  * **Line # 83 - convention:** Layout/LineLength: Line is too long. [124/120]
-
-    ```rb
-            expect(body).to include(CGI.escapeHTML(I18n.t("user_mailer.email_updated.body", old_email:, new_email: user.email)))
-    ```
-
-  * **Line # 84 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-            expect(body).to include(CGI.escapeHTML(I18n.t("user_mailer.email_updated.body", old_email:, 
-    ```
-
-  * **Line # 85 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    new_email: user.email)))
-    ```
-
-  * **Line # 114 - convention:** Layout/LineLength: Line is too long. [134/120]
-
-    ```rb
-                expect(mail.text_part.body.encoded).to include I18n.t("user_mailer.email_updated.body", old_email:, new_email: user.email)
-    ```
-
-  * **Line # 116 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-                expect(mail.text_part.body.encoded).to include I18n.t("user_mailer.email_updated.body", old_email:, 
-    ```
-
-  * **Line # 117 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    new_email: user.email)
-    ```
-
+### spec/mailers/user_mailer/user_mailer.email_updated_spec.rb - (3 offenses)
   * **Line # 117 - convention:** Layout/LineLength: Line is too long. [122/120]
 
     ```rb
@@ -22287,31 +19909,7 @@
         it "if user is deleted raise error" do
     ```
 
-### spec/mailers/user_mailer/user_mailer.email_verification_otp_spec.rb - (7 offenses)
-  * **Line # 25 - convention:** Style/WordArray: Use `%w` or `%W` for an array of words.
-
-    ```rb
-        [ ...
-    ```
-
-  * **Line # 37 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          expect(I18n.t("user_mailer.email_verification_otp.subject", 
-    ```
-
-  * **Line # 37 - convention:** Layout/LineLength: Line is too long. [158/120]
-
-    ```rb
-          expect(I18n.t("user_mailer.email_verification_otp.subject", locale: "it")).not_to eq(I18n.t("user_mailer.email_verification_otp.subject", locale: "en"))
-    ```
-
-  * **Line # 38 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    locale: "it")).not_to eq(I18n.t("user_mailer.email_verification_otp.subject", locale: "en"))
-    ```
-
+### spec/mailers/user_mailer/user_mailer.email_verification_otp_spec.rb - (3 offenses)
   * **Line # 106 - convention:** Layout/LineLength: Line is too long. [123/120]
 
     ```rb
@@ -24038,65 +21636,11 @@
             it { expect { subject.private? }.not_to raise_error }
     ```
 
-### spec/models/nexi/http_request_spec.rb - (10 offenses)
-  * **Line # 3 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-    require 'rails_helper'
-    ```
-
+### spec/models/nexi/http_request_spec.rb - (1 offense)
   * **Line # 5 - convention:** RSpec/Rails/InferredSpecType: Remove redundant spec type.
 
     ```rb
     RSpec.describe Nexi::HttpRequest, type: :model do
-    ```
-
-  * **Line # 6 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-      context 'validations' do
-    ```
-
-  * **Line # 7 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-        context 'request_body' do
-    ```
-
-  * **Line # 11 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-        context 'response_body' do
-    ```
-
-  * **Line # 15 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-        context 'url' do
-    ```
-
-  * **Line # 19 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-        context 'http_code' do
-    ```
-
-  * **Line # 23 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-        context 'http_method' do
-    ```
-
-  * **Line # 27 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-        context 'started_at' do
-    ```
-
-  * **Line # 31 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-        context 'ended_at' do
     ```
 
 ### spec/models/preference/DEFAULTS_spec.rb - (12 offenses)
@@ -24245,17 +21789,11 @@
             it { expect(doit).to eq nil }
     ```
 
-### spec/models/preorder_reservation_date_spec.rb - (3 offenses)
+### spec/models/preorder_reservation_date_spec.rb - (2 offenses)
   * **Line # 1 - convention:** Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 
     ```rb
     require "rails_helper"
-    ```
-
-  * **Line # 1 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-    require 'rails_helper'
     ```
 
   * **Line # 3 - convention:** RSpec/Rails/InferredSpecType: Remove redundant spec type.
@@ -24264,13 +21802,7 @@
     RSpec.describe PreorderReservationDate, type: :model do
     ```
 
-### spec/models/preorder_reservation_group_spec.rb - (5 offenses)
-  * **Line # 3 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-    require 'rails_helper'
-    ```
-
+### spec/models/preorder_reservation_group_spec.rb - (4 offenses)
   * **Line # 5 - convention:** RSpec/Rails/InferredSpecType: Remove redundant spec type.
 
     ```rb
@@ -24295,13 +21827,7 @@
         it { expect { group.destroy! }.to(change { PreorderReservationGroupsToTurn.count }.by(-3)) }
     ```
 
-### spec/models/preorder_reservation_groups_to_turn_spec.rb - (7 offenses)
-  * **Line # 3 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-    require 'rails_helper'
-    ```
-
+### spec/models/preorder_reservation_groups_to_turn_spec.rb - (6 offenses)
   * **Line # 5 - convention:** RSpec/Rails/InferredSpecType: Remove redundant spec type.
 
     ```rb
@@ -24562,13 +22088,7 @@
               it { expect(subject.pluck(:id)).to match_array(RefreshToken.where("expires_at > NOW()").pluck(:id)) }
     ```
 
-### spec/models/reservation_payment_spec.rb - (2 offenses)
-  * **Line # 3 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-    require 'rails_helper'
-    ```
-
+### spec/models/reservation_payment_spec.rb - (1 offense)
   * **Line # 5 - convention:** RSpec/Rails/InferredSpecType: Remove redundant spec type.
 
     ```rb
@@ -25483,31 +23003,31 @@
     # This file is copied to spec/ when you run 'rails generate rspec:install'
     ```
 
-  * **Line # 35 - warning:** Lint/RedundantDirGlobSort: Remove redundant `sort`.
+  * **Line # 36 - warning:** Lint/RedundantDirGlobSort: Remove redundant `sort`.
 
     ```rb
     Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
     ```
 
-  * **Line # 36 - warning:** Lint/RedundantDirGlobSort: Remove redundant `sort`.
+  * **Line # 37 - warning:** Lint/RedundantDirGlobSort: Remove redundant `sort`.
 
     ```rb
     Dir[Rails.root.join("spec/contexts/**/*.rb")].sort.each { |f| require f }
     ```
 
-  * **Line # 37 - warning:** Lint/RedundantDirGlobSort: Remove redundant `sort`.
+  * **Line # 38 - warning:** Lint/RedundantDirGlobSort: Remove redundant `sort`.
 
     ```rb
     Dir[Rails.root.join("spec/shared_examples/**/*.rb")].sort.each { |f| require f }
     ```
 
-  * **Line # 38 - warning:** Lint/RedundantDirGlobSort: Remove redundant `sort`.
+  * **Line # 39 - warning:** Lint/RedundantDirGlobSort: Remove redundant `sort`.
 
     ```rb
     Dir[Rails.root.join("spec/matchers/**/*.rb")].sort.each { |f| require f }
     ```
 
-### spec/requests/v1/admin/contacts_controller/contacts_controller.index_spec.rb - (9 offenses)
+### spec/requests/v1/admin/contacts_controller/contacts_controller.index_spec.rb - (2 offenses)
   * **Line # 11 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
 
     ```rb
@@ -25520,55 +23040,7 @@
       def req(p = params, h = headers)
     ```
 
-  * **Line # 40 - convention:** RSpec/EmptyLineAfterExample: Add an empty line after `it`.
-
-    ```rb
-          it { expect(json[:items]).not_to be_empty }
-    ```
-
-  * **Line # 48 - convention:** RSpec/EmptyLineAfterSubject: Add an empty line after `subject`.
-
-    ```rb
-          subject { json }
-    ```
-
-  * **Line # 49 - convention:** RSpec/LeadingSubject: Declare `subject` above any other `let!` declarations.
-
-    ```rb
-          subject { json }
-    ```
-
-  * **Line # 51 - convention:** Layout/EmptyLines: Extra blank line detected.
-
-    ```rb
-     ...
-    ```
-
-  * **Line # 67 - convention:** Layout/SpaceBeforeBlockBraces: Space missing to the left of {.
-
-    ```rb
-            expect(json[:items].find{|j| j[:key] == contact.key }).to include(key: contact.key, value: contact.value)
-    ```
-
-  * **Line # 67 - convention:** Layout/SpaceInsideBlockBraces: Space between { and | missing.
-
-    ```rb
-            expect(json[:items].find{|j| j[:key] == contact.key }).to include(key: contact.key, value: contact.value)
-    ```
-
-  * **Line # 68 - convention:** Layout/SpaceInsideBlockBraces: Space between { and | missing.
-
-    ```rb
-            expect(json[:items].find {|j| j[:key] == contact.key }).to include(key: contact.key, value: contact.value)
-    ```
-
-### spec/requests/v1/admin/contacts_controller/contacts_controller.show_spec.rb - (6 offenses)
-  * **Line # 12 - warning:** Lint/UnusedMethodArgument: Unused method argument - `k`. If it's necessary, use `_` or `_k` as an argument name to indicate that it won't be used. If it's unnecessary, remove it.
-
-    ```rb
-      def req(k = key, p = params, h = headers)
-    ```
-
+### spec/requests/v1/admin/contacts_controller/contacts_controller.show_spec.rb - (3 offenses)
   * **Line # 12 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
 
     ```rb
@@ -25587,25 +23059,7 @@
       def req(_k = key, p = params, h = headers)
     ```
 
-  * **Line # 42 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-          expect(json).to include(key: key, value: Contact::DEFAULTS.dig(key, :value))
-    ```
-
-  * **Line # 49 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-        let(:contact) { Contact.find_by(key: key) }
-    ```
-
-### spec/requests/v1/admin/contacts_controller/contacts_controller.update_spec.rb - (9 offenses)
-  * **Line # 13 - warning:** Lint/UnusedMethodArgument: Unused method argument - `k`. If it's necessary, use `_` or `_k` as an argument name to indicate that it won't be used. If it's unnecessary, remove it.
-
-    ```rb
-      def req(k = key, p = params, h = headers)
-    ```
-
+### spec/requests/v1/admin/contacts_controller/contacts_controller.update_spec.rb - (14 offenses)
   * **Line # 13 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
 
     ```rb
@@ -25624,59 +23078,77 @@
       def req(_k = key, p = params, h = headers)
     ```
 
-  * **Line # 63 - convention:** RSpec/EmptyLineAfterExample: Add an empty line after `it`.
-
-    ```rb
-          it { expect(contact.reload.value).to be_present }
-    ```
-
-  * **Line # 74 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+  * **Line # 78 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
 
     ```rb
           it do
     ```
 
-  * **Line # 107 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+  * **Line # 113 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
 
     ```rb
           it do
     ```
 
-  * **Line # 117 - convention:** RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
+  * **Line # 130 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
+
+    ```rb
+        { key: "tripadvisor_url", 
+    ```
+
+  * **Line # 130 - convention:** Layout/LineLength: Line is too long. [147/120]
+
+    ```rb
+        { key: "tripadvisor_url", value: "https://www.tripadvisor.it/Restaurant_Review-g187870-d1735599-Reviews-La_Porta_D_Acqua-Venice_Veneto.html" },
+    ```
+
+  * **Line # 131 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+
+    ```rb
+    value: "https://www.tripadvisor.it/Restaurant_Review-g187870-d1735599-Reviews-La_Porta_D_Acqua-Venice_Veneto.html" },
+    ```
+
+  * **Line # 131 - convention:** Layout/LineLength: Line is too long. [123/120]
+
+    ```rb
+          value: "https://www.tripadvisor.it/Restaurant_Review-g187870-d1735599-Reviews-La_Porta_D_Acqua-Venice_Veneto.html" },
+    ```
+
+  * **Line # 132 - convention:** Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
+
+    ```rb
+        { key: "google_url",      value: "https://g.page/laportadacqua?share" },
+    ```
+
+  * **Line # 137 - convention:** Performance/CollectionLiteralInLoop: Avoid immutable Array literals in loops. It is better to extract it into a local variable or a constant.
+
+    ```rb
+            ws = [ ...
+    ```
+
+  * **Line # 139 - convention:** Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
+
+    ```rb
+              "   ",
+    ```
+
+  * **Line # 202 - convention:** RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
 
     ```rb
         let!(:contact) { create(:contact, key: "email", value: email) }
     ```
 
-  * **Line # 133 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
+  * **Line # 218 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
 
     ```rb
         it do
     ```
 
-### spec/requests/v1/admin/holidays_controller/holidays_controller.create_spec.rb - (19 offenses)
-  * **Line # 25 - convention:** Layout/SpaceInsideBlockBraces: Space missing inside }.
-
-    ```rb
-      let(:message) { { it: "Vacanza!", en: "Holiday!" }}
-    ```
-
+### spec/requests/v1/admin/holidays_controller/holidays_controller.create_spec.rb - (9 offenses)
   * **Line # 47 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
 
     ```rb
       it "saves translated message" do
-    ```
-
-  * **Line # 58 - convention:** Style/TrailingCommaInHashLiteral: Avoid comma after the last item of a hash.
-
-    ```rb
-            to_timestamp:,
-    ```
-
-  * **Line # 76 - convention:** RSpec/EmptyLineAfterExample: Add an empty line after `it`.
-
-    ```rb
-          it { expect(json).to include(item: Hash) }
     ```
 
   * **Line # 78 - convention:** RSpec/ExampleLength: Example has too many lines. [8/5]
@@ -25691,52 +23163,10 @@
       context "when creating a weekly holiday" do ...
     ```
 
-  * **Line # 111 - convention:** RSpec/EmptyLineAfterExample: Add an empty line after `it`.
-
-    ```rb
-          it { expect(json).to include(item: Hash) }
-    ```
-
   * **Line # 114 - convention:** RSpec/ExampleLength: Example has too many lines. [8/5]
 
     ```rb
           it do ...
-    ```
-
-  * **Line # 114 - convention:** Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
-
-    ```rb
-                                        id: Integer, ...
-    ```
-
-  * **Line # 117 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-                                        weekly_from: weekly_from,
-    ```
-
-  * **Line # 118 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-                                        weekly_to: weekly_to,
-    ```
-
-  * **Line # 119 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-                                        weekday: weekday
-    ```
-
-  * **Line # 120 - convention:** Layout/ClosingParenthesisIndentation: Indent `)` to column 34 (not 8)
-
-    ```rb
-            )
-    ```
-
-  * **Line # 122 - convention:** Layout/ClosingParenthesisIndentation: Indent `)` to column 8 (not 34)
-
-    ```rb
-                                      )
     ```
 
   * **Line # 127 - convention:** RSpec/RepeatedExampleGroupDescription: Repeated context block description on line(s) [91]
@@ -25769,43 +23199,7 @@
         it do
     ```
 
-### spec/requests/v1/admin/holidays_controller/holidays_controller.destroy_spec.rb - (8 offenses)
-  * **Line # 14 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-      let!(:holiday) {
-    ```
-
-  * **Line # 14 - convention:** Layout/LineLength: Line is too long. [127/120]
-
-    ```rb
-      let!(:holiday) { create(:holiday, from_timestamp: 1.day.from_now.beginning_of_day, to_timestamp: 1.day.from_now.end_of_day) }
-    ```
-
-  * **Line # 15 - convention:** Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-
-    ```rb
-     create(:holiday, from_timestamp: 1.day.from_now.beginning_of_day, to_timestamp: 1.day.from_now.end_of_day)
-    ```
-
-  * **Line # 15 - convention:** Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
-
-    ```rb
-      create(:holiday, from_timestamp: 1.day.from_now.beginning_of_day, to_timestamp: 1.day.from_now.end_of_day)
-    ```
-
-  * **Line # 15 - convention:** Layout/BlockEndNewline: Expression at 15, 109 should be on its own line.
-
-    ```rb
-     create(:holiday, from_timestamp: 1.day.from_now.beginning_of_day, to_timestamp: 1.day.from_now.end_of_day) }
-    ```
-
-  * **Line # 16 - convention:** Layout/BlockAlignment: `}` at 16, 0 is not aligned with `let!(:holiday) {` at 14, 2.
-
-    ```rb
-    }
-    ```
-
+### spec/requests/v1/admin/holidays_controller/holidays_controller.destroy_spec.rb - (2 offenses)
   * **Line # 25 - convention:** RSpec/ExpectChange: Prefer `change(Holiday, :count)`.
 
     ```rb
@@ -25818,194 +23212,14 @@
       it { expect { req }.to change { Holiday.count }.by(-1) }
     ```
 
-### spec/requests/v1/admin/holidays_controller/holidays_controller.index_spec.rb - (24 offenses)
-  * **Line # 35 - convention:** RSpec/EmptyLineAfterExample: Add an empty line after `it`.
-
-    ```rb
-        it { expect(json[:items].size).to eq(holidays.size) }
-    ```
-
-  * **Line # 36 - convention:** Layout/LineLength: Line is too long. [154/120]
-
-    ```rb
-        it { expect(json[:items]).to all(include(id: Integer, from_timestamp: String, to_timestamp: String, weekly_from: nil, weekly_to: nil, weekday: nil)) }
-    ```
-
-  * **Line # 37 - convention:** Layout/LineLength: Line is too long. [146/120]
-
-    ```rb
-     expect(json[:items]).to all(include(id: Integer, from_timestamp: String, to_timestamp: String, weekly_from: nil, weekly_to: nil, weekday: nil)) }
-    ```
-
-  * **Line # 37 - convention:** Layout/BlockEndNewline: Expression at 37, 146 should be on its own line.
-
-    ```rb
-     expect(json[:items]).to all(include(id: Integer, from_timestamp: String, to_timestamp: String, weekly_from: nil, weekly_to: nil, weekday: nil)) }
-    ```
-
-  * **Line # 38 - convention:** Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-
-    ```rb
-     expect(json[:items]).to all(include(id: Integer, from_timestamp: String, to_timestamp: String, weekly_from: nil, 
-    ```
-
-  * **Line # 38 - convention:** Layout/IndentationWidth: Use 2 (not -2) spaces for indentation.
-
-    ```rb
-      expect(json[:items]).to all(include(id: Integer, from_timestamp: String, to_timestamp: String, weekly_from: nil,
-    ```
-
-  * **Line # 38 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-     expect(json[:items]).to all(include(id: Integer, from_timestamp: String, to_timestamp: String, weekly_from: nil, 
-    ```
-
-  * **Line # 39 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    weekly_to: nil, weekday: nil))
-    ```
-
-  * **Line # 39 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    weekly_to: nil, weekday: nil))
-    ```
-
-  * **Line # 39 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                                                                               weekly_to: nil, weekday: nil))
-    ```
-
-  * **Line # 39 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-                                                                               weekly_to: nil, weekday: nil))
-    ```
-
-  * **Line # 40 - convention:** Layout/BlockAlignment: `}` at 40, 0 is not aligned with `it {` at 37, 4.
-
-    ```rb
-    }
-    ```
-
-  * **Line # 54 - convention:** Rails/PluralizationGrammar: Prefer `2.days`.
-
-    ```rb
-            create(:holiday, from_timestamp: 2.day.from_now.beginning_of_day, to_timestamp: 3.days.from_now.end_of_day, weekly_from: "11:00", weekly_to: "15:00"),
-    ```
-
-  * **Line # 54 - convention:** Layout/LineLength: Line is too long. [158/120]
-
-    ```rb
-            create(:holiday, from_timestamp: 2.day.from_now.beginning_of_day, to_timestamp: 3.days.from_now.end_of_day, weekly_from: "11:00", weekly_to: "15:00"),
-    ```
-
-  * **Line # 54 - convention:** Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
-
-    ```rb
-            create(:holiday, from_timestamp: 2.day.from_now.beginning_of_day, to_timestamp: 3.days.from_now.end_of_day, weekly_from: "11:00", weekly_to: "15:00"),
-    ```
-
-  * **Line # 55 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-            create(:holiday, from_timestamp: 2.days.from_now.beginning_of_day, to_timestamp: 3.days.from_now.end_of_day, 
-    ```
-
-  * **Line # 56 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    weekly_from: "11:00", weekly_to: "15:00")
-    ```
-
-  * **Line # 69 - convention:** RSpec/MatchArray: Prefer `contain_exactly` when matching an array literal.
-
-    ```rb
-          it { expect(json[:items].pluck(:id)).to match_array([holidays.first.id]) }
-    ```
-
-  * **Line # 79 - convention:** Rails/PluralizationGrammar: Prefer `2.days`.
-
-    ```rb
-              req(params: { active_at: "#{2.day.from_now.strftime("%Y-%m-%d")} #{time}" })
-    ```
-
-  * **Line # 84 - convention:** RSpec/MatchArray: Prefer `contain_exactly` when matching an array literal.
-
-    ```rb
-            it { expect(json[:items].pluck(:id)).to match_array([holidays.second.id]) }
-    ```
-
-  * **Line # 92 - convention:** Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
-
-    ```rb
-          "23:59",
-    ```
-
-  * **Line # 96 - convention:** Rails/PluralizationGrammar: Prefer `2.days`.
-
-    ```rb
-              req(params: { active_at: "#{2.day.from_now.strftime("%Y-%m-%d")} #{time}" })
-    ```
-
-  * **Line # 112 - convention:** Rails/PluralizationGrammar: Prefer `5.days`.
-
-    ```rb
-              req(params: { active_at: "#{5.day.from_now.strftime("%Y-%m-%d")} #{time}" })
-    ```
-
+### spec/requests/v1/admin/holidays_controller/holidays_controller.index_spec.rb - (1 offense)
   * **Line # 115 - convention:** Layout/LineLength: Line is too long. [161/120]
 
     ```rb
           context "when filtering for 5 days from now with time #{time.inspect}: should not find anything. This because weekly holidays are for specific weekays." do
     ```
 
-### spec/requests/v1/admin/holidays_controller/holidays_controller.update_spec.rb - (43 offenses)
-  * **Line # 21 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-      let!(:holiday) {
-    ```
-
-  * **Line # 21 - convention:** Layout/LineLength: Line is too long. [127/120]
-
-    ```rb
-      let!(:holiday) { create(:holiday, from_timestamp: 1.day.from_now.beginning_of_day, to_timestamp: 1.day.from_now.end_of_day) }
-    ```
-
-  * **Line # 22 - convention:** Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-
-    ```rb
-     create(:holiday, from_timestamp: 1.day.from_now.beginning_of_day, to_timestamp: 1.day.from_now.end_of_day)
-    ```
-
-  * **Line # 22 - convention:** Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
-
-    ```rb
-      create(:holiday, from_timestamp: 1.day.from_now.beginning_of_day, to_timestamp: 1.day.from_now.end_of_day)
-    ```
-
-  * **Line # 22 - convention:** Layout/BlockEndNewline: Expression at 22, 109 should be on its own line.
-
-    ```rb
-     create(:holiday, from_timestamp: 1.day.from_now.beginning_of_day, to_timestamp: 1.day.from_now.end_of_day) }
-    ```
-
-  * **Line # 23 - convention:** Layout/BlockAlignment: `}` at 23, 0 is not aligned with `let!(:holiday) {` at 21, 2.
-
-    ```rb
-    }
-    ```
-
-  * **Line # 51 - convention:** Layout/LineLength: Line is too long. [128/120]
-
-    ```rb
-        expect { req(params: { message: }) }.to change { I18n.with_locale(:it) { holiday.reload.message } }.from(nil).to("Vacanza!")
-    ```
-
+### spec/requests/v1/admin/holidays_controller/holidays_controller.update_spec.rb - (9 offenses)
   * **Line # 52 - convention:** RSpec/ExampleLength: Example has too many lines. [6/5]
 
     ```rb
@@ -26018,114 +23232,6 @@
       it "saves translated message in Italian" do
     ```
 
-  * **Line # 52 - convention:** Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
-
-    ```rb
-        expect { req(params: { message: }) }.to change { I18n.with_locale(:it) { ...
-    ```
-
-  * **Line # 52 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-        expect { req(params: { message: }) }.to change { I18n.with_locale(:it) {
-    ```
-
-  * **Line # 53 - convention:** Layout/BlockEndNewline: Expression at 53, 25 should be on its own line.
-
-    ```rb
-     holiday.reload.message } }.from(nil).to("Vacanza!")
-    ```
-
-  * **Line # 53 - convention:** Layout/BlockEndNewline: Expression at 53, 27 should be on its own line.
-
-    ```rb
-     holiday.reload.message } }.from(nil).to("Vacanza!")
-    ```
-
-  * **Line # 53 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-        expect { req(params: { message: }) }.to change { 
-    ```
-
-  * **Line # 54 - convention:** Layout/IndentationWidth: Use 2 (not 46) spaces for indentation.
-
-    ```rb
-                                                  I18n.with_locale(:it) {
-    ```
-
-  * **Line # 54 - convention:** Layout/IndentationWidth: Use 2 (not -42) spaces for indentation.
-
-    ```rb
-      I18n.with_locale(:it) do ...
-    ```
-
-  * **Line # 54 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-                                                  I18n.with_locale(:it) {
-    ```
-
-  * **Line # 55 - convention:** Layout/IndentationWidth: Use 2 (not -1) spaces for indentation.
-
-    ```rb
-                                                 holiday.reload.message
-    ```
-
-  * **Line # 56 - convention:** Layout/BlockAlignment: `}` at 56, 0 is not aligned with `I18n.with_locale(:it) {` at 54, 46.
-
-    ```rb
-    }
-    ```
-
-  * **Line # 56 - convention:** Layout/BlockAlignment: `end` at 56, 46 is not aligned with `I18n.with_locale(:it) do` at 54, 2.
-
-    ```rb
-                                                  end
-    ```
-
-  * **Line # 56 - convention:** Layout/SpaceBeforeBlockBraces: Space missing to the left of {.
-
-    ```rb
-        expect { req(params: { message: }) }.to change { I18n.with_locale(:en){ holiday.reload.message } }.from(nil).to("Holiday!")
-    ```
-
-  * **Line # 56 - convention:** Layout/LineLength: Line is too long. [127/120]
-
-    ```rb
-        expect { req(params: { message: }) }.to change { I18n.with_locale(:en){ holiday.reload.message } }.from(nil).to("Holiday!")
-    ```
-
-  * **Line # 57 - convention:** Layout/BlockAlignment: `}` at 57, 0 is not aligned with `change { ` at 53, 44 or `expect { req(params: { message: }) }.to change { ` at 53, 4.
-
-    ```rb
-    }.from(nil).to("Vacanza!")
-    ```
-
-  * **Line # 58 - convention:** Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
-
-    ```rb
-        expect { req(params: { message: }) }.to change { I18n.with_locale(:en) { ...
-    ```
-
-  * **Line # 58 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-        expect { req(params: { message: }) }.to change { I18n.with_locale(:en) {
-    ```
-
-  * **Line # 59 - convention:** Layout/BlockEndNewline: Expression at 59, 25 should be on its own line.
-
-    ```rb
-     holiday.reload.message } }.from(nil).to("Holiday!")
-    ```
-
-  * **Line # 59 - convention:** Layout/BlockEndNewline: Expression at 59, 27 should be on its own line.
-
-    ```rb
-     holiday.reload.message } }.from(nil).to("Holiday!")
-    ```
-
   * **Line # 61 - convention:** RSpec/ExampleLength: Example has too many lines. [6/5]
 
     ```rb
@@ -26136,60 +23242,6 @@
 
     ```rb
       it "saves translated message in English" do
-    ```
-
-  * **Line # 62 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-        expect { req(params: { message: }) }.to change { 
-    ```
-
-  * **Line # 63 - convention:** Layout/IndentationWidth: Use 2 (not 46) spaces for indentation.
-
-    ```rb
-                                                  I18n.with_locale(:en) {
-    ```
-
-  * **Line # 63 - convention:** Layout/IndentationWidth: Use 2 (not -42) spaces for indentation.
-
-    ```rb
-      I18n.with_locale(:en) do ...
-    ```
-
-  * **Line # 63 - convention:** Style/TrailingCommaInHashLiteral: Avoid comma after the last item of a hash.
-
-    ```rb
-            weekday:,
-    ```
-
-  * **Line # 63 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-                                                  I18n.with_locale(:en) {
-    ```
-
-  * **Line # 64 - convention:** Layout/IndentationWidth: Use 2 (not -1) spaces for indentation.
-
-    ```rb
-                                                 holiday.reload.message
-    ```
-
-  * **Line # 65 - convention:** Layout/BlockAlignment: `}` at 65, 0 is not aligned with `I18n.with_locale(:en) {` at 63, 46.
-
-    ```rb
-    }
-    ```
-
-  * **Line # 65 - convention:** Layout/BlockAlignment: `end` at 65, 46 is not aligned with `I18n.with_locale(:en) do` at 63, 2.
-
-    ```rb
-                                                  end
-    ```
-
-  * **Line # 66 - convention:** Layout/BlockAlignment: `}` at 66, 0 is not aligned with `change { ` at 62, 44 or `expect { req(params: { message: }) }.to change { ` at 62, 4.
-
-    ```rb
-    }.from(nil).to("Holiday!")
     ```
 
   * **Line # 87 - convention:** RSpec/RepeatedExampleGroupBody: Repeated context block body on line(s) [104]
@@ -26222,7 +23274,7 @@
         it do
     ```
 
-### spec/requests/v1/admin/preferences_controller/preferences_controller.hash_spec.rb - (3 offenses)
+### spec/requests/v1/admin/preferences_controller/preferences_controller.hash_spec.rb - (2 offenses)
   * **Line # 11 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
 
     ```rb
@@ -26235,13 +23287,7 @@
       def req(p = params, h = headers)
     ```
 
-  * **Line # 16 - warning:** Lint/EmptyBlock: Empty block detected.
-
-    ```rb
-        let(:headers) {}
-    ```
-
-### spec/requests/v1/admin/preferences_controller/preferences_controller.index_spec.rb - (3 offenses)
+### spec/requests/v1/admin/preferences_controller/preferences_controller.index_spec.rb - (2 offenses)
   * **Line # 11 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
 
     ```rb
@@ -26254,13 +23300,7 @@
       def req(p = params, h = headers)
     ```
 
-  * **Line # 16 - warning:** Lint/EmptyBlock: Empty block detected.
-
-    ```rb
-        let(:headers) {}
-    ```
-
-### spec/requests/v1/admin/preferences_controller/preferences_controller.show_spec.rb - (4 offenses)
+### spec/requests/v1/admin/preferences_controller/preferences_controller.show_spec.rb - (3 offenses)
   * **Line # 12 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
 
     ```rb
@@ -26279,13 +23319,7 @@
       def req(k = key, p = params, h = headers)
     ```
 
-  * **Line # 17 - warning:** Lint/EmptyBlock: Empty block detected.
-
-    ```rb
-        let(:headers) {}
-    ```
-
-### spec/requests/v1/admin/preferences_controller/preferences_controller.update_spec.rb - (4 offenses)
+### spec/requests/v1/admin/preferences_controller/preferences_controller.update_spec.rb - (3 offenses)
   * **Line # 14 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
 
     ```rb
@@ -26304,513 +23338,231 @@
       def req(k = key, p = params, h = headers)
     ```
 
-  * **Line # 19 - warning:** Lint/EmptyBlock: Empty block detected.
-
-    ```rb
-        let(:headers) {}
-    ```
-
-### spec/requests/v1/admin/preorder_reservation_groups/preorder_reservation_groups.create_spec.rb - (78 offenses)
-  * **Line # 11 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-          title: title,
-    ```
-
-  * **Line # 12 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-          preorder_type: preorder_type,
-    ```
-
-  * **Line # 13 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-          payment_value: payment_value,
-    ```
-
-  * **Line # 14 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-          message: message,
-    ```
-
-  * **Line # 15 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-          dates: dates,
-    ```
-
-  * **Line # 16 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-          active_from: active_from,
-    ```
-
-  * **Line # 17 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-          active_to: active_to,
-    ```
-
-  * **Line # 17 - convention:** Style/TrailingCommaInHashLiteral: Avoid comma after the last item of a hash.
-
-    ```rb
-          active_to: active_to,
-    ```
-
-  * **Line # 29 - convention:** Layout/SpaceInsideArrayLiteralBrackets: Do not use space inside array brackets.
-
-    ```rb
-        [ { date: Date.current.next_occurring(:monday).to_s, turn_id: turn.id } ]
-    ```
-
-  * **Line # 34 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+### spec/requests/v1/admin/preorder_reservation_groups/preorder_reservation_groups.create_spec.rb - (35 offenses)
+  * **Line # 35 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
 
     ```rb
       def req(p = params, h = headers)
     ```
 
-  * **Line # 34 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+  * **Line # 35 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
 
     ```rb
       def req(p = params, h = headers)
     ```
 
-  * **Line # 39 - warning:** Lint/EmptyBlock: Empty block detected.
-
-    ```rb
-        let(:headers) {}
-    ```
-
-  * **Line # 59 - convention:** RSpec/EmptyLineAfterExample: Add an empty line after `it`.
-
-    ```rb
-          it { expect(json).to be_a(Hash) }
-    ```
-
-  * **Line # 61 - convention:** RSpec/ExampleLength: Example has too many lines. [10/5]
+  * **Line # 72 - convention:** RSpec/ExampleLength: Example has too many lines. [10/5]
 
     ```rb
           it do ...
     ```
 
-  * **Line # 78 - convention:** RSpec/EmptyLineAfterHook: Add an empty line after `before`.
-
-    ```rb
-        before { req(params.merge(turns:)) }
-    ```
-
-  * **Line # 82 - convention:** RSpec/EmptyLineAfterExample: Add an empty line after `it`.
-
-    ```rb
-        it { expect(json.dig(:item, :turns)).to all(include(id: turns.first, name: String, starts_at: String, ends_at: String, weekday: Integer)) }
-    ```
-
-  * **Line # 82 - convention:** Layout/LineLength: Line is too long. [143/120]
-
-    ```rb
-        it { expect(json.dig(:item, :turns)).to all(include(id: turns.first, name: String, starts_at: String, ends_at: String, weekday: Integer)) }
-    ```
-
-  * **Line # 83 - convention:** RSpec/EmptyLineAfterExample: Add an empty line after `it`.
-
-    ```rb
-        it { expect(json.dig(:item, :turns).length).to eq 1 }
-    ```
-
-  * **Line # 85 - convention:** Layout/LineLength: Line is too long. [135/120]
-
-    ```rb
-     expect(json.dig(:item, :turns)).to all(include(id: turns.first, name: String, starts_at: String, ends_at: String, weekday: Integer)) }
-    ```
-
-  * **Line # 85 - convention:** Layout/BlockEndNewline: Expression at 85, 135 should be on its own line.
-
-    ```rb
-     expect(json.dig(:item, :turns)).to all(include(id: turns.first, name: String, starts_at: String, ends_at: String, weekday: Integer)) }
-    ```
-
-  * **Line # 86 - convention:** Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-
-    ```rb
-     expect(json.dig(:item, 
-    ```
-
-  * **Line # 86 - convention:** Layout/IndentationWidth: Use 2 (not -2) spaces for indentation.
-
-    ```rb
-      expect(json.dig(:item,
-    ```
-
-  * **Line # 86 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-     expect(json.dig(:item, 
-    ```
-
-  * **Line # 87 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    :turns)).to all(include(id: turns.first, name: String, starts_at: String, ends_at: String, weekday: Integer))
-    ```
-
-  * **Line # 87 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-                          :turns)).to all(include(id: turns.first, name: String, starts_at: String, ends_at: String, 
-    ```
-
-  * **Line # 87 - convention:** Layout/LineLength: Line is too long. [127/120]
-
-    ```rb
-                      :turns)).to all(include(id: turns.first, name: String, starts_at: String, ends_at: String, weekday: Integer))
-    ```
-
-  * **Line # 88 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    weekday: Integer))
-    ```
-
-  * **Line # 88 - convention:** Layout/BlockAlignment: `}` at 88, 0 is not aligned with `it {` at 85, 4.
-
-    ```rb
-    }
-    ```
-
-  * **Line # 88 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    weekday: Integer))
-    ```
-
-  * **Line # 88 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                                                                                                weekday: Integer))
-    ```
-
-  * **Line # 88 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-                                                                                                weekday: Integer))
-    ```
-
-  * **Line # 98 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-          let(:params) { super().merge(turns: turns, dates: nil) }
-    ```
-
-  * **Line # 105 - convention:** RSpec/RepeatedExampleGroupDescription: Repeated context block description on line(s) [122]
+  * **Line # 116 - convention:** RSpec/RepeatedExampleGroupDescription: Repeated context block description on line(s) [133]
 
     ```rb
         context "when trying to add same turn to a new group" do ...
     ```
 
-  * **Line # 115 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-          let(:params) { super().merge(turns: nil, dates: dates) }
-    ```
-
-  * **Line # 118 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroup, :count)`.
+  * **Line # 129 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroup, :count)`.
 
     ```rb
           it { expect { req }.not_to(change { PreorderReservationGroup.count }) }
     ```
 
-  * **Line # 119 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroupsToTurn, :count)`.
+  * **Line # 130 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroupsToTurn, :count)`.
 
     ```rb
           it { expect { req }.not_to(change { PreorderReservationGroupsToTurn.count }) }
     ```
 
-  * **Line # 122 - convention:** RSpec/RepeatedExampleGroupDescription: Repeated context block description on line(s) [105]
+  * **Line # 133 - convention:** RSpec/RepeatedExampleGroupDescription: Repeated context block description on line(s) [116]
 
     ```rb
         context "when trying to add same turn to a new group" do ...
     ```
 
-  * **Line # 135 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroup, :count)`.
+  * **Line # 146 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroup, :count)`.
 
     ```rb
           it { expect { req }.not_to(change { PreorderReservationGroup.count }) }
     ```
 
-  * **Line # 136 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroupsToTurn, :count)`.
+  * **Line # 147 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroupsToTurn, :count)`.
 
     ```rb
           it { expect { req }.not_to(change { PreorderReservationGroupsToTurn.count }) }
     ```
 
-  * **Line # 149 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-          let(:params) { super().merge(turns: turns, dates: nil) }
-    ```
-
-  * **Line # 156 - convention:** RSpec/RepeatedExampleGroupDescription: Repeated context block description on line(s) [173]
+  * **Line # 167 - convention:** RSpec/RepeatedExampleGroupDescription: Repeated context block description on line(s) [184]
 
     ```rb
         context "when trying to add same turn to a new group" do ...
     ```
 
-  * **Line # 166 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-          let(:params) { super().merge(turns: nil, dates: dates) }
-    ```
-
-  * **Line # 169 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroup, :count)`.
+  * **Line # 180 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroup, :count)`.
 
     ```rb
           it { expect { req }.not_to(change { PreorderReservationGroup.count }) }
     ```
 
-  * **Line # 170 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroupsToTurn, :count)`.
+  * **Line # 181 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroupsToTurn, :count)`.
 
     ```rb
           it { expect { req }.not_to(change { PreorderReservationGroupsToTurn.count }) }
     ```
 
-  * **Line # 173 - convention:** RSpec/RepeatedExampleGroupDescription: Repeated context block description on line(s) [156]
+  * **Line # 184 - convention:** RSpec/RepeatedExampleGroupDescription: Repeated context block description on line(s) [167]
 
     ```rb
         context "when trying to add same turn to a new group" do ...
     ```
 
-  * **Line # 186 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroup, :count)`.
+  * **Line # 197 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroup, :count)`.
 
     ```rb
           it { expect { req }.not_to(change { PreorderReservationGroup.count }) }
     ```
 
-  * **Line # 187 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroupsToTurn, :count)`.
+  * **Line # 198 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroupsToTurn, :count)`.
 
     ```rb
           it { expect { req }.not_to(change { PreorderReservationGroupsToTurn.count }) }
     ```
 
-  * **Line # 189 - convention:** Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
-
-    ```rb
-            { date: (Date.current.next_occurring(:monday) + 28.days).to_s, turn_id: turn.id },
-    ```
-
-  * **Line # 191 - convention:** Layout/LineLength: Line is too long. [142/120]
+  * **Line # 202 - convention:** Layout/LineLength: Line is too long. [142/120]
 
     ```rb
       context "when providing many dates for same turn - real-life scenario where on certain dates the reservations can be created only paying" do
     ```
 
-  * **Line # 201 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroup, :count)`.
+  * **Line # 212 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroup, :count)`.
 
     ```rb
         it { expect { req }.to(change { PreorderReservationGroup.count }.by(1)) }
     ```
 
-  * **Line # 202 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationDate, :count)`.
+  * **Line # 213 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationDate, :count)`.
 
     ```rb
         it { expect { req }.to(change { PreorderReservationDate.count }.by(4)) }
     ```
 
-  * **Line # 203 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroupsToTurn, :count)`.
+  * **Line # 214 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroupsToTurn, :count)`.
 
     ```rb
         it { expect { req }.not_to(change { PreorderReservationGroupsToTurn.count }) }
     ```
 
-  * **Line # 215 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+  * **Line # 226 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
 
     ```rb
         it do
     ```
 
-  * **Line # 223 - convention:** RSpec/IndexedLet: This `let` statement uses index in its name. Please give it a meaningful name.
+  * **Line # 234 - convention:** RSpec/IndexedLet: This `let` statement uses index in its name. Please give it a meaningful name.
 
     ```rb
         let(:turn2) { create(:reservation_turn, weekday: 1) }
     ```
 
-  * **Line # 224 - convention:** RSpec/IndexedLet: This `let` statement uses index in its name. Please give it a meaningful name.
+  * **Line # 235 - convention:** RSpec/IndexedLet: This `let` statement uses index in its name. Please give it a meaningful name.
 
     ```rb
         let(:turn3) { create(:reservation_turn, weekday: 2) }
     ```
 
-  * **Line # 225 - convention:** RSpec/IndexedLet: This `let` statement uses index in its name. Please give it a meaningful name.
+  * **Line # 236 - convention:** RSpec/IndexedLet: This `let` statement uses index in its name. Please give it a meaningful name.
 
     ```rb
         let(:turn4) { create(:reservation_turn, weekday: 2) }
     ```
 
-  * **Line # 226 - convention:** Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
-
-    ```rb
-            { date: (Date.current.next_occurring(:tuesday) + 28.days).to_s, turn_id: turn3.id },
-    ```
-
-  * **Line # 230 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-        let(:params) { super().merge(dates: dates, turns: [turn4.id]) }
-    ```
-
-  * **Line # 240 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroup, :count)`.
+  * **Line # 251 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroup, :count)`.
 
     ```rb
         it { expect { req }.to(change { PreorderReservationGroup.count }.by(1)) }
     ```
 
-  * **Line # 241 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationDate, :count)`.
+  * **Line # 252 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationDate, :count)`.
 
     ```rb
         it { expect { req }.to(change { PreorderReservationDate.count }.by(5)) }
     ```
 
-  * **Line # 242 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroupsToTurn, :count)`.
+  * **Line # 253 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroupsToTurn, :count)`.
 
     ```rb
         it { expect { req }.to(change { PreorderReservationGroupsToTurn.count }.by(1)) }
     ```
 
-  * **Line # 249 - convention:** RSpec/MatchArray: Prefer `contain_exactly` when matching an array literal.
-
-    ```rb
-          expect(json.dig(:item, :dates).pluck(:reservation_turn_id).uniq).to match_array([turn.id, turn2.id, turn3.id])
-    ```
-
-  * **Line # 254 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
+  * **Line # 265 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
 
     ```rb
         it do
     ```
 
-  * **Line # 280 - convention:** RSpec/RepeatedExampleGroupDescription: Repeated context block description on line(s) [299]
+  * **Line # 291 - convention:** RSpec/RepeatedExampleGroupDescription: Repeated context block description on line(s) [310]
 
     ```rb
         context "when adding some turn to the new group, should receive 422" do ...
     ```
 
-  * **Line # 293 - convention:** Layout/LineLength: Line is too long. [132/120]
-
-    ```rb
-          let(:params) { super().merge(turns: [], dates: [{ date: Date.current.next_occurring(:monday).to_s, turn_id: some_turn.id }]) }
-    ```
-
-  * **Line # 294 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroup, :count)`.
+  * **Line # 305 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroup, :count)`.
 
     ```rb
           it { expect { req }.not_to(change { PreorderReservationGroup.count }) }
     ```
 
-  * **Line # 295 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationDate, :count)`.
+  * **Line # 306 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationDate, :count)`.
 
     ```rb
           it { expect { req }.not_to(change { PreorderReservationDate.count }) }
     ```
 
-  * **Line # 296 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroupsToTurn, :count)`.
+  * **Line # 307 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroupsToTurn, :count)`.
 
     ```rb
           it { expect { req }.not_to(change { PreorderReservationGroupsToTurn.count }) }
     ```
 
-  * **Line # 297 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-          let(:params) {
-    ```
-
-  * **Line # 298 - convention:** Layout/BlockEndNewline: Expression at 298, 112 should be on its own line.
-
-    ```rb
-     super().merge(turns: [], dates: [{ date: Date.current.next_occurring(:monday).to_s, turn_id: some_turn.id }]) }
-    ```
-
-  * **Line # 299 - convention:** RSpec/RepeatedExampleGroupDescription: Repeated context block description on line(s) [280]
+  * **Line # 310 - convention:** RSpec/RepeatedExampleGroupDescription: Repeated context block description on line(s) [291]
 
     ```rb
         context "when adding some turn to the new group, should receive 422" do ...
     ```
 
-  * **Line # 300 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-          let(:params) {
-    ```
-
-  * **Line # 301 - convention:** Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-
-    ```rb
-     super().merge(turns: [], dates: [{ date: Date.current.next_occurring(:monday).to_s, turn_id: some_turn.id }])
-    ```
-
-  * **Line # 301 - convention:** Layout/IndentationWidth: Use 2 (not -4) spaces for indentation.
-
-    ```rb
-      super().merge(turns: [], dates: [{ date: Date.current.next_occurring(:monday).to_s, turn_id: some_turn.id }])
-    ```
-
-  * **Line # 302 - convention:** Layout/BlockAlignment: `}` at 302, 0 is not aligned with `let(:params) {` at 300, 6.
-
-    ```rb
-    }
-    ```
-
-  * **Line # 315 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroup, :count)`.
+  * **Line # 326 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroup, :count)`.
 
     ```rb
           it { expect { req }.not_to(change { PreorderReservationGroup.count }) }
     ```
 
-  * **Line # 316 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationDate, :count)`.
+  * **Line # 327 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationDate, :count)`.
 
     ```rb
           it { expect { req }.not_to(change { PreorderReservationDate.count }) }
     ```
 
-  * **Line # 317 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroupsToTurn, :count)`.
+  * **Line # 328 - convention:** RSpec/ExpectChange: Prefer `change(PreorderReservationGroupsToTurn, :count)`.
 
     ```rb
           it { expect { req }.not_to(change { PreorderReservationGroupsToTurn.count }) }
     ```
 
-### spec/requests/v1/admin/preorder_reservation_groups/preorder_reservation_groups.destroy_spec.rb - (3 offenses)
-  * **Line # 22 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+### spec/requests/v1/admin/preorder_reservation_groups/preorder_reservation_groups.destroy_spec.rb - (2 offenses)
+  * **Line # 23 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
 
     ```rb
       def req(id = group.id, p = params, h = headers)
     ```
 
-  * **Line # 22 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+  * **Line # 23 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
 
     ```rb
       def req(id = group.id, p = params, h = headers)
     ```
 
-  * **Line # 27 - warning:** Lint/EmptyBlock: Empty block detected.
-
-    ```rb
-        let(:headers) {}
-    ```
-
-### spec/requests/v1/admin/preorder_reservation_groups/preorder_reservation_groups.index_spec.rb - (59 offenses)
-  * **Line # 9 - convention:** Layout/SpaceInsideHashLiteralBraces: Space inside empty hash literal braces detected.
-
-    ```rb
-      let(:params) { { } }
-    ```
-
-  * **Line # 18 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-            reservation_turn: create(:reservation_turn, weekday: weekday)
-    ```
-
+### spec/requests/v1/admin/preorder_reservation_groups/preorder_reservation_groups.index_spec.rb - (4 offenses)
   * **Line # 25 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
 
     ```rb
@@ -26821,138 +23573,6 @@
 
     ```rb
       def req(p = params, h = headers)
-    ```
-
-  * **Line # 30 - warning:** Lint/EmptyBlock: Empty block detected.
-
-    ```rb
-        let(:headers) {}
-    ```
-
-  * **Line # 57 - convention:** Layout/LineLength: Line is too long. [185/120]
-
-    ```rb
-          it { expect(item).to include(id: record.id, status: record.status, active_from: nil, active_to: nil, payment_value: record.payment_value, created_at: String, updated_at: String) }
-    ```
-
-  * **Line # 58 - convention:** Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-
-    ```rb
-     expect(item).to include(id: record.id, status: record.status, active_from: nil, active_to: nil, 
-    ```
-
-  * **Line # 58 - convention:** RSpec/EmptyLineAfterExample: Add an empty line after `it`.
-
-    ```rb
-     expect(item).to include(id: record.id, status: record.status, active_from: nil, active_to: nil, payment_value: record.payment_value, created_at: String, updated_at: String) }
-    ```
-
-  * **Line # 58 - convention:** Layout/IndentationWidth: Use 2 (not -4) spaces for indentation.
-
-    ```rb
-      expect(item).to include(id: record.id, status: record.status, active_from: nil, active_to: nil,
-    ```
-
-  * **Line # 58 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-     expect(item).to include(id: record.id, status: record.status, active_from: nil, active_to: nil, 
-    ```
-
-  * **Line # 58 - convention:** Layout/LineLength: Line is too long. [175/120]
-
-    ```rb
-     expect(item).to include(id: record.id, status: record.status, active_from: nil, active_to: nil, payment_value: record.payment_value, created_at: String, updated_at: String) }
-    ```
-
-  * **Line # 58 - convention:** Layout/BlockEndNewline: Expression at 58, 175 should be on its own line.
-
-    ```rb
-     expect(item).to include(id: record.id, status: record.status, active_from: nil, active_to: nil, payment_value: record.payment_value, created_at: String, updated_at: String) }
-    ```
-
-  * **Line # 59 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    payment_value: record.payment_value, created_at: String, updated_at: String)
-    ```
-
-  * **Line # 59 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    payment_value: record.payment_value, created_at: String, updated_at: String)
-    ```
-
-  * **Line # 59 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                                                       payment_value: record.payment_value, created_at: String, updated_at: String)
-    ```
-
-  * **Line # 59 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-                                                       payment_value: record.payment_value, created_at: String, updated_at: String)
-    ```
-
-  * **Line # 60 - convention:** Layout/BlockAlignment: `}` at 60, 0 is not aligned with `it {` at 57, 6.
-
-    ```rb
-    }
-    ```
-
-  * **Line # 60 - convention:** RSpec/EmptyLineAfterExample: Add an empty line after `it`.
-
-    ```rb
-          it { expect(item).to include(dates: Array) }
-    ```
-
-  * **Line # 60 - convention:** Layout/LineLength: Line is too long. [185/120]
-
-    ```rb
-          it { expect(item[:turns]).to all(include(id: Integer, name: String, starts_at: String, ends_at: String, weekday: Integer, step: Integer, created_at: String, updated_at: String)) }
-    ```
-
-  * **Line # 62 - convention:** RSpec/EmptyLineAfterExample: Add an empty line after `it`.
-
-    ```rb
-     expect(item[:turns]).to all(include(id: Integer, name: String, starts_at: String, ends_at: String, weekday: Integer, step: Integer, created_at: String, updated_at: String)) }
-    ```
-
-  * **Line # 62 - convention:** Layout/LineLength: Line is too long. [175/120]
-
-    ```rb
-     expect(item[:turns]).to all(include(id: Integer, name: String, starts_at: String, ends_at: String, weekday: Integer, step: Integer, created_at: String, updated_at: String)) }
-    ```
-
-  * **Line # 62 - convention:** Layout/BlockEndNewline: Expression at 62, 175 should be on its own line.
-
-    ```rb
-     expect(item[:turns]).to all(include(id: Integer, name: String, starts_at: String, ends_at: String, weekday: Integer, step: Integer, created_at: String, updated_at: String)) }
-    ```
-
-  * **Line # 63 - convention:** RSpec/ExampleWording: Do not use should when describing your tests.
-
-    ```rb
-          it "should either have dates or turns" do
-    ```
-
-  * **Line # 66 - convention:** Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-
-    ```rb
-     expect(item[:turns]).to all(include(id: Integer, name: String, starts_at: String, ends_at: String, weekday: Integer, 
-    ```
-
-  * **Line # 66 - convention:** Layout/IndentationWidth: Use 2 (not -4) spaces for indentation.
-
-    ```rb
-      expect(item[:turns]).to all(include(id: Integer, name: String, starts_at: String, ends_at: String, weekday: Integer,
-    ```
-
-  * **Line # 66 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-     expect(item[:turns]).to all(include(id: Integer, name: String, starts_at: String, ends_at: String, weekday: Integer, 
     ```
 
   * **Line # 66 - convention:** Layout/LineLength: Line is too long. [124/120]
@@ -26961,299 +23581,86 @@
             expect(item[:turns]).to all(include(id: Integer, name: String, starts_at: String, ends_at: String, weekday: Integer,
     ```
 
-  * **Line # 67 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    step: Integer, created_at: String, updated_at: String))
-    ```
-
-  * **Line # 67 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    step: Integer, created_at: String, updated_at: String))
-    ```
-
-  * **Line # 67 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                                                                               step: Integer, created_at: String, updated_at: String))
-    ```
-
-  * **Line # 67 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-                                                                               step: Integer, created_at: String, updated_at: String))
-    ```
-
-  * **Line # 68 - convention:** Layout/BlockAlignment: `}` at 68, 0 is not aligned with `it {` at 65, 6.
-
-    ```rb
-    }
-    ```
-
-  * **Line # 68 - convention:** Rails/Pluck: Prefer `pluck(:starts_at)` over `map { |t| t[:starts_at] }`.
-
-    ```rb
-            expect(item[:turns].map { |t| t[:starts_at] }).to all(match(/\A\d{1,2}:\d{1,2}\z/))
-    ```
-
-  * **Line # 70 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-  * **Line # 70 - convention:** Rails/Pluck: Prefer `pluck(:starts_at)` over `map { |t| t[:starts_at] }`.
-
-    ```rb
-            expect(item[:turns].map { |t| t[:starts_at] }).to all(match(/\A\d{1,2}:\d{1,2}\z/))
-    ```
-
-  * **Line # 72 - convention:** Rails/Pluck: Prefer `pluck(:reservation_turn)` over `map{|j| j[:reservation_turn]}`.
-
-    ```rb
-            expect(item[:dates].map{|j| j[:reservation_turn]}.flatten.map { |t| t[:starts_at] }).to all(match(/\A\d{1,2}:\d{1,2}\z/))
-    ```
-
-  * **Line # 72 - convention:** Layout/SpaceBeforeBlockBraces: Space missing to the left of {.
-
-    ```rb
-            expect(item[:dates].map{|j| j[:reservation_turn]}.flatten.map { |t| t[:starts_at] }).to all(match(/\A\d{1,2}:\d{1,2}\z/))
-    ```
-
-  * **Line # 72 - convention:** Layout/SpaceInsideBlockBraces: Space between { and | missing.
-
-    ```rb
-            expect(item[:dates].map{|j| j[:reservation_turn]}.flatten.map { |t| t[:starts_at] }).to all(match(/\A\d{1,2}:\d{1,2}\z/))
-    ```
-
-  * **Line # 72 - convention:** Layout/SpaceInsideBlockBraces: Space missing inside }.
-
-    ```rb
-            expect(item[:dates].map{|j| j[:reservation_turn]}.flatten.map { |t| t[:starts_at] }).to all(match(/\A\d{1,2}:\d{1,2}\z/))
-    ```
-
-  * **Line # 72 - convention:** Rails/Pluck: Prefer `pluck(:starts_at)` over `map { |t| t[:starts_at] }`.
-
-    ```rb
-            expect(item[:dates].map{|j| j[:reservation_turn]}.flatten.map { |t| t[:starts_at] }).to all(match(/\A\d{1,2}:\d{1,2}\z/))
-    ```
-
-  * **Line # 72 - convention:** Layout/LineLength: Line is too long. [129/120]
-
-    ```rb
-            expect(item[:dates].map{|j| j[:reservation_turn]}.flatten.map { |t| t[:starts_at] }).to all(match(/\A\d{1,2}:\d{1,2}\z/))
-    ```
-
-  * **Line # 74 - convention:** Rails/Pluck: Prefer `pluck(:reservation_turn)` over `map {|j|
- j[:reservation_turn]}`.
-
-    ```rb
-            expect(item[:dates].map {|j| ...
-    ```
-
-  * **Line # 74 - convention:** Layout/SpaceInsideBlockBraces: Space between { and | missing.
-
-    ```rb
-            expect(item[:dates].map {|j|
-    ```
-
-  * **Line # 74 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-            expect(item[:dates].map {|j|
-    ```
-
-  * **Line # 75 - convention:** Layout/BlockEndNewline: Expression at 75, 22 should be on its own line.
-
-    ```rb
-     j[:reservation_turn]}.flatten.map { |t| t[:starts_at] }).to all(match(/\A\d{1,2}:\d{1,2}\z/))
-    ```
-
-  * **Line # 75 - convention:** Rails/Pluck: Prefer `pluck(:starts_at)` over `map { |t| t[:starts_at] }`.
-
-    ```rb
-     j[:reservation_turn]}.flatten.map { |t| t[:starts_at] }).to all(match(/\A\d{1,2}:\d{1,2}\z/))
-    ```
-
-  * **Line # 77 - convention:** Rails/Pluck: Prefer `pluck(:starts_at)` over `map { |t| t[:starts_at] }`.
-
-    ```rb
-            expect(item[:turns].map { |t| t[:starts_at] }).to all(match(/\A\d{1,2}:\d{1,2}\z/))
-    ```
-
-  * **Line # 81 - convention:** Rails/Pluck: Prefer `pluck(:reservation_turn)` over `map do |j|
-                 j[:reservation_turn]
-               end`.
-
-    ```rb
-            expect(item[:dates].map do |j| ...
-    ```
-
-  * **Line # 81 - convention:** Rails/Pluck: Prefer `pluck(:reservation_turn)` over `map do |j|
-  j[:reservation_turn]
-               end`.
-
-    ```rb
-            expect(item[:dates].map do |j| ...
-    ```
-
-  * **Line # 81 - convention:** Rails/Pluck: Prefer `pluck(:reservation_turn)` over `map { |j|
- j[:reservation_turn]
-}`.
-
-    ```rb
-            expect(item[:dates].map { |j| ...
-    ```
-
-  * **Line # 81 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-            expect(item[:dates].map { |j|
-    ```
-
-  * **Line # 82 - convention:** Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-
-    ```rb
-     j[:reservation_turn]
-    ```
-
-  * **Line # 82 - convention:** Layout/IndentationWidth: Use 2 (not -13) spaces for indentation.
-
-    ```rb
-      j[:reservation_turn]
-    ```
-
-  * **Line # 83 - convention:** Layout/BlockAlignment: `}` at 83, 0 is not aligned with `item[:dates].map { |j|` at 81, 15 or `expect(item[:dates].map { |j|` at 81, 8.
-
-    ```rb
-    }.flatten.map { |t| t[:starts_at] }).to all(match(/\A\d{1,2}:\d{1,2}\z/))
-    ```
-
-  * **Line # 83 - convention:** Rails/Pluck: Prefer `pluck(:starts_at)` over `map { |t| t[:starts_at] }`.
-
-    ```rb
-    }.flatten.map { |t| t[:starts_at] }).to all(match(/\A\d{1,2}:\d{1,2}\z/))
-    ```
-
-  * **Line # 83 - convention:** Rails/Pluck: Prefer `pluck(:starts_at)` over `map { |t| t[:starts_at] }`.
-
-    ```rb
-                   end.flatten.map { |t| t[:starts_at] }).to all(match(/\A\d{1,2}:\d{1,2}\z/))
-    ```
-
-  * **Line # 129 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-          let!(:all_active) {
-    ```
-
-  * **Line # 135 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-          let!(:all_inactive) {
-    ```
-
   * **Line # 144 - convention:** RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
 
     ```rb
           let!(:all_inactive) do
     ```
 
-### spec/requests/v1/admin/preorder_reservation_groups/preorder_reservation_groups.update_spec.rb - (16 offenses)
-  * **Line # 44 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+### spec/requests/v1/admin/preorder_reservation_groups/preorder_reservation_groups.update_spec.rb - (12 offenses)
+  * **Line # 45 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
 
     ```rb
       def req(id = group.id, p = params, h = headers)
     ```
 
-  * **Line # 44 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+  * **Line # 45 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
 
     ```rb
       def req(id = group.id, p = params, h = headers)
     ```
 
-  * **Line # 49 - warning:** Lint/EmptyBlock: Empty block detected.
-
-    ```rb
-        let(:headers) {}
-    ```
-
-  * **Line # 63 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+  * **Line # 74 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
 
     ```rb
         it do
     ```
 
-  * **Line # 76 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+  * **Line # 87 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
 
     ```rb
         it do
     ```
 
-  * **Line # 78 - convention:** Style/SingleArgumentDig: Use `json[:item]` instead of `json.dig(:item)`.
+  * **Line # 89 - convention:** Style/SingleArgumentDig: Use `json[:item]` instead of `json.dig(:item)`.
 
     ```rb
           expect(json.dig(:item)).to include(:active_from)
     ```
 
-  * **Line # 82 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+  * **Line # 93 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
 
     ```rb
         it do
     ```
 
-  * **Line # 106 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+  * **Line # 117 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
 
     ```rb
         it do
     ```
 
-  * **Line # 114 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-        let(:params) { { dates: dates } }
-    ```
-
-  * **Line # 124 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+  * **Line # 135 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
 
     ```rb
         it do
     ```
 
-  * **Line # 133 - convention:** Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
-
-    ```rb
-        [],
-    ```
-
-  * **Line # 142 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+  * **Line # 153 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
 
     ```rb
           it do
     ```
 
-  * **Line # 157 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+  * **Line # 168 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
 
     ```rb
         it do
     ```
 
-  * **Line # 166 - convention:** Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
-
-    ```rb
-        [],
-    ```
-
-  * **Line # 177 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+  * **Line # 188 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
 
     ```rb
           it do
     ```
 
-  * **Line # 201 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
+  * **Line # 212 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
 
     ```rb
             it do
     ```
 
-### spec/requests/v1/admin/public_messages_controller/public_messages_controller.create_spec.rb - (3 offenses)
+### spec/requests/v1/admin/public_messages_controller/public_messages_controller.create_spec.rb - (2 offenses)
   * **Line # 15 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
 
     ```rb
@@ -27266,13 +23673,7 @@
       def req(p = params, h = headers)
     ```
 
-  * **Line # 20 - warning:** Lint/EmptyBlock: Empty block detected.
-
-    ```rb
-        let(:headers) {}
-    ```
-
-### spec/requests/v1/admin/public_messages_controller/public_messages_controller.index_spec.rb - (3 offenses)
+### spec/requests/v1/admin/public_messages_controller/public_messages_controller.index_spec.rb - (2 offenses)
   * **Line # 11 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
 
     ```rb
@@ -27285,13 +23686,7 @@
       def req(p = params, h = headers)
     ```
 
-  * **Line # 16 - warning:** Lint/EmptyBlock: Empty block detected.
-
-    ```rb
-        let(:headers) {}
-    ```
-
-### spec/requests/v1/admin/public_messages_controller/public_messages_controller.show_spec.rb - (4 offenses)
+### spec/requests/v1/admin/public_messages_controller/public_messages_controller.show_spec.rb - (3 offenses)
   * **Line # 13 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
 
     ```rb
@@ -27310,13 +23705,7 @@
       def req(k = key, p = params, h = headers)
     ```
 
-  * **Line # 18 - warning:** Lint/EmptyBlock: Empty block detected.
-
-    ```rb
-        let(:headers) {}
-    ```
-
-### spec/requests/v1/admin/public_messages_controller/public_messages_controller.update_spec.rb - (3 offenses)
+### spec/requests/v1/admin/public_messages_controller/public_messages_controller.update_spec.rb - (2 offenses)
   * **Line # 15 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
 
     ```rb
@@ -27327,12 +23716,6 @@
 
     ```rb
       def req(p = params, h = headers)
-    ```
-
-  * **Line # 20 - warning:** Lint/EmptyBlock: Empty block detected.
-
-    ```rb
-        let(:headers) {}
     ```
 
 ### spec/requests/v1/admin/settings_controller/settings_controller.hash_spec.rb - (2 offenses)
@@ -27348,7 +23731,7 @@
       def req(p = params, h = headers)
     ```
 
-### spec/requests/v1/admin/settings_controller/settings_controller.index_spec.rb - (3 offenses)
+### spec/requests/v1/admin/settings_controller/settings_controller.index_spec.rb - (2 offenses)
   * **Line # 11 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
 
     ```rb
@@ -27359,12 +23742,6 @@
 
     ```rb
       def req(p = params, h = headers)
-    ```
-
-  * **Line # 18 - warning:** Lint/EmptyBlock: Empty block detected.
-
-    ```rb
-        let(:headers) {}
     ```
 
 ### spec/requests/v1/admin/settings_controller/settings_controller.show_spec.rb - (3 offenses)
@@ -27387,22 +23764,149 @@
     ```
 
 ### spec/requests/v1/admin/settings_controller/settings_controller.update_spec.rb - (3 offenses)
-  * **Line # 14 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+  * **Line # 15 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
 
     ```rb
       def req(k = key, p = params, h = headers)
     ```
 
-  * **Line # 14 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+  * **Line # 15 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
 
     ```rb
       def req(k = key, p = params, h = headers)
     ```
 
-  * **Line # 14 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+  * **Line # 15 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
 
     ```rb
       def req(k = key, p = params, h = headers)
+    ```
+
+### spec/requests/v1/admin/stats_controller/stats_controller.index_spec.rb - (21 offenses)
+  * **Line # 8 - warning:** Lint/ConstantDefinitionInBlock: Do not define constants this way within a block.
+
+    ```rb
+      ALL_KEYS = %w[reservations-by-hour].freeze
+    ```
+
+  * **Line # 8 - convention:** RSpec/LeakyConstantDeclaration: Stub constant instead of declaring explicitly.
+
+    ```rb
+      ALL_KEYS = %w[reservations-by-hour].freeze
+    ```
+
+  * **Line # 14 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+
+    ```rb
+      def req(p = params, h = headers)
+    ```
+
+  * **Line # 14 - convention:** Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+
+    ```rb
+      def req(p = params, h = headers)
+    ```
+
+  * **Line # 43 - convention:** Layout/SpaceInsideHashLiteralBraces: Space inside empty hash literal braces detected.
+
+    ```rb
+        let(:params) { { } }
+    ```
+
+  * **Line # 82 - convention:** RSpec/IndexedLet: This `let` statement uses index in its name. Please give it a meaningful name.
+
+    ```rb
+          let(:res1) { create(:reservation, adults: 1, datetime:) }
+    ```
+
+  * **Line # 83 - convention:** RSpec/IndexedLet: This `let` statement uses index in its name. Please give it a meaningful name.
+
+    ```rb
+          let(:res2) { create(:reservation, adults: 1, datetime:) }
+    ```
+
+  * **Line # 95 - convention:** RSpec/MatchArray: Prefer `contain_exactly` when matching an array literal.
+
+    ```rb
+          it { expect(json["reservations-by-hour"].keys).to match_array(["2021-01-01 10:00"]) }
+    ```
+
+  * **Line # 100 - convention:** RSpec/IndexedLet: This `let` statement uses index in its name. Please give it a meaningful name.
+
+    ```rb
+          let(:datetime1) { DateTime.parse("2021-01-01 10:00:00") }
+    ```
+
+  * **Line # 101 - convention:** RSpec/IndexedLet: This `let` statement uses index in its name. Please give it a meaningful name.
+
+    ```rb
+          let(:datetime2) { DateTime.parse("2021-01-01 11:00:00") }
+    ```
+
+  * **Line # 102 - convention:** RSpec/IndexedLet: This `let` statement uses index in its name. Please give it a meaningful name.
+
+    ```rb
+          let(:res1) { create(:reservation, adults: 1, datetime: datetime1) }
+    ```
+
+  * **Line # 103 - convention:** RSpec/IndexedLet: This `let` statement uses index in its name. Please give it a meaningful name.
+
+    ```rb
+          let(:res2) { create(:reservation, adults: 1, datetime: datetime2) }
+    ```
+
+  * **Line # 115 - convention:** RSpec/MatchArray: Prefer `contain_exactly` when matching an array literal.
+
+    ```rb
+          it { expect(json["reservations-by-hour"].keys).to match_array(["2021-01-01 10:00", "2021-01-01 11:00"]) }
+    ```
+
+  * **Line # 124 - convention:** Style/HashSyntax: Omit the hash value.
+
+    ```rb
+              create(:reservation, adults: 1, datetime: datetime),
+    ```
+
+  * **Line # 126 - convention:** Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
+
+    ```rb
+              create(:reservation, adults: 1, datetime: datetime + 1.day),
+    ```
+
+  * **Line # 133 - convention:** Style/CommentAnnotation: Annotation keywords like `Note` should be all upper case, followed by a colon, and a space, then a note describing the problem.
+
+    ```rb
+              # Note: both 'reservation' and 'reservationS' are valid
+    ```
+
+  * **Line # 134 - convention:** Style/RedundantParentheses: Don't use parentheses around a method call.
+
+    ```rb
+              reservations_date_from: (datetime).to_date,
+    ```
+
+  * **Line # 135 - convention:** Style/RedundantParentheses: Don't use parentheses around a method call.
+
+    ```rb
+              reservation_date_to: (datetime).to_date
+    ```
+
+  * **Line # 149 - convention:** RSpec/MatchArray: Prefer `contain_exactly` when matching an array literal.
+
+    ```rb
+          it { expect(json["reservations-by-hour"].keys).to match_array(["2021-01-01 10:00", "2021-01-01 11:00"]) }
+    ```
+
+  * **Line # 156 - convention:** RSpec/EmptyLineAfterFinalLet: Add an empty line after the last `let`.
+
+    ```rb
+        let(:datetime) { DateTime.parse("2021-01-01 10:00:00") }
+    ```
+
+  * **Line # 167 - convention:** RSpec/MatchArray: Prefer `contain_exactly` when matching an array literal.
+
+    ```rb
+        it { expect(json["reservations-by-hour"].keys).to match_array(["2021-01-01 10:00"]) }
     ```
 
 ### spec/requests/v1/admin/users_controller/users_controller.index_spec.rb - (4 offenses)
@@ -27467,17 +23971,11 @@
           expect(subject[:item]).not_to include(:enc_otp_key)
     ```
 
-### spec/requests/v1/auth_controller/auth_controller.login_spec.rb - (15 offenses)
+### spec/requests/v1/auth_controller/auth_controller.login_spec.rb - (12 offenses)
   * **Line # 22 - convention:** RSpec/ExpectChange: Prefer `change(RefreshToken, :count)`.
 
     ```rb
           expect { req }.to(change { RefreshToken.count }.by(1))
-    ```
-
-  * **Line # 37 - convention:** RSpec/EmptyLineAfterHook: Add an empty line after `before`.
-
-    ```rb
-        before { user.update!(username:) }
     ```
 
   * **Line # 42 - convention:** RSpec/ExpectChange: Prefer `change(RefreshToken, :count)`.
@@ -27486,22 +23984,10 @@
           expect { req }.to(change { RefreshToken.count }.by(1))
     ```
 
-  * **Line # 56 - convention:** RSpec/EmptyLineAfterHook: Add an empty line after `before`.
-
-    ```rb
-        before { user.update!(username:) }
-    ```
-
   * **Line # 62 - convention:** RSpec/ExpectChange: Prefer `change(RefreshToken, :count)`.
 
     ```rb
           expect { req }.to(change { RefreshToken.count }.by(1))
-    ```
-
-  * **Line # 75 - convention:** RSpec/EmptyLineAfterHook: Add an empty line after `before`.
-
-    ```rb
-        before { user.update!(username:) }
     ```
 
   * **Line # 82 - convention:** RSpec/ExpectChange: Prefer `change(RefreshToken, :count)`.
@@ -27602,46 +24088,57 @@
         it do
     ```
 
-### spec/requests/v1/profile_controller/profile_controller.destroy_spec.rb - (2 offenses)
-  * **Line # 9 - convention:** Layout/SpaceInsideHashLiteralBraces: Space inside empty hash literal braces detected.
+### spec/requests/v1/auth_controller/auth_controller.root_spec.rb - (7 offenses)
+  * **Line # 51 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
 
     ```rb
-      let(:default_params) { { } }
+        it "after some time, won't be root anymore." do
     ```
 
+  * **Line # 55 - convention:** Rails/DurationArithmetic: Do not add or subtract duration.
+
+    ```rb
+          travel_to(Time.current + 1.hour) do
+    ```
+
+  * **Line # 84 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
+
+    ```rb
+          expect(json.dig(:details, 
+    ```
+
+  * **Line # 84 - convention:** Layout/LineLength: Line is too long. [131/120]
+
+    ```rb
+          expect(json.dig(:details, :password)).to be_present.and(be_a(Array)).and(include(I18n.t("errors.messages.invalid_password")))
+    ```
+
+  * **Line # 85 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+
+    ```rb
+    :password)).to be_present.and(be_a(Array)).and(include(I18n.t("errors.messages.invalid_password")))
+    ```
+
+  * **Line # 85 - convention:** Layout/LineLength: Line is too long. [121/120]
+
+    ```rb
+                          :password)).to be_present.and(be_a(Array)).and(include(I18n.t("errors.messages.invalid_password")))
+    ```
+
+  * **Line # 102 - convention:** RSpec/Rails/HttpStatus: Prefer `:forbidden` over `403` to describe HTTP status code.
+
+    ```rb
+          expect(response).to have_http_status(403)
+    ```
+
+### spec/requests/v1/profile_controller/profile_controller.destroy_spec.rb - (1 offense)
   * **Line # 29 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
 
     ```rb
         it do
     ```
 
-### spec/requests/v1/profile_controller/profile_controller.send_email_verification_otp_spec.rb - (1 offense)
-  * **Line # 10 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-      let(:default_params) { { email: email } }
-    ```
-
-### spec/requests/v1/profile_controller/profile_controller.update_email_spec.rb - (2 offenses)
-  * **Line # 11 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-      let(:default_params) { { email: email, otp: otp } }
-    ```
-
-  * **Line # 11 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-      let(:default_params) { { email: email, otp: otp } }
-    ```
-
-### spec/requests/v1/profile_controller/profile_controller.update_password_spec.rb - (4 offenses)
-  * **Line # 11 - convention:** Style/TrailingCommaInHashLiteral: Avoid comma after the last item of a hash.
-
-    ```rb
-      let(:default_params) { { current_password:, new_password:, } }
-    ```
-
+### spec/requests/v1/profile_controller/profile_controller.update_password_spec.rb - (3 offenses)
   * **Line # 63 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
 
     ```rb
@@ -27660,31 +24157,6 @@
           expect(current_user.reload.authenticate(current_password)).to eq(false)
     ```
 
-### spec/requests/v1/profile_controller/profile_controller.update_spec.rb - (4 offenses)
-  * **Line # 11 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-      let(:default_params) { { fullname: fullname, username: username } }
-    ```
-
-  * **Line # 11 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-      let(:default_params) { { fullname: fullname, username: username } }
-    ```
-
-  * **Line # 27 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-        let(:default_params) { { fullname: fullname } }
-    ```
-
-  * **Line # 38 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-        let(:default_params) { { username: username } }
-    ```
-
 ### spec/requests/v1/reservations_controller/resend_confirmation_email_spec.rb - (1 offense)
   * **Line # 5 - convention:** RSpec/Rails/InferredSpecType: Remove redundant spec type.
 
@@ -27692,276 +24164,48 @@
     RSpec.context "POST /v1/reservations/:secret/resend_confirmation_email", type: :request do
     ```
 
-### spec/requests/v1/reservations_controller/valid_dates_spec.rb - (42 offenses)
+### spec/requests/v1/reservations_controller/valid_dates_spec.rb - (6 offenses)
   * **Line # 5 - convention:** RSpec/Rails/InferredSpecType: Remove redundant spec type.
 
     ```rb
     RSpec.context "GET /v1/reservations/valid_dates", type: :request do
     ```
 
-  * **Line # 30 - convention:** Rails/PluralizationGrammar: Prefer `10.days`.
+  * **Line # 149 - convention:** Style/RedundantParentheses: Don't use parentheses around a method call.
 
     ```rb
-            create(:holiday, from_timestamp: 10.days.ago, to_timestamp: 10.day.from_now, weekday: weekday, weekly_from: "15:00", weekly_to: "23:59")
+            expect(json[0]).to eq((1.day.from_now).to_date.to_s)
     ```
 
-  * **Line # 30 - convention:** Style/HashSyntax: Omit the hash value.
+  * **Line # 149 - convention:** Rails/DurationArithmetic: Do not add or subtract duration.
 
     ```rb
-            create(:holiday, from_timestamp: 10.days.ago, to_timestamp: 10.day.from_now, weekday: weekday, weekly_from: "15:00", weekly_to: "23:59")
+            expect(json[0]).to eq((Time.zone.now + 1.day).to_date.to_s)
     ```
 
-  * **Line # 30 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
+  * **Line # 167 - convention:** Style/RedundantParentheses: Don't use parentheses around a method call.
 
     ```rb
-            create(:holiday, from_timestamp: 10.days.ago, to_timestamp: 10.days.from_now, weekday:, 
+            expect(json[0]).to eq((1.day.from_now).to_date.to_s)
     ```
 
-  * **Line # 30 - convention:** Layout/LineLength: Line is too long. [144/120]
+  * **Line # 167 - convention:** Rails/DurationArithmetic: Do not add or subtract duration.
 
     ```rb
-            create(:holiday, from_timestamp: 10.days.ago, to_timestamp: 10.day.from_now, weekday: weekday, weekly_from: "15:00", weekly_to: "23:59")
+            expect(json[0]).to eq((Time.zone.now + 1.day).to_date.to_s)
     ```
 
-  * **Line # 31 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+  * **Line # 187 - convention:** RSpec/MatchArray: Prefer `contain_exactly` when matching an array literal.
 
     ```rb
-    weekly_from: "15:00", weekly_to: "23:59")
+            expect(json).to match_array([4.days.from_now.to_date.to_s, 5.days.from_now.to_date.to_s])
     ```
 
-  * **Line # 31 - convention:** Rails/PluralizationGrammar: Prefer `10.days`.
-
-    ```rb
-            create(:holiday, from_timestamp: 10.days.ago, to_timestamp: 10.day.from_now, weekday: weekday, weekly_from: "00:00", weekly_to: "11:59")
-    ```
-
-  * **Line # 31 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-            create(:holiday, from_timestamp: 10.days.ago, to_timestamp: 10.day.from_now, weekday: weekday, weekly_from: "00:00", weekly_to: "11:59")
-    ```
-
-  * **Line # 31 - convention:** Layout/LineLength: Line is too long. [144/120]
-
-    ```rb
-            create(:holiday, from_timestamp: 10.days.ago, to_timestamp: 10.day.from_now, weekday: weekday, weekly_from: "00:00", weekly_to: "11:59")
-    ```
-
-  * **Line # 32 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-            create(:holiday, from_timestamp: 3.days.ago, to_timestamp: 2.days.ago, weekday: weekday, weekly_from: "00:00", weekly_to: "23:59")
-    ```
-
-  * **Line # 32 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-            create(:holiday, from_timestamp: 10.days.ago, to_timestamp: 10.days.from_now, weekday:, 
-    ```
-
-  * **Line # 32 - convention:** Layout/LineLength: Line is too long. [138/120]
-
-    ```rb
-            create(:holiday, from_timestamp: 3.days.ago, to_timestamp: 2.days.ago, weekday: weekday, weekly_from: "00:00", weekly_to: "23:59")
-    ```
-
-  * **Line # 33 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    weekly_from: "00:00", weekly_to: "11:59")
-    ```
-
-  * **Line # 34 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-            create(:holiday, from_timestamp: 3.days.ago, to_timestamp: 2.days.ago, weekday:, weekly_from: "00:00", 
-    ```
-
-  * **Line # 35 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    weekly_to: "23:59")
-    ```
-
-  * **Line # 43 - convention:** RSpec/EmptyLineAfterExample: Add an empty line after `it`.
-
-    ```rb
-        it { expect(json).not_to include(message: String) }
-    ```
-
-  * **Line # 46 - convention:** Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the first position after the preceding left parenthesis.
-
-    ```rb
-            (Time.zone.now.to_date).to_s,
-    ```
-
-  * **Line # 46 - convention:** Style/RedundantParentheses: Don't use parentheses around a method call.
-
-    ```rb
-            (Time.zone.now.to_date).to_s,
-    ```
-
-  * **Line # 47 - convention:** Rails/PluralizationGrammar: Prefer `1.day`.
-
-    ```rb
-            (Time.zone.now.to_date + 1.days).to_s,
-    ```
-
-  * **Line # 48 - convention:** Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
-
-    ```rb
-            (Time.zone.now.to_date + 2.days).to_s,
-    ```
-
-  * **Line # 49 - convention:** Layout/FirstArrayElementIndentation: Indent the right bracket the same as the first position after the preceding left parenthesis.
-
-    ```rb
-          ])
-    ```
-
-  * **Line # 51 - convention:** Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
-
-    ```rb
-            (Time.zone.now.to_date + 1.day).to_s,
-    ```
-
-  * **Line # 52 - convention:** Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
-
-    ```rb
-            (Time.zone.now.to_date + 2.days).to_s
-    ```
-
-  * **Line # 59 - convention:** Rails/PluralizationGrammar: Prefer `3.days`.
-
-    ```rb
-            create(:holiday, from_timestamp: 3.days.ago, to_timestamp: 3.day.from_now, weekday: weekday, weekly_from: "00:00", weekly_to: "23:59")
-    ```
-
-  * **Line # 59 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-            create(:holiday, from_timestamp: 3.days.ago, to_timestamp: 3.day.from_now, weekday: weekday, weekly_from: "00:00", weekly_to: "23:59")
-    ```
-
-  * **Line # 59 - convention:** Layout/LineLength: Line is too long. [142/120]
-
-    ```rb
-            create(:holiday, from_timestamp: 3.days.ago, to_timestamp: 3.day.from_now, weekday: weekday, weekly_from: "00:00", weekly_to: "23:59")
-    ```
-
-  * **Line # 63 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-            create(:holiday, from_timestamp: 3.days.ago, to_timestamp: 3.days.from_now, weekday:, 
-    ```
-
-  * **Line # 64 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    weekly_from: "00:00", weekly_to: "23:59")
-    ```
-
-  * **Line # 91 - convention:** RSpec/EmptyLineAfterExample: Add an empty line after `it`.
-
-    ```rb
-        it { expect(json).not_to include(message: String) }
-    ```
-
-  * **Line # 94 - convention:** Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the first position after the preceding left parenthesis.
-
-    ```rb
-            (Time.zone.now.to_date).to_s,
-    ```
-
-  * **Line # 94 - convention:** Style/RedundantParentheses: Don't use parentheses around a method call.
-
-    ```rb
-            (Time.zone.now.to_date).to_s,
-    ```
-
-  * **Line # 95 - convention:** Rails/PluralizationGrammar: Prefer `1.day`.
-
-    ```rb
-            (Time.zone.now.to_date + 1.days).to_s,
-    ```
-
-  * **Line # 96 - convention:** Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
-
-    ```rb
-            (Time.zone.now.to_date + 2.days).to_s,
-    ```
-
-  * **Line # 97 - convention:** Layout/FirstArrayElementIndentation: Indent the right bracket the same as the first position after the preceding left parenthesis.
-
-    ```rb
-          ])
-    ```
-
-  * **Line # 101 - convention:** Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
-
-    ```rb
-            (Time.zone.now.to_date + 1.day).to_s,
-    ```
-
-  * **Line # 102 - convention:** Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
-
-    ```rb
-            (Time.zone.now.to_date + 2.days).to_s
-    ```
-
-  * **Line # 107 - convention:** RSpec/EmptyLineAfterExample: Add an empty line after `it`.
-
-    ```rb
-          it { is_expected.to have_http_status(:ok) }
-    ```
-
-  * **Line # 110 - convention:** Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the first position after the preceding left parenthesis.
-
-    ```rb
-              (Time.zone.now.to_date + 1.days).to_s,
-    ```
-
-  * **Line # 110 - convention:** Rails/PluralizationGrammar: Prefer `1.day`.
-
-    ```rb
-              (Time.zone.now.to_date + 1.days).to_s,
-    ```
-
-  * **Line # 111 - convention:** Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
-
-    ```rb
-              (Time.zone.now.to_date + 2.days).to_s,
-    ```
-
-  * **Line # 112 - convention:** Layout/FirstArrayElementIndentation: Indent the right bracket the same as the first position after the preceding left parenthesis.
-
-    ```rb
-            ])
-    ```
-
-  * **Line # 118 - convention:** Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
-
-    ```rb
-              (Time.zone.now.to_date + 2.days).to_s
-    ```
-
-### spec/requests/v1/reservations_controller/valid_times_spec.rb - (39 offenses)
+### spec/requests/v1/reservations_controller/valid_times_spec.rb - (15 offenses)
   * **Line # 5 - convention:** RSpec/Rails/InferredSpecType: Remove redundant spec type.
 
     ```rb
     RSpec.context "GET /v1/reservations/valid_times", type: :request do
-    ```
-
-  * **Line # 27 - convention:** Layout/FirstArgumentIndentation: Indent the first argument one step more than the start of the previous line.
-
-    ```rb
-              name: "Day", ...
-    ```
-
-  * **Line # 32 - convention:** Layout/ClosingParenthesisIndentation: Indent `)` to column 6 (not 8)
-
-    ```rb
-            )
     ```
 
   * **Line # 35 - convention:** Layout/LineLength: Line is too long. [133/120]
@@ -27970,142 +24214,16 @@
         context "when got holidays on all weekdays but they are expired (to_timestamp is in the past): should see all times available" do
     ```
 
-  * **Line # 39 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                from_timestamp: 4.days.ago, ...
-    ```
-
-  * **Line # 41 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-                weekday: weekday,
-    ```
-
-  * **Line # 44 - convention:** Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the same line as the last argument when opening brace is on the same line as the first argument.
-
-    ```rb
-              )
-    ```
-
-  * **Line # 62 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                from_timestamp: 20.days.from_now, ...
-    ```
-
-  * **Line # 64 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-                weekday: weekday,
-    ```
-
-  * **Line # 67 - convention:** Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the same line as the last argument when opening brace is on the same line as the first argument.
-
-    ```rb
-              )
-    ```
-
-  * **Line # 81 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-            create(:holiday, from_timestamp: 10.days.ago, to_timestamp: 10.days.from_now, weekday: Time.zone.now.wday, 
-    ```
-
-  * **Line # 82 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    weekly_from: "12:30", weekly_to: "15:00")
-    ```
-
-  * **Line # 83 - convention:** Layout/LineLength: Line is too long. [156/120]
-
-    ```rb
-            create(:holiday, from_timestamp: 10.days.ago, to_timestamp: 10.days.from_now, weekday: Time.zone.now.wday, weekly_from: "12:30", weekly_to: "15:00")
-    ```
-
-  * **Line # 96 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-            create(:holiday, from_timestamp: 10.days.ago, to_timestamp: 10.days.from_now, weekday: Time.zone.now.wday, 
-    ```
-
-  * **Line # 97 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    weekly_from: "11:00", weekly_to: "15:00")
-    ```
-
-  * **Line # 97 - convention:** Layout/LineLength: Line is too long. [156/120]
-
-    ```rb
-            create(:holiday, from_timestamp: 10.days.ago, to_timestamp: 10.days.from_now, weekday: Time.zone.now.wday, weekly_from: "11:00", weekly_to: "15:00")
-    ```
-
-  * **Line # 112 - convention:** Rails/PluralizationGrammar: Prefer `1.day`.
-
-    ```rb
-            create(:holiday, from_timestamp: 1.days.ago, to_timestamp: 1.day.from_now)
-    ```
-
   * **Line # 252 - convention:** Rails/TimeZone: Do not use `Time.now` without zone. Use one of `Time.zone.now`, `Time.current`, `Time.now.in_time_zone`, `Time.now.utc`, `Time.now.getlocal`, `Time.now.xmlschema`, `Time.now.iso8601`, `Time.now.jisx0301`, `Time.now.rfc3339`, `Time.now.httpdate`, `Time.now.to_i`, `Time.now.to_f` instead.
 
     ```rb
           create(:reservation_turn, starts_at: "12:00", ends_at: "15:00", weekday: Time.now.wday)
     ```
 
-  * **Line # 258 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-            group: group,
-    ```
-
-  * **Line # 268 - convention:** RSpec/EmptyLineAfterExample: Add an empty line after `it`.
-
-    ```rb
-        it { expect(json).not_to include(message: String) }
-    ```
-
   * **Line # 270 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
 
     ```rb
         it do
-    ```
-
-  * **Line # 272 - convention:** Layout/LineLength: Line is too long. [178/120]
-
-    ```rb
-          expect(item["preorder_reservation_group"]).to include("id" => group.id, "payment_value" => group.payment_value, "preorder_type" => group.preorder_type, "message" => String)
-    ```
-
-  * **Line # 273 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          expect(item["preorder_reservation_group"]).to include("id" => group.id, "payment_value" => group.payment_value, 
-    ```
-
-  * **Line # 274 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    "preorder_type" => group.preorder_type, "message" => String)
-    ```
-
-  * **Line # 274 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    "preorder_type" => group.preorder_type, "message" => String)
-    ```
-
-  * **Line # 274 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                                                                                                                            "preorder_type" => group.preorder_type, "message" => String)
-    ```
-
-  * **Line # 274 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-                                                                                                                            "preorder_type" => group.preorder_type, "message" => String)
     ```
 
   * **Line # 290 - convention:** Rails/TimeZone: Do not use `Time.now` without zone. Use one of `Time.zone.now`, `Time.current`, `Time.now.in_time_zone`, `Time.now.utc`, `Time.now.getlocal`, `Time.now.xmlschema`, `Time.now.iso8601`, `Time.now.jisx0301`, `Time.now.rfc3339`, `Time.now.httpdate`, `Time.now.to_i`, `Time.now.to_f` instead.
@@ -28120,52 +24238,10 @@
           ReservationTurn.create!(name: "Night", weekday: Time.now.wday, starts_at: "19:00", ends_at: "21:00", step: 30)
     ```
 
-  * **Line # 299 - convention:** RSpec/EmptyLineAfterExample: Add an empty line after `it`.
-
-    ```rb
-        it { expect(json).not_to include(message: String) }
-    ```
-
   * **Line # 303 - convention:** RSpec/MultipleExpectations: Example has too many expectations [3/1].
 
     ```rb
         it do
-    ```
-
-  * **Line # 303 - convention:** Layout/LineLength: Line is too long. [178/120]
-
-    ```rb
-          expect(item["preorder_reservation_group"]).to include("id" => group.id, "payment_value" => group.payment_value, "preorder_type" => group.preorder_type, "message" => String)
-    ```
-
-  * **Line # 306 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          expect(item["preorder_reservation_group"]).to include("id" => group.id, "payment_value" => group.payment_value, 
-    ```
-
-  * **Line # 307 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    "preorder_type" => group.preorder_type, "message" => String)
-    ```
-
-  * **Line # 307 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    "preorder_type" => group.preorder_type, "message" => String)
-    ```
-
-  * **Line # 307 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                                                                                                                            "preorder_type" => group.preorder_type, "message" => String)
-    ```
-
-  * **Line # 307 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-                                                                                                                            "preorder_type" => group.preorder_type, "message" => String)
     ```
 
   * **Line # 323 - convention:** Rails/TimeZone: Do not use `Time.now` without zone. Use one of `Time.zone.now`, `Time.current`, `Time.now.in_time_zone`, `Time.now.utc`, `Time.now.getlocal`, `Time.now.xmlschema`, `Time.now.iso8601`, `Time.now.jisx0301`, `Time.now.rfc3339`, `Time.now.httpdate`, `Time.now.to_i`, `Time.now.to_f` instead.
@@ -28178,6 +24254,42 @@
 
     ```rb
           ReservationTurn.create!(name: "Night", weekday: Time.now.wday, starts_at: "19:00", ends_at: "21:00", step: 30)
+    ```
+
+  * **Line # 369 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
+
+    ```rb
+          ReservationTurn.create!(name: "Day2", weekday: 1.day.from_now.wday, starts_at: "12:00", ends_at: "16:00", 
+    ```
+
+  * **Line # 369 - convention:** Layout/LineLength: Line is too long. [121/120]
+
+    ```rb
+          ReservationTurn.create!(name: "Day2", weekday: 1.day.from_now.wday, starts_at: "12:00", ends_at: "16:00", step: 30)
+    ```
+
+  * **Line # 370 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+
+    ```rb
+    step: 30)
+    ```
+
+  * **Line # 370 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+
+    ```rb
+    step: 30)
+    ```
+
+  * **Line # 370 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
+
+    ```rb
+                                                                step: 30)
+    ```
+
+  * **Line # 370 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
+
+    ```rb
+                                                                step: 30)
     ```
 
 ### spec/routing/v1/admin/menu/categories_routing_spec.rb - (5 offenses)
@@ -28426,6 +24538,6 @@
   * **Line # 1 - convention:** Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 
     ```rb
-    require "simplecov"
+    # This file was generated by the `rails generate rspec:install` command. Conventionally, all
     ```
 
