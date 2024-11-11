@@ -17,6 +17,22 @@ RSpec.context "GET /v1/reservations/:secret/do_payment", type: :request do
     expect(payment.hpp_url).to include("/v1/reservations/#{reservation.secret}/do_payment")
   end
 
+  context "when upening the payment page, an event should be created" do
+    it { expect { req }.to change { reservation.events.count }.from(0).to(1) }
+    it { expect { req }.to change { Log::ReservationEvent.count }.from(0).to(1) }
+    it { expect { req }.to change { reservation.events.where(event_type: "do_payment").count }.from(0).to(1) }
+    it { expect { req }.to change { Log::ReservationEvent.where(reservation:, event_type: "do_payment").count }.from(0).to(1) }
+
+    it do
+      payment.paid!
+
+      5.times do
+        # puts "Creating event"
+        expect { req }.to change { Log::ReservationEvent.where(reservation:, event_type: "redirect_payment_success").count }.by(1)
+      end
+    end
+  end
+
   context "basic request" do
     before { req }
 

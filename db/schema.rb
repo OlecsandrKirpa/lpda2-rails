@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_07_182952) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_11_143438) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -143,6 +143,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_07_182952) do
     t.index ["change_type"], name: "index_log_model_changes_on_change_type"
     t.index ["record_type", "record_id"], name: "index_log_model_changes_on_record"
     t.index ["user_id"], name: "index_log_model_changes_on_user_id"
+  end
+
+  create_table "log_reservation_events", force: :cascade do |t|
+    t.text "event_type"
+    t.jsonb "payload"
+    t.bigint "reservation_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reservation_id"], name: "index_log_reservation_events_on_reservation_id"
   end
 
   create_table "menu_allergens", force: :cascade do |t|
@@ -480,6 +489,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_07_182952) do
   add_foreign_key "log_image_pixels", "images"
   add_foreign_key "log_image_pixels", "log_delivered_emails", column: "delivered_email_id"
   add_foreign_key "log_model_changes", "users"
+  add_foreign_key "log_reservation_events", "reservations"
   add_foreign_key "menu_allergens_in_dishes", "menu_allergens"
   add_foreign_key "menu_allergens_in_dishes", "menu_dishes"
   add_foreign_key "menu_categories", "menu_visibilities"
