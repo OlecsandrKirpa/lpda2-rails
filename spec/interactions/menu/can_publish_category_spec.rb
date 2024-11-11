@@ -14,6 +14,7 @@ RSpec.shared_examples CANNOT_PUBLISH_CATEGORY do |options = nil|
     end
   end
 
+  it { expect(call.result).to eq(category.can_publish?) }
   it { expect(call.result).to eq false }
   it { expect(reasons).not_to be_empty }
   it { expect { subject }.not_to(change { category.reload.visibility&.as_json }) }
