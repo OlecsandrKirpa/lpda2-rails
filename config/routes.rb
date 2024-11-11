@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   defaults format: :json do
     scope module: :v1, path: "v1" do
       get "public_data", to: "public_data#index", as: :public_data
+      post "nexi/receive_order_outcome", as: :nexi_receive_order_outcome
 
       resources :images, only: %w[index show create] do
         member do

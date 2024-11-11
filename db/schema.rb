@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_11_143438) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_11_163423) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -320,6 +320,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_11_143438) do
     t.datetime "updated_at", null: false
     t.text "html_response"
     t.index ["record_type", "record_id"], name: "index_nexi_http_requests_on_record"
+  end
+
+  create_table "nexi_order_outcome_requests", force: :cascade do |t|
+    t.jsonb "body"
+    t.jsonb "headers"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "preferences", force: :cascade do |t|

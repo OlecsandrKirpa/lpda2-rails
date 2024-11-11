@@ -23,8 +23,8 @@ module Nexi
         request_purpose: "reservation_payment",
         request_record: reservation,
         additional_params: {
-          nome: reservation.fullname,
-          email: reservation.email
+          email: reservation.email,
+          urlpost: Rails.application.routes.url_helpers.nexi_receive_order_outcome_url
         }
       )
 
