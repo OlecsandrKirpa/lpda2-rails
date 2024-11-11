@@ -10,8 +10,6 @@ module Lpda2
   class Application < Rails::Application
     config.load_defaults 7.0
 
-    config.force_ssl = Rails.env.production? && Config.force_ssl
-
     config.app = config_for("app.example").symbolize_keys
     config.app.merge!(config_for("app").symbolize_keys) if File.exist?("config/app.yml")
 
@@ -46,6 +44,8 @@ module Lpda2
     config.active_record.default_timezone = :utc
     config.i18n.default_locale = :en
     config.i18n.available_locales = %i[it en]
+
+    config.force_ssl = Rails.env.production? && Rails.configuration.app[:force_ssl]
 
     smtp = Rails.configuration.app[:smtp]
     imap = Rails.configuration.app[:imap]
