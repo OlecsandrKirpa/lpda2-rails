@@ -80,6 +80,17 @@ RSpec.context "GET /v1/reservations/:secret/do_payment", type: :request do
     it { expect(response.body).to include("Unable to find") }
   end
 
+  context "will remove comments from html" do
+    before do
+      reservation.payment.update!(html: "<!-- some-comment -->#{reservation.payment.html}")
+      req
+    end
+
+    it { expect(response).to have_http_status(:ok) }
+    it { expect(response.body).not_to include("some-comment") }
+    it { expect(response.body).not_to include("<!--") }
+  end
+
   %w[cancelled deleted noshow].each do |status|
     context "when reservation has status #{status}" do
       before do

@@ -49,4 +49,8 @@ class ReservationPayment < ApplicationRecord
       # host: "gigi"
     )
   end
+
+  def clean_html
+    html.gsub(/<!--.*?-->/m, "")
+  end
 end

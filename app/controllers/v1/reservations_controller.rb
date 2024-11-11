@@ -24,7 +24,7 @@ module V1
 
       if @item.payment.html.present?
         Log::ReservationEvent.create!(reservation: @item, event_type: "do_payment")
-        return render plain: @item.payment.html, content_type: "text/html"
+        return render plain: @item.payment.clean_html, content_type: "text/html"
       end
 
       raise "Don't know how to render payment for reservation"
