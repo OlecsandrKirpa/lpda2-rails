@@ -72,8 +72,12 @@ RSpec.describe V1::ReservationsController, type: :controller do
 
     context "when setting reservation_min_hours_in_advance" do
       let!(:turn) do
-        create(:reservation_turn, weekday: Time.zone.now.wday, starts_at: DateTime.parse("12:00"), ends_at: DateTime.parse("15:00"))
+        create(:reservation_turn, weekday: Time.zone.now.wday, starts_at: DateTime.parse("12:00"),
+                                  ends_at: DateTime.parse("15:00"))
       end
+      let(:datetime) { "#{date.to_date} #{time}" }
+      let(:date) { Time.zone.now }
+      let(:time) { "12:00" }
 
       before do
         Setting[:reservation_min_hours_in_advance] = 2
@@ -84,10 +88,6 @@ RSpec.describe V1::ReservationsController, type: :controller do
           req
         end
       end
-
-      let(:datetime) { "#{date.to_date} #{time}" }
-      let(:date) { Time.zone.now }
-      let(:time) { "12:00" }
 
       context "when trying to create a reservation for same time" do
         let(:time) { "12:00" }

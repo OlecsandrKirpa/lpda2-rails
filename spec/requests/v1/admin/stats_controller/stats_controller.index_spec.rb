@@ -40,7 +40,7 @@ RSpec.describe "GET /v1/admin/stats" do
   end
 
   context "when not providing any keyM will return all." do
-    let(:params) { { } }
+    let(:params) { {} }
 
     before { req }
 
@@ -92,7 +92,7 @@ RSpec.describe "GET /v1/admin/stats" do
       it { expect(Reservation.count).to eq 2 }
 
       it { expect(json["reservations-by-hour"]).to be_a(Hash) }
-      it { expect(json["reservations-by-hour"].keys).to match_array(["2021-01-01 10:00"]) }
+      it { expect(json["reservations-by-hour"].keys).to contain_exactly("2021-01-01 10:00") }
       it { expect(json["reservations-by-hour"]["2021-01-01 10:00"]).to eq(2) }
     end
 
@@ -112,7 +112,7 @@ RSpec.describe "GET /v1/admin/stats" do
       it { expect(Reservation.count).to eq 2 }
 
       it { expect(json["reservations-by-hour"]).to be_a(Hash) }
-      it { expect(json["reservations-by-hour"].keys).to match_array(["2021-01-01 10:00", "2021-01-01 11:00"]) }
+      it { expect(json["reservations-by-hour"].keys).to contain_exactly("2021-01-01 10:00", "2021-01-01 11:00") }
       it { expect(json["reservations-by-hour"]["2021-01-01 10:00"]).to eq(1) }
       it { expect(json["reservations-by-hour"]["2021-01-01 11:00"]).to eq(1) }
     end
@@ -121,18 +121,18 @@ RSpec.describe "GET /v1/admin/stats" do
       let(:datetime) { DateTime.parse("2021-01-01 10:00:00") }
       let(:reservations) do
         [
-          create(:reservation, adults: 1, datetime: datetime),
+          create(:reservation, adults: 1, datetime:),
           create(:reservation, adults: 1, datetime: datetime + 1.hour),
-          create(:reservation, adults: 1, datetime: datetime + 1.day),
+          create(:reservation, adults: 1, datetime: datetime + 1.day)
         ]
       end
 
       let(:params) do
         {
           keys:,
-          # Note: both 'reservation' and 'reservationS' are valid
-          reservations_date_from: (datetime).to_date,
-          reservation_date_to: (datetime).to_date
+          # NOTE: both 'reservation' and 'reservationS' are valid
+          reservations_date_from: datetime.to_date,
+          reservation_date_to: datetime.to_date
         }
       end
 
@@ -146,7 +146,7 @@ RSpec.describe "GET /v1/admin/stats" do
       it { expect(Reservation.count).to eq 3 }
 
       it { expect(json["reservations-by-hour"]).to be_a(Hash) }
-      it { expect(json["reservations-by-hour"].keys).to match_array(["2021-01-01 10:00", "2021-01-01 11:00"]) }
+      it { expect(json["reservations-by-hour"].keys).to contain_exactly("2021-01-01 10:00", "2021-01-01 11:00") }
       it { expect(json["reservations-by-hour"]["2021-01-01 10:00"]).to eq(1) }
       it { expect(json["reservations-by-hour"]["2021-01-01 11:00"]).to eq(1) }
     end
@@ -154,6 +154,7 @@ RSpec.describe "GET /v1/admin/stats" do
 
   context "will return sum of people" do
     let(:datetime) { DateTime.parse("2021-01-01 10:00:00") }
+
     before do
       create(:reservation_turn, starts_at: "9:00", ends_at: "12:00", weekday: datetime.wday)
       create(:reservation, adults: 7, children: 2, datetime:)
@@ -164,7 +165,7 @@ RSpec.describe "GET /v1/admin/stats" do
     it { expect(Reservation.count).to eq 2 }
 
     it { expect(json["reservations-by-hour"]).to be_a(Hash) }
-    it { expect(json["reservations-by-hour"].keys).to match_array(["2021-01-01 10:00"]) }
+    it { expect(json["reservations-by-hour"].keys).to contain_exactly("2021-01-01 10:00") }
     it { expect(json["reservations-by-hour"]["2021-01-01 10:00"]).to eq(11) }
   end
 end

@@ -366,7 +366,8 @@ RSpec.context "GET /v1/reservations/valid_times", type: :request do
     before do
       Setting[:reservation_min_hours_in_advance] = 100
       ReservationTurn.create!(name: "Day", weekday: Time.zone.now.wday, starts_at: "12:00", ends_at: "16:00", step: 30)
-      ReservationTurn.create!(name: "Day2", weekday: 1.day.from_now.wday, starts_at: "12:00", ends_at: "16:00", step: 30)
+      ReservationTurn.create!(name: "Day2", weekday: 1.day.from_now.wday, starts_at: "12:00", ends_at: "16:00",
+                              step: 30)
       travel_to(Time.zone.now.beginning_of_day + 12.hours) do
         req(date: 1.day.from_now.to_date.to_s)
       end

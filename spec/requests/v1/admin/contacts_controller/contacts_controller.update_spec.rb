@@ -127,16 +127,17 @@ RSpec.describe "PATCH /v1/admin/contacts" do
     { key: "whatsapp_number", value: "+393515590063" },
     { key: "facebook_url",    value: "https://www.facebook.com/Laportadacqua" },
     { key: "instagram_url",   value: "https://www.instagram.com/laportadacqua" },
-    { key: "tripadvisor_url", value: "https://www.tripadvisor.it/Restaurant_Review-g187870-d1735599-Reviews-La_Porta_D_Acqua-Venice_Veneto.html" },
+    { key: "tripadvisor_url",
+      value: "https://www.tripadvisor.it/Restaurant_Review-g187870-d1735599-Reviews-La_Porta_D_Acqua-Venice_Veneto.html" },
     { key: "homepage_url",    value: "https://laportadacqua.com" },
-    { key: "google_url",      value: "https://g.page/laportadacqua?share" },
+    { key: "google_url",      value: "https://g.page/laportadacqua?share" }
   ].each do |config|
     context "will remove whitespaces from #{config[:key].inspect}" do
       def s
         ws = [
           " ",
           "  ",
-          "   ",
+          "   "
         ].sample
         Random.rand(2).zero? ? ws : ""
       end
