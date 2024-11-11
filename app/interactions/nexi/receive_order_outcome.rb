@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "rails_helper"
-
 module Nexi
   class ReceiveOrderOutcome < ActiveInteraction::Base
     interface :request, methods: %i[params headers]
