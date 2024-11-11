@@ -335,6 +335,46 @@ RSpec.describe V1::ReservationsController, type: :controller do
       end
     end
 
+    context "when nexi APIs return just a comment" do
+      before do
+        stub_request(:post, "#{Config.app.dig!(:nexi_api_url)}/#{Config.app.dig!(:nexi_simple_payment_path)}").to_return do |_request|
+          {
+            status: 200,
+            body: "<!-- some useless comment -->"
+          }
+        end
+      end
+
+      context "when a payment is always required for that turn" do
+        let(:group) do
+          create(:preorder_reservation_group).tap do |grp|
+            grp.turns = [turn]
+          end
+        end
+
+        before do
+          group
+        end
+
+        it do
+          allow(ExceptionNotifier).to receive(:notify_exception).and_call_original
+          req
+          expect(ExceptionNotifier).to have_received(:notify_exception).once
+        end
+
+        it { expect { req }.not_to(change { Reservation.count }) }
+        it { expect { req }.not_to(change { ReservationPayment.count }) }
+        it { expect { req }.to(change { Nexi::HttpRequest.count }.by(1)) }
+        it { expect { req }.to(change { Nexi::HttpRequest.where(http_code: 200).count }.by(1)) }
+
+        it do
+          req
+          expect(json).to include(:message)
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+      end
+    end
+
     context "when we're not authorized to use nexi APIs" do
       before do
         stub_request(:post, "#{Config.app.dig!(:nexi_api_url)}/#{Config.app.dig!(:nexi_simple_payment_path)}").to_return do |_request|

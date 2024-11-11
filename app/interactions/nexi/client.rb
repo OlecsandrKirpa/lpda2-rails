@@ -107,6 +107,10 @@ module Nexi
         errors.add(:base, "something went wrong during the request, got html error")
       end
 
+      if response.body.to_s.gsub(/\s+/, "").start_with?("<!--") && response.body.gsub(/<!--.*?-->/m, "").blank?
+        errors.add(:base, "empty html response")
+      end
+
       json_str = json.stringify_keys { |k| k.to_s.downcase }
 
       %w[error err failure fail].each do |error|
