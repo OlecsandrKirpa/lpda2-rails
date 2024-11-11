@@ -1,0 +1,31 @@
+<!-- XPay Dispatch 06/11/2024 23:39:25 -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<title>Sistema di Pagamento Online</title>
+<meta charset="ISO-8859-1">
+<script type="text/javascript">
+function dispatchOnLoad() {
+   document.forms[0].submit();
+}
+</script>
+</head>
+<body onLoad="dispatchOnLoad()">
+<form method="post" action="https://int-ecommerce.nexi.it/ecomm/payment/CassaQP.jsp">
+<input type="hidden" name="codTrans" value="PS20241106223925">
+<input type="hidden" name="url_back" value="http://localhost:4250/#/r/59e104c9-4c4b-48bc-82e4-0037141d7fe5/cancelled">
+<input type="hidden" name="divisa" value="EUR">
+<input type="hidden" name="importo" value="2000">
+<input type="hidden" name="languageId" value="eng">
+<input type="hidden" name="Referer" value="">
+<input type="hidden" name="alias" value="ALIAS_WEB_00085266">
+<input type="hidden" name="mac" value="4af92ebc72208c585b48eb355af9af91f889d15a">
+<input type="hidden" name="url" value="http://localhost:4250/#/r/59e104c9-4c4b-48bc-82e4-0037141d7fe5/processed">
+<input type="hidden" name="merchantnumber" value="00085266">
+<input type="hidden" name="pathGpo" value="https://int-ecommerce.nexi.it/ecomm/payment/CassaQP.jsp">
+<input type="hidden" name="mioReferer" value="">
+<input type="hidden" name="dispatchingSequence" value="938159">
+</form>
+</body>
+</html>

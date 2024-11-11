@@ -13,6 +13,7 @@ require "faker"
 require "rails-controller-testing"
 require "webmock/rspec"
 require_relative "coverage_helper"
+require "roo"
 
 # https://github.com/sidekiq/sidekiq/wiki/Testing
 require "sidekiq/testing"

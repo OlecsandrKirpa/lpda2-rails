@@ -6,21 +6,22 @@ module Nexi
   # - manage authentication
   # - track http request and response
   class Client < ActiveInteraction::Base
-    # Mandatory param
+    # Mandatory params
     object :params, class: Hash
     string :path
     string :request_purpose # Why this request is being made?
+    string :mac_part # partial mac. Will append secret key before sending request.
 
     # Optional params - use them to customize behaviour
     interface :request_record, methods: %w[id persisted? update], default: nil # Object to associate to http request
     string :http_verb, default: "post"
     object :headers, class: Hash, default: {}
-    string :correlation_id, default: -> { SecureRandom.uuid }
     string :url, default: -> { Config.nexi_api_url }
-    string :content_type, default: "application/json"
-    string :api_key, default: -> { Config.nexi_api_key }
 
-    validates_presence_of :path, :http_verb, :correlation_id, :api_key
+    string :mac_key, default: -> { Config.nexi_mac_key || raise("missing nexi_mac_key. update your credentials.") }
+    string :alias_merchant, default: -> { Config.nexi_alias_merchant || raise("missing nexi_alias_merchant. update your credentials.") }
+
+    validates_presence_of :path, :http_verb
 
     validate do
       errors.add(:params, "must be hash. got #{params.class}") if params.present? && !params.is_a?(Hash)
@@ -41,15 +42,8 @@ module Nexi
       @response
     end
 
-    def connection
-      @connection ||= Faraday.new(
-        url:,
-        headers: headers.stringify_keys.merge(
-          "Content-Type" => content_type,
-          "X-Api-Key" => api_key,
-          "Correlation-Id" => correlation_id
-        )
-      )
+    def final_mac
+      @final_mac ||= Digest::SHA1.hexdigest("#{mac_part}#{mac_key}")
     end
 
     def response
@@ -64,25 +58,57 @@ module Nexi
       @response
     end
 
-    def send_request
-      return connection.post(path) { |req| req.body = params.to_json } if http_verb == "post"
+    def request_url
+      @request_url ||= "#{url}/#{path}"
+    end
 
-      raise "unknown http verb #{http_verb}"
+    def connection
+      @connection ||= Faraday.new(url: request_url) do |f|
+        f.request :url_encoded
+        f.adapter Faraday.default_adapter
+      end
+    end
+
+    def request_params
+      params.merge(
+        alias: alias_merchant,
+        mac: final_mac
+      )
+    end
+
+    def send_request
+      @response = connection.post { |req| req.body = request_params }
     rescue Faraday::ConnectionFailed => e
       errors.add(:base, e.to_s)
       nil
     end
 
     def json
+      return {} unless response_json?
+
       @json ||= Oj.load(@response.body)
     rescue Oj::ParseError => e
       Rails.logger.error("Failed to parse response body: #{@response.body}: #{e}")
       {}
     end
 
+    def html
+      return "" unless response_html?
+
+      @html ||= @response.body
+    end
+
     def validate_response
       if response.status > 299
         errors.add(:base, "something went wrong during the request, got status #{response.status}")
+      end
+
+      if @response.body.include?("<title>Errore</title>")
+        errors.add(:base, "something went wrong during the request, got html error")
+      end
+
+      if response.body.to_s.gsub(/\s+/, "").start_with?("<!--") && response.body.gsub(/<!--.*?-->/m, "").blank?
+        errors.add(:base, "empty html response")
       end
 
       json_str = json.stringify_keys { |k| k.to_s.downcase }
@@ -101,18 +127,29 @@ module Nexi
       response.headers.transform_keys { |k| k.to_s.downcase }["content-type"].to_s.include?("application/json")
     end
 
+    def response_html?
+      return true if response.body.include?("<!DOCTYPE html>")
+
+      response.headers.transform_keys { |k| k.to_s.downcase }["content-type"].to_s.include?("text/html")
+    end
+
     def create_http_request
-      @http_request = HttpRequest.create!(
-        request_body: params,
+      @http_request = HttpRequest.create(
+        request_body: request_params,
         response_body: json,
+        html_response: html,
         url:,
         http_code: response.status,
         http_method: http_verb,
         started_at: @request_started_at,
         ended_at: @request_ended_at,
         purpose: request_purpose,
-        record: request_record.persisted? ? request_record : nil
+        record: request_record&.persisted? ? request_record : nil
       )
+
+      errors.merge!(@http_request.errors)
+
+      @http_request
     end
   end
 end

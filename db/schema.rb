@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_03_100539) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_11_163423) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -143,6 +143,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_03_100539) do
     t.index ["change_type"], name: "index_log_model_changes_on_change_type"
     t.index ["record_type", "record_id"], name: "index_log_model_changes_on_record"
     t.index ["user_id"], name: "index_log_model_changes_on_user_id"
+  end
+
+  create_table "log_reservation_events", force: :cascade do |t|
+    t.text "event_type"
+    t.jsonb "payload"
+    t.bigint "reservation_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reservation_id"], name: "index_log_reservation_events_on_reservation_id"
   end
 
   create_table "menu_allergens", force: :cascade do |t|
@@ -298,7 +307,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_03_100539) do
 
   create_table "nexi_http_requests", force: :cascade do |t|
     t.jsonb "request_body", null: false
-    t.jsonb "response_body", null: false
+    t.jsonb "response_body"
     t.text "url", null: false
     t.integer "http_code", null: false
     t.string "http_method", null: false
@@ -309,7 +318,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_03_100539) do
     t.text "purpose", comment: "Specify the reason this request was made, optional"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "html_response"
     t.index ["record_type", "record_id"], name: "index_nexi_http_requests_on_record"
+  end
+
+  create_table "nexi_order_outcome_requests", force: :cascade do |t|
+    t.jsonb "body"
+    t.jsonb "headers"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "preferences", force: :cascade do |t|
@@ -380,6 +397,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_03_100539) do
     t.jsonb "other", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "html"
+    t.text "external_id"
+    t.text "success_url"
+    t.text "failure_url"
     t.index ["hpp_url"], name: "index_reservation_payments_on_hpp_url", unique: true
     t.index ["reservation_id"], name: "index_reservation_payments_on_reservation_id", unique: true
   end
@@ -475,6 +496,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_03_100539) do
   add_foreign_key "log_image_pixels", "images"
   add_foreign_key "log_image_pixels", "log_delivered_emails", column: "delivered_email_id"
   add_foreign_key "log_model_changes", "users"
+  add_foreign_key "log_reservation_events", "reservations"
   add_foreign_key "menu_allergens_in_dishes", "menu_allergens"
   add_foreign_key "menu_allergens_in_dishes", "menu_dishes"
   add_foreign_key "menu_categories", "menu_visibilities"

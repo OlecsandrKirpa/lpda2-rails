@@ -3,7 +3,7 @@
 module V1
   class ReservationsController < ApplicationController
     before_action :find_item, only: %i[show cancel]
-    before_action :find_next_and_active_reservation, only: %i[resend_confirmation_email]
+    before_action :find_next_and_active_reservation, only: %i[do_payment resend_confirmation_email]
     skip_before_action :authenticate_user
 
     def show
@@ -11,6 +11,23 @@ module V1
       render json: {
         item: full_json(@item)
       }
+    end
+
+    # GET /v1/reservations/:secret/do_payment
+    def do_payment
+      return item_not_found if @item.payment.blank?
+
+      if @item.payment.paid? && @item.payment.success_url.present?
+        Log::ReservationEvent.create!(reservation: @item, event_type: "redirect_payment_success")
+        return redirect_to @item.payment.success_url, allow_other_host: true
+      end
+
+      if @item.payment.html.present?
+        Log::ReservationEvent.create!(reservation: @item, event_type: "do_payment")
+        return render plain: @item.payment.clean_html, content_type: "text/html"
+      end
+
+      raise "Don't know how to render payment for reservation"
     end
 
     def create
@@ -93,22 +110,24 @@ module V1
 
     private
 
+    def item_not_found
+      render_error(status: 404,
+                   message: I18n.t("record_not_found", model: Reservation,
+                                                       id: params[:secret].inspect))
+    end
+
     def find_item
       @item = ::Reservation.visible.where(secret: params[:secret]).first
       return unless @item.nil?
 
-      render_error(status: 404,
-                   message: I18n.t("record_not_found", model: Reservation,
-                                                       id: params[:secret].inspect))
+      item_not_found
     end
 
     def find_next_and_active_reservation
       @item = ::Reservation.visible.where(secret: params[:secret]).active.next.first
       return unless @item.nil?
 
-      render_error(status: 404,
-                   message: I18n.t("record_not_found", model: Reservation,
-                                                       id: params[:secret].inspect))
+      item_not_found
     end
 
     def full_json(item)

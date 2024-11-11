@@ -54,42 +54,42 @@ module Menu
     end
 
     def write_menu(sheet)
-      write_row(sheet, 0, %w[id name.it name.en description.it description.en status price images])
-      Menu::Category.all.where(parent_id: nil).each_with_index do |cat, index|
+      write_row(sheet, 0, %w[id name.it name.en description.it description.en status price updated_at created_at images])
+      Menu::Category.visible.where(parent_id: nil).each_with_index do |cat, index|
         write_row(sheet, index + 1,
-                  [cat.id, cat.name_it, cat.name_en, cat.description_it, cat.description_en, cat.status, cat.price, cat.images.map(&:url)].flatten)
+                  [cat.id, cat.name_it, cat.name_en, cat.description_it, cat.description_en, cat.status, cat.price, cat.updated_at, cat.created_at, cat.images.map(&:url)].flatten)
       end
     end
 
     def write_dishes(sheet)
-      write_row(sheet, 0, %w[id name.it name.en description.it description.en status price images])
-      Menu::Dish.all.each_with_index do |dish, index|
+      write_row(sheet, 0, %w[id name.it name.en description.it description.en status price updated_at created_at images])
+      Menu::Dish.visible.each_with_index do |dish, index|
         write_row(sheet, index + 1,
-                  [dish.id, dish.name_it, dish.name_en, dish.description_it, dish.description_en, dish.status, dish.price, dish.images.map(&:url)].flatten)
+                  [dish.id, dish.name_it, dish.name_en, dish.description_it, dish.description_en, dish.status, dish.price, dish.updated_at, dish.created_at, dish.images.map(&:url)].flatten)
       end
     end
 
     def write_allergens(sheet)
-      write_row(sheet, 0, %w[id name.it name.en description.it description.en status imageUrl])
-      Menu::Allergen.all.visible.each_with_index do |allergen, index|
+      write_row(sheet, 0, %w[id name.it name.en description.it description.en status imageUrl updated_at created_at])
+      Menu::Allergen.visible.each_with_index do |allergen, index|
         write_row(sheet, index + 1,
-                  [allergen.id, allergen.name_it, allergen.name_en, allergen.description_it, allergen.description_en, allergen.status, allergen.image&.url])
+                  [allergen.id, allergen.name_it, allergen.name_en, allergen.description_it, allergen.description_en, allergen.status, allergen.image&.url, allergen.updated_at, allergen.created_at])
       end
     end
 
     def write_tags(sheet)
-      write_row(sheet, 0, %w[id name.it name.en description.it description.en status color imageUrl])
-      Menu::Tag.all.visible.each_with_index do |tag, index|
+      write_row(sheet, 0, %w[id name.it name.en description.it description.en status color imageUrl updated_at created_at])
+      Menu::Tag.visible.each_with_index do |tag, index|
         write_row(sheet, index + 1,
-                  [tag.id, tag.name_it, tag.name_en, tag.description_it, tag.description_en, tag.status, tag.color, tag.image&.url])
+                  [tag.id, tag.name_it, tag.name_en, tag.description_it, tag.description_en, tag.status, tag.color, tag.image&.url, tag.updated_at, tag.created_at])
       end
     end
 
     def write_ingredients(sheet)
-      write_row(sheet, 0, %w[id name.it name.en description.it description.en status imageUrl])
-      Menu::Ingredient.all.visible.each_with_index do |ingredient, index|
+      write_row(sheet, 0, %w[id name.it name.en description.it description.en status imageUrl updated_at created_at])
+      Menu::Ingredient.visible.each_with_index do |ingredient, index|
         write_row(sheet, index + 1,
-                  [ingredient.id, ingredient.name_it, ingredient.name_en, ingredient.description_it, ingredient.description_en, ingredient.status, ingredient.image&.url])
+                  [ingredient.id, ingredient.name_it, ingredient.name_en, ingredient.description_it, ingredient.description_en, ingredient.status, ingredient.image&.url, ingredient.updated_at, ingredient.created_at])
       end
     end
 
@@ -112,6 +112,7 @@ module Menu
     end
 
     def write_row(sheet, x_start, data)
+      data = data.map { |d| d.is_a?(Time) ? d.strftime("%Y-%m-%d %H:%M") : d }
       write(sheet, x_start, 0, data)
     end
   end

@@ -93,7 +93,7 @@ RSpec.describe Menu::Category, type: :model do
           it { expect(child).to be_persisted }
           it { expect(child.index).to eq parent.index }
           it { expect(child.parent_id).to eq parent.id }
-          it { expect(Menu::Category.count).to eq 2 }
+          it { expect(described_class.count).to eq 2 }
 
           it do
             expect { child.remove_parent! }.not_to raise_error
@@ -160,7 +160,7 @@ RSpec.describe Menu::Category, type: :model do
     end
 
     context "should not be able to create two elements with same secret" do
-      subject { Menu::Category.new(original.as_json(except: [:id, "id"])) }
+      subject { described_class.new(original.as_json(except: [:id, "id"])) }
 
       let(:original) { create(:menu_category) }
 
@@ -180,7 +180,7 @@ RSpec.describe Menu::Category, type: :model do
     end
 
     context "should not be able to create two elements with same secret_desc" do
-      subject { Menu::Category.new(original.as_json(except: [:id, "id"])) }
+      subject { described_class.new(original.as_json(except: [:id, "id"])) }
 
       let(:original) { create(:menu_category, secret_desc: "secret-#{SecureRandom.hex(20)}") }
 
@@ -349,6 +349,15 @@ RSpec.describe Menu::Category, type: :model do
       it { is_expected.to respond_to(:menu_visibility) }
       it { expect(subject.visibility).to eq subject.menu_visibility }
     end
+
+    context "#filter_by_query should return all if is blank" do
+      let(:categories) { create_list(:menu_category, 3) }
+      before { categories }
+      subject(:result) { described_class.filter_by_query([nil, ""].sample) }
+
+      it { is_expected.to be_a(ActiveRecord::Relation) }
+      it { expect(result.count).to eq 3 }
+    end
   end
 
   context "should define methods since valid statuses" do
@@ -365,15 +374,15 @@ RSpec.describe Menu::Category, type: :model do
       let!(:with_price) { create_list(:menu_category, 2, price: 5.2) }
       let!(:without_price) { create_list(:menu_category, 2, price: nil) }
 
-      it { expect(Menu::Category.count).to eq 4 }
-      it { expect(Menu::Category.with_fixed_price.count).to eq 2 }
-      it { expect(Menu::Category.without_fixed_price.count).to eq 2 }
-      it { expect(Menu::Category.without_fixed_price.map(&:price)).to all(eq nil) }
-      it { expect(Menu::Category.with_fixed_price.map(&:price)).to all(be_a(Numeric)) }
-      it { expect(Menu::Category.with_fixed_price.map(&:price)).to all(be_positive) }
+      it { expect(described_class.count).to eq 4 }
+      it { expect(described_class.with_fixed_price.count).to eq 2 }
+      it { expect(described_class.without_fixed_price.count).to eq 2 }
+      it { expect(described_class.without_fixed_price.map(&:price)).to all(eq nil) }
+      it { expect(described_class.with_fixed_price.map(&:price)).to all(be_a(Numeric)) }
+      it { expect(described_class.with_fixed_price.map(&:price)).to all(be_positive) }
 
-      it { expect(Menu::Category.without_price.map(&:price)).to all(eq nil) }
-      it { expect(Menu::Category.with_price.map(&:price)).to all(be_positive) }
+      it { expect(described_class.without_price.map(&:price)).to all(eq nil) }
+      it { expect(described_class.with_price.map(&:price)).to all(be_positive) }
     end
   end
 end

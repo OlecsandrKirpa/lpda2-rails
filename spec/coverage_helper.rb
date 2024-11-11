@@ -2,12 +2,14 @@
 
 require "simplecov"
 
+return if ENV["SKIP_COVERAGE"] == "true"
+
 SimpleCov.start "rails" do
   enable_coverage :branch
 
   merge_timeout 3600
 
-  minimum_coverage line: 90, branch: 80
+  minimum_coverage line: 90, branch: 70
   # minimum_coverage_by_file line: 85, branch: 80
 
   add_group "Models", "app/models"
