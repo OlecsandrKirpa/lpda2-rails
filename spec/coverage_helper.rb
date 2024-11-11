@@ -2,6 +2,8 @@
 
 require "simplecov"
 
+return if ENV["SKIP_COVERAGE"] == "true"
+
 SimpleCov.start "rails" do
   enable_coverage :branch
 
