@@ -146,7 +146,7 @@ RSpec.context "GET /v1/reservations/valid_dates", type: :request do
       it { expect(json).not_to include(message: String) }
 
       it do
-        expect(json[0]).to eq((Time.zone.now + 1.day).to_date.to_s)
+        expect(json[0]).to eq(1.day.from_now.to_date.to_s)
       end
     end
 
@@ -164,7 +164,7 @@ RSpec.context "GET /v1/reservations/valid_dates", type: :request do
       it { expect(json).not_to include(message: String) }
 
       it do
-        expect(json[0]).to eq((Time.zone.now + 1.day).to_date.to_s)
+        expect(json[0]).to eq(1.day.from_now.to_date.to_s)
       end
 
       it { expect(json).to eq((1.day.from_now.to_date..(Time.zone.now.to_date + 5.days)).map(&:to_s)) }
@@ -184,7 +184,7 @@ RSpec.context "GET /v1/reservations/valid_dates", type: :request do
       it { expect(json).not_to include(message: String) }
 
       it do
-        expect(json).to match_array([4.days.from_now.to_date.to_s, 5.days.from_now.to_date.to_s])
+        expect(json).to contain_exactly(4.days.from_now.to_date.to_s, 5.days.from_now.to_date.to_s)
       end
     end
   end

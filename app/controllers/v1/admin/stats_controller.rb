@@ -7,7 +7,8 @@ module V1::Admin
     def index
       call = Stats::All.run(params:)
       if call.errors.any? || call.invalid?
-        return render_error(status: :bad_request, message: call.errors.full_messages.join(','), details: call.errors.as_json)
+        return render_error(status: :bad_request, message: call.errors.full_messages.join(","),
+                            details: call.errors.as_json)
       end
 
       render json: call.result

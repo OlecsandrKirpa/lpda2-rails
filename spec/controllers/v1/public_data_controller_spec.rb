@@ -29,7 +29,8 @@ RSpec.describe V1::PublicDataController, type: :controller do
       it { expect(json).to include(contacts: Hash) }
 
       # Taken from Contact::DEFAULTS.keys.join(" ")
-      %w[address email phone whatsapp_number facebook_url instagram_url tripadvisor_url homepage_url google_url].each do |key|
+      %w[address email phone whatsapp_number facebook_url instagram_url tripadvisor_url homepage_url
+         google_url].each do |key|
         it "json->contacts->#{key} should be present" do
           expect(json.dig("contacts", key)).to be_present
         end
