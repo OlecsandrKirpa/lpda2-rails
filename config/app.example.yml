@@ -2,7 +2,7 @@ default: &default
   base_url: "localhost:3050"
 
   # In production, this value will be read. Othwerwise, it will be ignored.
-  force_ssl: false
+  force_ssl: true
 
   # In seconds.
   temporary_block_duration: 600
