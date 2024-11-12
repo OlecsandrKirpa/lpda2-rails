@@ -13,7 +13,7 @@ module Menu
       check_category_name
       category_not_root! if category.parent.present?
       category_invalid! unless category.valid?
-      missing_dishes! if category.dishes.visible.empty?
+      missing_dishes! if category.dishes.visible.empty? && category.children.visible.empty?
       missing_price! if missing_price?
       category_missing_images! if category.images.visible.empty?
 

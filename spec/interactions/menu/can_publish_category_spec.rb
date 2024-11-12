@@ -257,6 +257,29 @@ RSpec.describe Menu::CanPublishCategory, type: :interaction do
     end
 
     it { expect(subject.reasons.full_messages).to be_empty }
+
+    context "when category does not have any dish but has subcategories" do
+      let(:child) do
+        create(:menu_category, images: [create(:image, :with_attached_image)], visibility: nil, parent: category)
+      end
+
+      let(:dish) do
+        create(:menu_dish, images: [create(:image, :with_attached_image)], price: 15)
+      end
+
+      let(:dish_ingredient) { create(:menu_ingredient) }
+
+      before do
+        category.dishes = []
+        child.dishes << dish
+        dish.ingredients << dish_ingredient
+      end
+
+      it { expect(category.dishes).to be_empty }
+      it { expect(category.reload.children.visible).not_to be_empty }
+
+      it { expect(subject.reasons.full_messages).to be_empty }
+    end
   end
 
   context "if menu has one category and that one has valid dish, can pubblish." do
