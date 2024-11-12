@@ -24,6 +24,7 @@ module Menu
     alias_attribute :visibility, :menu_visibility
 
     belongs_to :parent, class_name: "Menu::Category", optional: true
+    belongs_to :root, class_name: "Menu::Category", optional: true
     has_many :children, class_name: "Menu::Category", foreign_key: :parent_id # , dependent: :destroy
 
     has_many :menu_dishes_in_categories, class_name: "Menu::DishesInCategory", foreign_key: :menu_category_id
@@ -54,6 +55,7 @@ module Menu
     before_validation :assign_defaults, on: :create
     before_validation :assign_valid_index
     before_validation :assign_default_visibility_if_necessary
+    before_validation :assign_root
     before_destroy :check_if_has_children
 
     # ##############################
@@ -66,6 +68,18 @@ module Menu
     scope :without_price, -> { without_fixed_price }
     scope :with_parent, -> { where.not(parent_id: nil) }
     scope :without_parent, -> { where(parent_id: nil) }
+    scope :public_visible, -> {
+      ids = joins("JOIN menu_visibilities v ON v.id = menu_categories.menu_visibility_id")
+        .where(<<~SQL.squish, time: Time.zone.now).select("menu_categories.id")
+          v.public_visible = true AND
+          (v.daily_from IS NULL OR v.daily_from < :time) AND
+          (v.daily_to IS NULL OR v.daily_to > :time) AND
+          (v.public_from IS NULL OR v.public_from <= :time) AND
+          (v.public_to IS NULL OR v.public_to >= :time)
+        SQL
+
+      where(id: ids).or(where(root_id: ids))
+    }
 
     # ##############################
     # Class methods
@@ -190,6 +204,18 @@ module Menu
 
       breadcrumb.reverse!
       breadcrumb.map { |item| item.as_json(only: %i[id]).merge(name: item.name) }
+    end
+
+    def assign_root
+      self.root = nil
+      return if parent.nil?
+
+      root = parent
+      while root.parent.present?
+        root = root.parent
+      end
+
+      self.root = root
     end
 
     private

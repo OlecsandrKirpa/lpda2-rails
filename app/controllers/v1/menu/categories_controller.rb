@@ -7,7 +7,7 @@ module V1::Menu
     skip_before_action :authenticate_user
 
     def index
-      call = ::Menu::SearchCategories.run(params:)
+      call = ::Menu::SearchCategories.run(params:, all: ::Menu::Category.public_visible)
       unless call.valid?
         return render_error(status: 400, details: call.errors.as_json,
                             message: call.errors.full_messages.join(", "))

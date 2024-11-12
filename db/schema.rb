@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_11_163423) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_12_183540) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -186,9 +186,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_11_163423) do
     t.string "member_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "root_id", comment: "Root parent. Will be auto-calculated with before_validation"
     t.index ["index", "parent_id"], name: "index_menu_categories_on_index_and_parent_id", unique: true
     t.index ["menu_visibility_id"], name: "index_menu_categories_on_menu_visibility_id"
     t.index ["parent_id"], name: "index_menu_categories_on_parent_id"
+    t.index ["root_id"], name: "index_menu_categories_on_root_id"
     t.index ["secret"], name: "index_menu_categories_on_secret"
     t.index ["secret_desc"], name: "index_menu_categories_on_secret_desc", unique: true, where: "(secret_desc IS NOT NULL)"
   end
@@ -499,6 +501,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_11_163423) do
   add_foreign_key "log_reservation_events", "reservations"
   add_foreign_key "menu_allergens_in_dishes", "menu_allergens"
   add_foreign_key "menu_allergens_in_dishes", "menu_dishes"
+  add_foreign_key "menu_categories", "menu_categories", column: "root_id"
   add_foreign_key "menu_categories", "menu_visibilities"
   add_foreign_key "menu_dish_suggestions", "menu_dishes", column: "dish_id"
   add_foreign_key "menu_dish_suggestions", "menu_dishes", column: "suggestion_id"

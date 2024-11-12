@@ -37,6 +37,54 @@ RSpec.describe V1::Menu::CategoriesController, type: :controller do
       end
     end
 
+    context "when public visibility is disabled" do
+      before do
+        create_menu_categories(2)
+        Menu::Category.all.map { |item| item.visibility.update!(public_visible: false) }
+        req
+      end
+
+      it { expect(Menu::Category.count).to eq 2 }
+      it { expect(Menu::Category.all.pluck(:status)).to all(eq "active") }
+
+      it { expect(response).to be_successful }
+      it { expect(json[:items]).to be_empty }
+    end
+
+    [
+      [1.day.from_now, 1.week.from_now],
+      [1.week.ago, 1.day.ago],
+      [1.year.ago, 2.weeks.ago]
+    ].each do |from, to|
+      context "when public visibility is enabled but current time is out of absolute timezone (from: #{from.inspect}, to: #{to.inspect})" do
+        before do
+          create_menu_categories(2)
+          Menu::Category.all.map { |item| item.visibility.update!(public_visible: true, public_from: from, public_to: to) }
+          req
+        end
+
+        it { expect(Menu::Category.count).to eq 2 }
+        it { expect(Menu::Category.all.pluck(:status)).to all(eq "active") }
+
+        it { expect(response).to be_successful }
+        it { expect(json[:items]).to be_empty }
+      end
+    end
+
+    context "when public visibility is enabled but current time is out of daily visible time" do
+      before do
+        create_menu_categories(2)
+        Menu::Category.all.map { |item| item.visibility.update!(public_visible: true, daily_from: 1.hour.ago, daily_to: 5.minutes.ago) }
+        req
+      end
+
+      it { expect(Menu::Category.count).to eq 2 }
+      it { expect(Menu::Category.all.pluck(:status)).to all(eq "active") }
+
+      it { expect(response).to be_successful }
+      it { expect(json[:items]).to be_empty }
+    end
+
     context "should return all categories, paginated" do
       before do
         create_menu_categories(10)
@@ -163,6 +211,7 @@ RSpec.describe V1::Menu::CategoriesController, type: :controller do
 
           @first = Menu::Category.create!(index: 1)
           @last = Menu::Category.create!(index: 10)
+          Menu::Visibility.update_all(public_visible: true)
           req
         end
 

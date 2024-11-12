@@ -2,8 +2,10 @@
 
 module Menu
   class SearchCategories < SearchRecords
+    interface :all, methods: %i[visible without_parent], default: -> { Category.all }
+
     def execute
-      categories = Category.visible
+      categories = all.visible
 
       categories = categories.without_parent if param_true?(:root, :without_parent, :root_only)
 

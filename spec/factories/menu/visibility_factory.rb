@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :menu_visibility, class: "Menu::Visibility" do
-    public_visible { false }
+    public_visible { true }
     private_visible { false }
 
     public_from { nil }
