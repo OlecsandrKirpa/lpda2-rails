@@ -7,7 +7,7 @@ module V1::Menu
     skip_before_action :authenticate_user
 
     def index
-      call = ::Menu::SearchCategories.run(params:, all: ::Menu::Category.public_visible)
+      call = ::Menu::SearchCategories.run(params:, public: true)
       unless call.valid?
         return render_error(status: 400, details: call.errors.as_json,
                             message: call.errors.full_messages.join(", "))
@@ -30,7 +30,7 @@ module V1::Menu
     private
 
     def find_category
-      @item = Menu::Category.visible.find_by(id: params[:id])
+      @item = Menu::Category.visible.public_visible.find_by(id: params[:id]) || Menu::Category.visible.private_visible.find_by(secret: params[:id])
       return unless @item.nil?
 
       render_error(status: 404,

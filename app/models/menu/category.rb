@@ -81,6 +81,19 @@ module Menu
       where(id: ids).or(where(root_id: ids))
     }
 
+    scope :private_visible, -> {
+      ids = joins("JOIN menu_visibilities v ON v.id = menu_categories.menu_visibility_id")
+        .where(<<~SQL.squish, time: Time.zone.now).select("menu_categories.id")
+          v.private_visible = true AND
+          (v.private_from IS NULL OR v.private_from <= :time) AND
+          (v.private_to IS NULL OR v.private_to >= :time)
+        SQL
+
+      where(id: ids).or(where(root_id: ids))
+    }
+
+    scope :public_or_private_visible, -> { public_visible.or(private_visible) }
+
     # ##############################
     # Class methods
     # ##############################

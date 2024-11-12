@@ -40,7 +40,7 @@ RSpec.describe V1::Menu::CategoriesController, type: :controller do
     context "when public visibility is disabled" do
       before do
         create_menu_categories(2)
-        Menu::Category.all.map { |item| item.visibility.update!(public_visible: false) }
+        Menu::Category.all.map { |item| item.visibility.update!(public_visible: false, private_visible: true) }
         req
       end
 
@@ -543,10 +543,76 @@ RSpec.describe V1::Menu::CategoriesController, type: :controller do
       get :show, params:
     end
 
-    let(:category) { create(:menu_category) }
+    let(:category) do
+      create(:menu_category).tap do |cat|
+        cat.visibility.update!(public_visible: true)
+      end
+    end
 
     it { expect(instance).to respond_to(:show) }
     it { expect(described_class).to route(:get, "/v1/menu/categories/2").to(action: :show, format: :json, id: 2) }
+
+    [
+      { private_visible: false, public_visible: false },
+      { private_visible: true, private_from: 1.week.ago, private_to: 1.day.ago, public_visible: false },
+      { private_visible: false, public_from: 1.week.ago, public_to: 1.day.ago, public_visible: true },
+      { private_visible: true, private_from: 1.week.from_now, public_visible: false },
+      { private_visible: false, public_from: 1.week.from_now, public_visible: true }
+    ].each do |visibility_options|
+      context "with visibility #{visibility_options.inspect}, should not find by id" do
+        before do
+          category.visibility.update!(visibility_options)
+          req(id: category.id)
+        end
+
+        it { expect(response).to have_http_status(:not_found) }
+        it { expect(json).to include(message: String) }
+      end
+
+      context "with visibility #{visibility_options.inspect}, should not find by secret" do
+        before do
+          category.visibility.update!(visibility_options)
+          req(id: category.secret)
+        end
+
+        it { expect(response).to have_http_status(:not_found) }
+        it { expect(json).to include(message: String) }
+      end
+    end
+
+    [
+      { private_visible: true, public_visible: false },
+      { private_visible: true, private_from: 1.hour.ago, private_to: 1.hour.from_now, public_visible: false },
+      { private_visible: true, public_visible: true },
+    ].each do |visibility_options|
+      context "with visibility #{visibility_options.inspect} should be able to find by secret" do
+        before do
+          category.visibility.update!(visibility_options)
+          req(id: category.secret)
+        end
+
+        it { expect(response).to have_http_status(:ok) }
+        it { expect(json).to include(item: Hash) }
+        it { expect(json.dig(:item, :id)).to eq(category.id) }
+      end
+    end
+
+    [
+      { private_visible: false, public_visible: true },
+      { private_visible: true, public_visible: true },
+      { private_visible: false, public_from: 1.hour.ago, public_to: 1.hour.from_now, public_visible: true },
+    ].each do |visibility_options|
+      context "with visibility #{visibility_options.inspect} should be able to find by id" do
+        before do
+          category.visibility.update!(visibility_options)
+          req(id: category.id)
+        end
+
+        it { expect(response).to have_http_status(:ok) }
+        it { expect(json).to include(item: Hash) }
+        it { expect(json.dig(:item, :id)).to eq(category.id) }
+      end
+    end
 
     context "basic" do
       subject do
