@@ -41,7 +41,7 @@ RSpec.describe V1::Menu::CategoriesController, type: :controller do
       before do
         create_menu_categories(2)
         Menu::Category.all.map { |item| item.visibility.update!(public_visible: false, private_visible: true) }
-        req
+        req(root: true)
       end
 
       it { expect(Menu::Category.count).to eq 2 }
@@ -60,7 +60,7 @@ RSpec.describe V1::Menu::CategoriesController, type: :controller do
         before do
           create_menu_categories(2)
           Menu::Category.all.map { |item| item.visibility.update!(public_visible: true, public_from: from, public_to: to) }
-          req
+          req(root: true)
         end
 
         it { expect(Menu::Category.count).to eq 2 }
@@ -75,7 +75,7 @@ RSpec.describe V1::Menu::CategoriesController, type: :controller do
       before do
         create_menu_categories(2)
         Menu::Category.all.map { |item| item.visibility.update!(public_visible: true, daily_from: 1.hour.ago, daily_to: 5.minutes.ago) }
-        req
+        req(root: true)
       end
 
       it { expect(Menu::Category.count).to eq 2 }
