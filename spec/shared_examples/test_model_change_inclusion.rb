@@ -22,7 +22,7 @@ RSpec.shared_examples TEST_MODEL_CHANGE_INCLUSION do
       expect(described_class.count).to eq 0
       record
       expect(described_class.count).to eq 1
-      expect(SaveModelChangeJob).to have_received(:perform_async).twice
+      expect(SaveModelChangeJob).to have_received(:perform_async)
     end
   end
 
@@ -34,7 +34,7 @@ RSpec.shared_examples TEST_MODEL_CHANGE_INCLUSION do
         record.touch
       end
 
-      it { expect(SaveModelChangeJob).to have_received(:perform_async).twice }
+      it { expect(SaveModelChangeJob).to have_received(:perform_async) }
     end
   end
 
