@@ -68,26 +68,26 @@ module Menu
     scope :without_price, -> { without_fixed_price }
     scope :with_parent, -> { where.not(parent_id: nil) }
     scope :without_parent, -> { where(parent_id: nil) }
-    scope :public_visible, -> {
+    scope :public_visible, lambda {
       ids = joins("JOIN menu_visibilities v ON v.id = menu_categories.menu_visibility_id")
-        .where(<<~SQL.squish, time: Time.zone.now).select("menu_categories.id")
-          v.public_visible = true AND
-          (v.daily_from IS NULL OR v.daily_from < :time) AND
-          (v.daily_to IS NULL OR v.daily_to > :time) AND
-          (v.public_from IS NULL OR v.public_from <= :time) AND
-          (v.public_to IS NULL OR v.public_to >= :time)
-        SQL
+            .where(<<~SQL.squish, time: Time.zone.now).select("menu_categories.id")
+              v.public_visible = true AND
+              (v.daily_from IS NULL OR v.daily_from < :time) AND
+              (v.daily_to IS NULL OR v.daily_to > :time) AND
+              (v.public_from IS NULL OR v.public_from <= :time) AND
+              (v.public_to IS NULL OR v.public_to >= :time)
+            SQL
 
       where(id: ids).or(where(root_id: ids))
     }
 
-    scope :private_visible, -> {
+    scope :private_visible, lambda {
       ids = joins("JOIN menu_visibilities v ON v.id = menu_categories.menu_visibility_id")
-        .where(<<~SQL.squish, time: Time.zone.now).select("menu_categories.id")
-          v.private_visible = true AND
-          (v.private_from IS NULL OR v.private_from <= :time) AND
-          (v.private_to IS NULL OR v.private_to >= :time)
-        SQL
+            .where(<<~SQL.squish, time: Time.zone.now).select("menu_categories.id")
+              v.private_visible = true AND
+              (v.private_from IS NULL OR v.private_from <= :time) AND
+              (v.private_to IS NULL OR v.private_to >= :time)
+            SQL
 
       where(id: ids).or(where(root_id: ids))
     }
@@ -224,9 +224,7 @@ module Menu
       return if parent.nil?
 
       root = parent
-      while root.parent.present?
-        root = root.parent
-      end
+      root = root.parent while root.parent.present?
 
       self.root = root
     end

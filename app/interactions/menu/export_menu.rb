@@ -54,7 +54,8 @@ module Menu
     end
 
     def write_menu(sheet)
-      write_row(sheet, 0, %w[id name.it name.en description.it description.en status price updated_at created_at images])
+      write_row(sheet, 0,
+                %w[id name.it name.en description.it description.en status price updated_at created_at images])
       Menu::Category.visible.where(parent_id: nil).each_with_index do |cat, index|
         write_row(sheet, index + 1,
                   [cat.id, cat.name_it, cat.name_en, cat.description_it, cat.description_en, cat.status, cat.price, cat.updated_at, cat.created_at, cat.images.map(&:url)].flatten)
@@ -62,7 +63,8 @@ module Menu
     end
 
     def write_dishes(sheet)
-      write_row(sheet, 0, %w[id name.it name.en description.it description.en status price updated_at created_at images])
+      write_row(sheet, 0,
+                %w[id name.it name.en description.it description.en status price updated_at created_at images])
       Menu::Dish.visible.each_with_index do |dish, index|
         write_row(sheet, index + 1,
                   [dish.id, dish.name_it, dish.name_en, dish.description_it, dish.description_en, dish.status, dish.price, dish.updated_at, dish.created_at, dish.images.map(&:url)].flatten)
@@ -78,7 +80,8 @@ module Menu
     end
 
     def write_tags(sheet)
-      write_row(sheet, 0, %w[id name.it name.en description.it description.en status color imageUrl updated_at created_at])
+      write_row(sheet, 0,
+                %w[id name.it name.en description.it description.en status color imageUrl updated_at created_at])
       Menu::Tag.visible.each_with_index do |tag, index|
         write_row(sheet, index + 1,
                   [tag.id, tag.name_it, tag.name_en, tag.description_it, tag.description_en, tag.status, tag.color, tag.image&.url, tag.updated_at, tag.created_at])

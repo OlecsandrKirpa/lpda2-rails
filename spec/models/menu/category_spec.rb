@@ -350,10 +350,12 @@ RSpec.describe Menu::Category, type: :model do
       it { expect(subject.visibility).to eq subject.menu_visibility }
     end
 
-    context "#filter_by_query should return all if is blank" do
-      let(:categories) { create_list(:menu_category, 3) }
-      before { categories }
+    describe "#filter_by_query should return all if is blank" do
       subject(:result) { described_class.filter_by_query([nil, ""].sample) }
+
+      let(:categories) { create_list(:menu_category, 3) }
+
+      before { categories }
 
       it { is_expected.to be_a(ActiveRecord::Relation) }
       it { expect(result.count).to eq 3 }

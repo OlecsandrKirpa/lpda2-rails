@@ -52,7 +52,8 @@ class PublicCreateReservation < ActiveInteraction::Base
       if @reservation.requires_payment?
         call = @reservation.create_payment
         unless call.valid?
-          ExceptionNotifier.notify_exception(NexiApiIssue.new(call.errors.full_messages.join(", ")), data: { errors: call.errors })
+          ExceptionNotifier.notify_exception(NexiApiIssue.new(call.errors.full_messages.join(", ")),
+                                             data: { errors: call.errors })
           errors.merge!(call.errors)
         end
       else

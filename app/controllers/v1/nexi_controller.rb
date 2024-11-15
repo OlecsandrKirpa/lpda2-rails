@@ -11,7 +11,7 @@ module V1
     # https://ecommerce.nexi.it/specifiche-tecniche/codicebase/esito.html
     def receive_order_outcome
       Rails.logger.warn "NexiController#receive_order_outcome: #{params.inspect}, headers: #{request.headers.inspect}"
-      Nexi::ReceiveOrderOutcome.run!(request: request)
+      Nexi::ReceiveOrderOutcome.run!(request:)
 
       render json: {
         status: "ok"
