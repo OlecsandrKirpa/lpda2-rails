@@ -19,7 +19,9 @@ module Nexi
     string :url, default: -> { Config.nexi_api_url }
 
     string :mac_key, default: -> { Config.nexi_mac_key || raise("missing nexi_mac_key. update your credentials.") }
-    string :alias_merchant, default: -> { Config.nexi_alias_merchant || raise("missing nexi_alias_merchant. update your credentials.") }
+    string :alias_merchant, default: lambda {
+                                       Config.nexi_alias_merchant || raise("missing nexi_alias_merchant. update your credentials.")
+                                     }
 
     validates_presence_of :path, :http_verb
 

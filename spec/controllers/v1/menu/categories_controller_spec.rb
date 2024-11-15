@@ -59,7 +59,9 @@ RSpec.describe V1::Menu::CategoriesController, type: :controller do
       context "when public visibility is enabled but current time is out of absolute timezone (from: #{from.inspect}, to: #{to.inspect})" do
         before do
           create_menu_categories(2)
-          Menu::Category.all.map { |item| item.visibility.update!(public_visible: true, public_from: from, public_to: to) }
+          Menu::Category.all.map do |item|
+            item.visibility.update!(public_visible: true, public_from: from, public_to: to)
+          end
           req(root: true)
         end
 
@@ -74,7 +76,9 @@ RSpec.describe V1::Menu::CategoriesController, type: :controller do
     context "when public visibility is enabled but current time is out of daily visible time" do
       before do
         create_menu_categories(2)
-        Menu::Category.all.map { |item| item.visibility.update!(public_visible: true, daily_from: 1.hour.ago, daily_to: 5.minutes.ago) }
+        Menu::Category.all.map do |item|
+          item.visibility.update!(public_visible: true, daily_from: 1.hour.ago, daily_to: 5.minutes.ago)
+        end
         req(root: true)
       end
 
@@ -583,7 +587,7 @@ RSpec.describe V1::Menu::CategoriesController, type: :controller do
     [
       { private_visible: true, public_visible: false },
       { private_visible: true, private_from: 1.hour.ago, private_to: 1.hour.from_now, public_visible: false },
-      { private_visible: true, public_visible: true },
+      { private_visible: true, public_visible: true }
     ].each do |visibility_options|
       context "with visibility #{visibility_options.inspect} should be able to find by secret" do
         before do
@@ -600,7 +604,7 @@ RSpec.describe V1::Menu::CategoriesController, type: :controller do
     [
       { private_visible: false, public_visible: true },
       { private_visible: true, public_visible: true },
-      { private_visible: false, public_from: 1.hour.ago, public_to: 1.hour.from_now, public_visible: true },
+      { private_visible: false, public_from: 1.hour.ago, public_to: 1.hour.from_now, public_visible: true }
     ].each do |visibility_options|
       context "with visibility #{visibility_options.inspect} should be able to find by id" do
         before do

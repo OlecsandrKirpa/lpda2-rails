@@ -45,7 +45,7 @@ class ReservationPayment < ApplicationRecord
     return if reservation&.secret.blank?
 
     self.hpp_url ||= Rails.application.routes.url_helpers.do_payment_reservations_url(
-      secret: reservation&.secret,
+      secret: reservation&.secret
       # host: "gigi"
     )
   end

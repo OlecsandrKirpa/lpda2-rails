@@ -24,7 +24,7 @@ RSpec.context "POST /v1/nexi/receive_order_outcome", type: :request do
       brand:,
       nazionalita:,
       languageId:,
-      tipoTransazione:,
+      tipoTransazione:
     }
   end
 
@@ -91,15 +91,16 @@ RSpec.context "POST /v1/nexi/receive_order_outcome", type: :request do
   it { expect { req }.to change { reservation.events.count }.by(1) }
   it { expect { req }.to(change { Nexi::OrderOutcomeRequest.count }.by(1)) }
   it { expect { req }.to(change { Log::ReservationEvent.count }.by(1)) }
+
   it do
     req
     expect(Log::ReservationEvent.last.payload).to include("ip" => String)
   end
 
-  [
-    "KO",
-    "ANNULLO",
-    "ERRORE",
+  %w[
+    KO
+    ANNULLO
+    ERRORE
   ].each do |failure_esito|
     context "when esito is #{failure_esito.inspect}" do
       let(:esito) { failure_esito }
