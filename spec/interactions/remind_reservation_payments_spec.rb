@@ -180,4 +180,32 @@ RSpec.describe RemindReservationPayments, type: :interaction do
     it { expect { run! }.not_to raise_error }
     it { expect { run! }.to(have_enqueued_job(ActionMailer::MailDeliveryJob).exactly(1).times) }
   end
+
+  context "when some reservatio is for 12 november 2024 H13:00 and now it's 14 november 2024 H11:00" do
+    before do
+      # reservations
+      travel_to DateTime.parse("2024-11-12 10:00") do
+        create(:reservation, status: :active, email: Faker::Internet.email, datetime: DateTime.parse("2024-11-12 13:00")).tap do |res|
+          create(:reservation_payment, reservation: res)
+        end
+      end
+    end
+
+    it { expect(Reservation.count).to eq 1 }
+    it { expect(Reservation.active.count).to eq 1 }
+    it { expect(ReservationPayment.count).to eq 1 }
+    it { expect(ReservationPayment.todo.count).to eq 1 }
+
+    it do
+      travel_to DateTime.parse("2024-11-14 11:00") do
+        expect { run! }.not_to(have_enqueued_job(ActionMailer::MailDeliveryJob))
+      end
+    end
+
+    it do
+      travel_to DateTime.parse("2024-11-14 11:00") do
+        expect { run! }.not_to(change { ActionMailer::Base.deliveries.count })
+      end
+    end
+  end
 end
