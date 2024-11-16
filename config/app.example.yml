@@ -86,6 +86,8 @@ default: &default
 
   cors_origins:
     - localhost
+    - localhost:4250
+    - localhost:8080
     - laportadacqua.com
 
   cookie_secure: true
