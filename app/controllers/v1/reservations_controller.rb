@@ -117,7 +117,7 @@ module V1
     end
 
     def find_item
-      @item = ::Reservation.visible.where(secret: params[:secret]).first
+      @item = ::Reservation.visible.public_visible.where(secret: params[:secret]).first
       return unless @item.nil?
 
       item_not_found

@@ -1222,6 +1222,21 @@ RSpec.describe V1::ReservationsController, type: :controller do
       get :show, params: data
     end
 
+    %w[cancelled deleted].each do |invalid_status|
+      context "when reservation is in status #{invalid_status.inspect}" do
+        let(:reservation) { create(:reservation, status: :active, datetime: 1.week.from_now) }
+
+        before do
+          reservation.update!(status: invalid_status)
+          req
+        end
+
+        it { expect(response).to have_http_status(:not_found) }
+        it { expect(json).not_to include(:item) }
+        it { expect(json).to include(message: String) }
+      end
+    end
+
     context "basic" do
       context "should return a reservation" do
         it do
