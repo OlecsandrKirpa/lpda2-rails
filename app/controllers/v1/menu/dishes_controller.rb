@@ -7,7 +7,7 @@ module V1::Menu
     skip_before_action :authenticate_user
 
     def index
-      call = ::Menu::SearchDishes.run(params:)
+      call = ::Menu::SearchDishes.run(params:, items: Dish.public_visible)
       unless call.valid?
         return render_error(status: 400, details: call.errors.as_json,
                             message: call.errors.full_messages.join(", "))
@@ -45,7 +45,7 @@ module V1::Menu
     end
 
     def find_item
-      @item = Menu::Dish.visible.find_by(id: params[:id])
+      @item = Menu::Dish.visible.public_visible.find_by(id: params[:id])
       return unless @item.nil?
 
       render_error(status: 404,

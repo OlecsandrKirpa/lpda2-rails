@@ -22,6 +22,33 @@ RSpec.describe V1::Menu::DishesController do
 
     it { expect(req).to be_successful }
 
+    %w[deleted inactive].each do |invisible_status|
+      context "when a dish has status #{invisible_status.inspect}" do
+        let(:dish) do
+          create(:menu_dish, :with_name, :with_description, :with_images,
+                :with_allergens, :with_tags, :with_ingredients, status: invisible_status).tap do |d|
+            image = create(:image, :with_attached_image)
+            d.allergens.map { |a| a.image = image }
+            d.tags.map { |a| a.image = image }
+            d.ingredients.map { |a| a.image = image }
+          end
+        end
+
+        let(:params) { {} }
+
+        before do
+          dish
+          req
+        end
+
+        it { expect(Menu::Dish.count).to eq 1 }
+        it { expect(Menu::Dish.all.pluck(:status).uniq).to match_array([invisible_status]) }
+
+        it { expect(response).to have_http_status(:ok) }
+        it { expect(json[:items]).to be_empty }
+      end
+    end
+
     context "when requiring all informations with { include_all: true }" do
       let!(:dish) do
         create(:menu_dish, :with_name, :with_description, :with_images,

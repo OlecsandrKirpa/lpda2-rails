@@ -37,6 +37,24 @@ RSpec.describe V1::Menu::CategoriesController, type: :controller do
       end
     end
 
+    context "when the category is visible but has status deleted" do
+      before do
+        create_menu_categories(2)
+        Menu::Category.all.map do |item|
+          item.visibility.update!(public_visible: true, private_visible: true)
+          item.update!(status: :deleted)
+        end
+
+        req(root: true)
+      end
+
+      it { expect(Menu::Category.count).to eq 2 }
+      it { expect(Menu::Category.all.pluck(:status)).to all(eq "deleted") }
+
+      it { expect(response).to be_successful }
+      it { expect(json[:items]).to be_empty }
+    end
+
     context "when public visibility is disabled" do
       before do
         create_menu_categories(2)

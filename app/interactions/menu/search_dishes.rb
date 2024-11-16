@@ -4,6 +4,8 @@ module Menu
   class SearchDishes < ActiveInteraction::Base
     interface :params, methods: %i[[] merge! fetch each has_key?], default: {}
 
+    interface :items, methods: %i[to_sql to_ary], default: -> { Dish.all }
+
     def execute
       filter_by_query(
         filter_by_description(
@@ -15,7 +17,7 @@ module Menu
                     filter_by_except(
                       filter_by_can_suggest(
                         filter_by_allowed_fields(
-                          order(items)
+                          order(items.visible)
                         )
                       )
                     )
@@ -71,10 +73,6 @@ module Menu
           category_id: params[:category_id].present? ? params[:category_id].to_i : nil
         }
       ).order("#{Menu::DishesInCategory.table_name}.index ASC")
-    end
-
-    def items
-      Dish.visible
     end
 
     def filter_by_category(items)

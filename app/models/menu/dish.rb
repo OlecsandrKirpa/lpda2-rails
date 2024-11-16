@@ -55,6 +55,7 @@ module Menu
     # Scopes
     # ##############################
     scope :visible, -> { not_deleted }
+    scope :public_visible, -> { where(status: :active) }
 
     # ##############################
     # CLass methods
