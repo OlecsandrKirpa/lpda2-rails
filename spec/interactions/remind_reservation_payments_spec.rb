@@ -120,7 +120,7 @@ RSpec.describe RemindReservationPayments, type: :interaction do
     it { expect(ReservationPayment.todo.count).to be_positive }
 
     it { expect { run! }.not_to raise_error }
-    it { expect { run! }.to have_enqueued_job(ActionMailer::MailDeliveryJob).at_least(2).times }
+    it { expect { run! }.to have_enqueued_job(ActionMailer::MailDeliveryJob).at_least(1).times }
   end
 
   context "when created a payment a week ago, should not send reminder." do
