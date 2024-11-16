@@ -297,7 +297,8 @@ RSpec.describe V1::ReservationsController, type: :controller do
 
     context "when nexi APIs return some kind of error" do
       before do
-        stub_request(:post, "#{Config.app.dig!(:nexi_api_url)}/#{Config.app.dig!(:nexi_simple_payment_path)}").to_return do |_request|
+        stub_request(:post,
+                     "#{Config.app.dig!(:nexi_api_url)}/#{Config.app.dig!(:nexi_simple_payment_path)}").to_return do |_request|
           {
             status: 200,
             body: File.read(Rails.root.join("spec", "fixtures", "nexi-error-page.html"))
@@ -337,7 +338,8 @@ RSpec.describe V1::ReservationsController, type: :controller do
 
     context "when nexi APIs return just a comment" do
       before do
-        stub_request(:post, "#{Config.app.dig!(:nexi_api_url)}/#{Config.app.dig!(:nexi_simple_payment_path)}").to_return do |_request|
+        stub_request(:post,
+                     "#{Config.app.dig!(:nexi_api_url)}/#{Config.app.dig!(:nexi_simple_payment_path)}").to_return do |_request|
           {
             status: 200,
             body: "<!-- some useless comment -->"
@@ -377,7 +379,8 @@ RSpec.describe V1::ReservationsController, type: :controller do
 
     context "when we're not authorized to use nexi APIs" do
       before do
-        stub_request(:post, "#{Config.app.dig!(:nexi_api_url)}/#{Config.app.dig!(:nexi_simple_payment_path)}").to_return do |_request|
+        stub_request(:post,
+                     "#{Config.app.dig!(:nexi_api_url)}/#{Config.app.dig!(:nexi_simple_payment_path)}").to_return do |_request|
           {
             body: error_html
           }
@@ -402,6 +405,7 @@ RSpec.describe V1::ReservationsController, type: :controller do
         it { expect { req }.not_to(change { Reservation.count }) }
         it { expect { req }.not_to(change { ReservationPayment.count }) }
         it { expect { req }.to(change { Nexi::HttpRequest.count }.by(1)) }
+
         it do
           allow(ExceptionNotifier).to receive(:notify_exception).and_call_original
           req
@@ -422,7 +426,8 @@ RSpec.describe V1::ReservationsController, type: :controller do
 
     context "when nexi APIs are working and we're authorized" do
       before do
-        stub_request(:post, "#{Config.app.dig!(:nexi_api_url)}/#{Config.app.dig!(:nexi_simple_payment_path)}").to_return do |_request|
+        stub_request(:post,
+                     "#{Config.app.dig!(:nexi_api_url)}/#{Config.app.dig!(:nexi_simple_payment_path)}").to_return do |_request|
           {
             body: html
           }

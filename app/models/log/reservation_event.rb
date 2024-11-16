@@ -19,7 +19,7 @@ module Log
       redirect_payment_success: "redirect_payment_success",
 
       # Provider notified us about the outcome of the payment.
-      payment_outcome: "payment_outcome",
+      payment_outcome: "payment_outcome"
     }
 
     validates :event_type, presence: true

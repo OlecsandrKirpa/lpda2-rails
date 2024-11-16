@@ -48,6 +48,8 @@ RSpec.describe "GET /v1/admin/holidays" do
     File.write(fname, response.body, mode: "wb")
     Roo::Excelx.new(fname)
   end
+  let(:default_headers) { auth_headers }
+  let(:default_params) { {} }
 
   def col_index(sheet_name, col_name)
     file.sheet(sheet_name).row(1).index(col_name) + 1
@@ -56,9 +58,6 @@ RSpec.describe "GET /v1/admin/holidays" do
   def col_values(sheet_name)
     file.sheet(sheet_name).column(col_index(col_name))[1..]
   end
-
-  let(:default_headers) { auth_headers }
-  let(:default_params) { {} }
 
   def req(params: default_params, headers: default_headers)
     get "/v1/admin/menu/export", headers:, params:
@@ -100,7 +99,7 @@ RSpec.describe "GET /v1/admin/holidays" do
       expect(response.headers["Content-Type"]).to eq "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     end
 
-    it { expect(file.sheets).to match_array(["All", "Allergens", "Dishes", "Ingredients", "Menu", "Tags"]) }
+    it { expect(file.sheets).to match_array(%w[All Allergens Dishes Ingredients Menu Tags]) }
 
     %w[id name.it name.en description.it description.en status created_at updated_at].each do |col|
       it "Allergens sheet should have column #{col.inspect}" do
@@ -126,31 +125,66 @@ RSpec.describe "GET /v1/admin/holidays" do
       end
     end
 
-    it { expect(file.sheet("Allergens").column(col_index("Allergens", "id"))).to contain_exactly("id", *Menu::Allergen.where.not(status: :deleted).map(&:id)) }
-    it { expect(file.sheet("Ingredients").column(col_index("Ingredients", "id"))).to contain_exactly("id", *Menu::Ingredient.where.not(status: :deleted).map(&:id)) }
-    it { expect(file.sheet("Tags").column(col_index("Tags", "id"))).to contain_exactly("id", *Menu::Tag.where.not(status: :deleted).map(&:id)) }
-    it { expect(file.sheet("Menu").column(col_index("Menu", "id"))).to contain_exactly("id", *Menu::Category.where.not(status: :deleted).without_parent.map(&:id)) }
+    it {
+      expect(file.sheet("Allergens").column(col_index("Allergens",
+                                                      "id"))).to contain_exactly("id",
+                                                                                 *Menu::Allergen.where.not(status: :deleted).map(&:id))
+    }
+
+    it {
+      expect(file.sheet("Ingredients").column(col_index("Ingredients",
+                                                        "id"))).to contain_exactly("id",
+                                                                                   *Menu::Ingredient.where.not(status: :deleted).map(&:id))
+    }
+
+    it {
+      expect(file.sheet("Tags").column(col_index("Tags",
+                                                 "id"))).to contain_exactly("id",
+                                                                            *Menu::Tag.where.not(status: :deleted).map(&:id))
+    }
+
+    it {
+      expect(file.sheet("Menu").column(col_index("Menu",
+                                                 "id"))).to contain_exactly("id",
+                                                                            *Menu::Category.where.not(status: :deleted).without_parent.map(&:id))
+    }
 
     %w[created_at updated_at].each do |col|
       it "checking Dishes sheet #{col.inspect}" do
-        expect(file.sheet("Dishes").column(col_index("Dishes", col))).to contain_exactly(col, *Menu::Dish.where.not(status: :deleted).map{|t| t.send(col).strftime("%Y-%m-%d %H:%M") })
+        expect(file.sheet("Dishes").column(col_index("Dishes",
+                                                     col))).to contain_exactly(col, *Menu::Dish.where.not(status: :deleted).map do |t|
+                                                                                      t.send(col).strftime("%Y-%m-%d %H:%M")
+                                                                                    end)
       end
 
       it "checking Allergens sheet #{col.inspect}" do
-        expect(file.sheet("Allergens").column(col_index("Allergens", col))).to contain_exactly(col, *Menu::Allergen.where.not(status: :deleted).map{|t| t.send(col).strftime("%Y-%m-%d %H:%M") })
+        expect(file.sheet("Allergens").column(col_index("Allergens",
+                                                        col))).to contain_exactly(col, *Menu::Allergen.where.not(status: :deleted).map do |t|
+                                                                                         t.send(col).strftime("%Y-%m-%d %H:%M")
+                                                                                       end)
       end
 
       it "checking Tags sheet #{col.inspect}" do
-        expect(file.sheet("Tags").column(col_index("Tags", col))).to contain_exactly(col, *Menu::Tag.where.not(status: :deleted).map{|t| t.send(col).strftime("%Y-%m-%d %H:%M") })
+        expect(file.sheet("Tags").column(col_index("Tags",
+                                                   col))).to contain_exactly(col, *Menu::Tag.where.not(status: :deleted).map do |t|
+                                                                                    t.send(col).strftime("%Y-%m-%d %H:%M")
+                                                                                  end)
       end
 
       it "checking Menu sheet #{col.inspect}" do
-        expect(file.sheet("Menu").column(col_index("Menu", col))).to contain_exactly(col, *Menu::Category.where.not(status: :deleted).where(parent_id: nil).map{|t| t.send(col).strftime("%Y-%m-%d %H:%M") })
+        expect(file.sheet("Menu").column(col_index("Menu",
+                                                   col))).to contain_exactly(col, *Menu::Category.where.not(status: :deleted).where(parent_id: nil).map do |t|
+                                                                                    t.send(col).strftime("%Y-%m-%d %H:%M")
+                                                                                  end)
       end
     end
 
     context "when checking dishes" do
-      it { expect(file.sheet("Dishes").column(col_index("Dishes", "id"))).to contain_exactly("id", *Menu::Dish.where.not(status: :deleted).map(&:id)) }
+      it {
+        expect(file.sheet("Dishes").column(col_index("Dishes",
+                                                     "id"))).to contain_exactly("id",
+                                                                                *Menu::Dish.where.not(status: :deleted).map(&:id))
+      }
 
       it do
         expect(Menu::Dish.visible.count).to be_positive

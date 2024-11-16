@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe RemindReservationPaymentsJob, type: :job do
-  it "should call RemindReservationPayments.run!" do
+  it "calls RemindReservationPayments.run!" do
     allow(RemindReservationPayments).to receive(:run!).and_return(true)
     described_class.perform_async
     described_class.perform_one

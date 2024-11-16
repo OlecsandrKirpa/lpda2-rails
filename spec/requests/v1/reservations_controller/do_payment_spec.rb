@@ -21,14 +21,21 @@ RSpec.context "GET /v1/reservations/:secret/do_payment", type: :request do
     it { expect { req }.to change { reservation.events.count }.from(0).to(1) }
     it { expect { req }.to change { Log::ReservationEvent.count }.from(0).to(1) }
     it { expect { req }.to change { reservation.events.where(event_type: "do_payment").count }.from(0).to(1) }
-    it { expect { req }.to change { Log::ReservationEvent.where(reservation:, event_type: "do_payment").count }.from(0).to(1) }
+
+    it {
+      expect { req }.to change {
+                          Log::ReservationEvent.where(reservation:, event_type: "do_payment").count
+                        }.from(0).to(1)
+    }
 
     it do
       payment.paid!
 
       5.times do
         # puts "Creating event"
-        expect { req }.to change { Log::ReservationEvent.where(reservation:, event_type: "redirect_payment_success").count }.by(1)
+        expect { req }.to change {
+                            Log::ReservationEvent.where(reservation:, event_type: "redirect_payment_success").count
+                          }.by(1)
       end
     end
   end
@@ -66,7 +73,7 @@ RSpec.context "GET /v1/reservations/:secret/do_payment", type: :request do
       req
     end
 
-    it { expect(response).to have_http_status(302) }
+    it { expect(response).to have_http_status(:found) }
     it { expect(response.headers["Location"]).to eq(payment.success_url) }
   end
 
