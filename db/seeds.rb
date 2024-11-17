@@ -37,6 +37,8 @@ Dev::Menu::ImportCategories.run!
 debug "Importing dishes..."
 Dev::Menu::ImportDishes.run!
 
+Menu::Dish.all.update(status: :active)
+
 ReservationTurn.delete_all
 
 debug "Creating reservation turns..."
