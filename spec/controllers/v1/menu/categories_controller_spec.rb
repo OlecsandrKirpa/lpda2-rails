@@ -39,18 +39,49 @@ RSpec.describe V1::Menu::CategoriesController, type: :controller do
 
     context "when category hasnt any dish and providing { skip_categories_without_dishes: true }" do
       before do
-        create_menu_categories(2)
+        create(:menu_category, parent: create_menu_categories(2).first, visibility: nil)
         req(skip_categories_without_dishes: true)
       end
 
       it { expect(Menu::Dish.count).to eq 0 }
-      it { expect(Menu::Category.count).to eq(2) }
-      it { expect(Menu::Category.active.count).to eq(2) }
+      it { expect(Menu::Category.count).to eq(3) }
+      it { expect(Menu::Category.active.count).to eq(3) }
       it { expect(Menu::Visibility.count).to eq 2 }
       it { expect(Menu::Visibility.all.where(public_visible: true).count).to eq 2 }
 
       it { expect(response).to be_successful }
       it { expect(json[:items]).to be_empty }
+    end
+
+    context "filtering for { skip_empty_categories: true } and categories are actually empty (no dishes, no categories)" do
+      before do
+        create_menu_categories(3)
+        req(skip_empty_categories: true)
+      end
+
+      it { expect(Menu::Category.count).to eq 3 }
+      it { expect(Menu::Dish.count).to eq 0 }
+
+      it { expect(response).to be_successful }
+      it { expect(json[:items]).to be_empty }
+    end
+
+    context "filtering for { skip_empty_categories: true } and some categories have dishes, other have children categories" do
+      before do
+        categories = create_menu_categories(2)
+        create_menu_categories(2, parent: categories.first, visibility: nil)
+
+        categories.last.dishes = create_list(:menu_dish, 2)
+        req(skip_empty_categories: true)
+      end
+
+      it { expect(Menu::Category.count).to eq 4 }
+      it { expect(Menu::Dish.count).to eq 2 }
+
+      it { expect(response).to be_successful }
+      it { expect(json[:items]).not_to be_empty }
+      it { expect(json[:items].count).to eq(2) }
+      it { expect(json[:items].pluck(:id)).to match_array(Menu::Category.root.pluck(:id)) }
     end
 
     context "when the category is visible but has status deleted" do

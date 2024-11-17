@@ -9,6 +9,10 @@ module Menu
 
       categories = categories.without_parent.public_visible if param_true?(:root, :without_parent, :root_only)
 
+      if param_true?(:skip_empty_categories)
+        categories = categories.having_public_dishes.or(categories.having_children)
+      end
+
       if param_true?(:skip_categories_without_dishes)
         categories = categories.having_public_dishes
       end

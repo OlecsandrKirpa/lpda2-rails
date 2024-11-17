@@ -68,6 +68,7 @@ module Menu
     scope :without_price, -> { without_fixed_price }
     scope :with_parent, -> { where.not(parent_id: nil) }
     scope :without_parent, -> { where(parent_id: nil) }
+    scope :root, -> { without_parent }
     scope :public_visible, lambda {
       ids = joins("JOIN menu_visibilities v ON v.id = menu_categories.menu_visibility_id")
             .where(<<~SQL.squish, time: Time.zone.now).select("menu_categories.id")
@@ -100,6 +101,8 @@ module Menu
         )
       )
     }
+
+    scope :having_children, -> { where(id: Category.select(:parent_id)) }
 
     scope :public_or_private_visible, -> { public_visible.or(private_visible) }
 
