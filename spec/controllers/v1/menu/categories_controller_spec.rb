@@ -37,6 +37,22 @@ RSpec.describe V1::Menu::CategoriesController, type: :controller do
       end
     end
 
+    context "when category hasnt any dish and providing { skip_categories_without_dishes: true }" do
+      before do
+        create_menu_categories(2)
+        req(skip_categories_without_dishes: true)
+      end
+
+      it { expect(Menu::Dish.count).to eq 0 }
+      it { expect(Menu::Category.count).to eq(2) }
+      it { expect(Menu::Category.active.count).to eq(2) }
+      it { expect(Menu::Visibility.count).to eq 2 }
+      it { expect(Menu::Visibility.all.where(public_visible: true).count).to eq 2 }
+
+      it { expect(response).to be_successful }
+      it { expect(json[:items]).to be_empty }
+    end
+
     context "when the category is visible but has status deleted" do
       before do
         create_menu_categories(2)

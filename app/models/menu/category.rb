@@ -92,6 +92,15 @@ module Menu
       where(id: ids).or(where(root_id: ids))
     }
 
+    # scope :having_dishes, -> { joins(:menu_dishes).distinct }
+    scope :having_public_dishes, -> {
+      where(
+        id: Menu::DishesInCategory.select(:menu_category_id).where(
+          menu_dish_id: Menu::Dish.visible.public_visible.select(:id)
+        )
+      )
+    }
+
     scope :public_or_private_visible, -> { public_visible.or(private_visible) }
 
     # ##############################

@@ -9,6 +9,10 @@ module Menu
 
       categories = categories.without_parent.public_visible if param_true?(:root, :without_parent, :root_only)
 
+      if param_true?(:skip_categories_without_dishes)
+        categories = categories.having_public_dishes
+      end
+
       if params[:except].present? && params[:except].is_a?(String)
         categories = categories.where.not(id: params[:except].split(",").map(&:to_i))
       end
