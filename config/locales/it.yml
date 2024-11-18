@@ -311,7 +311,6 @@ it:
     greetings: "Salve %{fullname}"
     reservation_registered: "Ti informiamo che la tua prenotazione, per il giorno %{date} alle ore %{hour} e per %{people} persone, è stata registrata correttamente."
     special_request: "Di seguito sono state riportate le tue richieste particolari."
-    delete_reservation: "Cancella pranotazione"
     changed_mind: "Cambiato idea?"
   invalid_param: "Parametro %{name} non è valido."
   settings:

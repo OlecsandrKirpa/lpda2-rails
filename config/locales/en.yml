@@ -309,7 +309,6 @@ en:
     greetings: "Hello %{fullname}"
     reservation_registered: "We inform you that your reservation on the day %{date} at %{hour}, for %{people} people has been registered correctly."
     special_request: "Your special requests are listed below."
-    delete_reservation: "Delete reservation"
     changed_mind: "Changed your mind?"
   invalid_param: "Param %{name} is invalid."
   settings:

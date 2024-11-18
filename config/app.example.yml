@@ -25,9 +25,6 @@ default: &default
   emails:
     default_from: no-reply@example.com
 
-  # 'cr' stands for 'cancel reservation'
-  cancel_reservation_path: "/#/cr/{{secret}}"
-
   # Basic page where you can see your reservations details.
   # 'r' stands for 'reservation'
   show_reservation_url: "/#/r/{{secret}}"

@@ -2,7 +2,6 @@
 
 class ReservationMailer < ApplicationMailer
   before_action :validate_reservation
-  before_action :cancel_reservation_path
   before_action :show_reservation_url
   before_action :set_locale_by_reservation
   layout "public"
@@ -49,13 +48,6 @@ class ReservationMailer < ApplicationMailer
     @show_reservation_url ||= URI.join(
       Config.hash[:frontend_base_url],
       Mustache.render(Config.hash[:show_reservation_url], { secret: reservation.secret })
-    ).to_s
-  end
-
-  def cancel_reservation_path
-    @cancel_url ||= URI.join(
-      Config.hash[:frontend_base_url],
-      Mustache.render(Config.hash[:cancel_reservation_path], { secret: reservation.secret })
     ).to_s
   end
 
