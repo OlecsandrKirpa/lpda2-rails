@@ -78,6 +78,8 @@ RSpec.context "POST /v1/nexi/receive_order_outcome", type: :request do
   # https://ecommerce.nexi.it/specifiche-tecniche/tabelleecodifiche/codificatipotransazione.html
   let(:tipoTransazione) { "3DS_FULL" }
 
+  before { CreateMissingImages.run! }
+
   def req(params: default_params)
     post "/v1/nexi/receive_order_outcome", params:
   end
@@ -91,6 +93,45 @@ RSpec.context "POST /v1/nexi/receive_order_outcome", type: :request do
   it { expect { req }.to change { reservation.events.count }.by(1) }
   it { expect { req }.to(change { Nexi::OrderOutcomeRequest.count }.by(1)) }
   it { expect { req }.to(change { Log::ReservationEvent.count }.by(1)) }
+
+  context "should send email to confirm the payment", :perform_enqueued_jobs do
+    it { expect { req }.to change { ActionMailer::Base.deliveries.count }.by(1) }
+    it { expect { req }.to change { Log::DeliveredEmail.count }.by(1) }
+
+    it do
+      req
+      mail = Log::DeliveredEmail.last
+      expect(mail.record).to be_a(Reservation)
+      expect(mail.record).to eq(Reservation.last)
+    end
+
+    it do
+      req
+      email = ActionMailer::Base.deliveries.last
+      expect(email.to).to include(reservation.email)
+      expect(email.html_part.encoded).to include("We have received the payment")
+      expect(email.html_part.encoded).to include(I18n.t("reservation_mailer.payment_received.body"))
+      expect(email.text_part.encoded).to include("We have received the payment")
+      expect(email.text_part.encoded).to include(I18n.t("reservation_mailer.payment_received.body"))
+    end
+
+    it do
+      req
+      email = ActionMailer::Base.deliveries.last
+      expect(email.subject).to include("Payment received")
+    end
+
+    context "when language is 'it'" do
+      before do
+        reservation.update!(lang: "it")
+        req
+      end
+
+      it { expect(ActionMailer::Base.deliveries.last.subject).to include("Pagamento ricevuto") }
+      it { expect(ActionMailer::Base.deliveries.last.html_part.decoded).to include("Abbiamo ricevuto il pagamento") }
+      it { expect(ActionMailer::Base.deliveries.last.text_part.encoded).to include("Abbiamo ricevuto il pagamento") }
+    end
+  end
 
   it do
     req

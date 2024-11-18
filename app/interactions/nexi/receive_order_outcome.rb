@@ -15,7 +15,10 @@ module Nexi
         payload: { params:, headers:, ip: request.remote_ip }
       )
 
-      return find_payment.paid! if params.dig!(:esito).to_s.downcase.strip == "ok"
+      if params.dig!(:esito).to_s.downcase.strip == "ok"
+        ReservationMailer.with(reservation_id: find_reservation.id).payment_received.deliver_now
+        return find_payment.paid!
+      end
 
       Rails.logger.warn "Nexi::ReceiveOrderOutcome: Don't know what to do with params: #{params.inspect}, headers: #{headers.inspect}"
     end

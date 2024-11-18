@@ -294,6 +294,9 @@ it:
   invalid_status: "Stato non valido"
   reservation_mailer:
     signature: "~ Lo Staff de La Porta D'Acqua"
+    payment_received:
+      body: "Abbiamo ricevuto il pagamento per la tua prenotazione. La tua prenotazione è ora confermata."
+      subject: "Pagamento ricevuto per la tua prenotazione presso La Porta D'acqua"
     confirmation:
       subject: "La tua prenotazione presso La Porta D'acqua %{fullname}"
       no_email: "Questa prenotazione non ha alcuna mail associata."

@@ -292,6 +292,9 @@ en:
   invalid_status: "Invalid status"
   reservation_mailer:
     signature: "~ La Porta D'Acqua's Staff"
+    payment_received:
+      body: "We have received the payment for your reservation. Your reservation is now confirmed."
+      subject: "Payment received for your reservation at La Porta D'acqua"
     confirmation:
       subject: "Your reservation at La Porta D'acqua %{fullname}"
       no_email: "This reservation has no email."

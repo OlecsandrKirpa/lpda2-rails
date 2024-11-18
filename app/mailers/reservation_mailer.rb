@@ -21,6 +21,13 @@ class ReservationMailer < ApplicationMailer
     )
   end
 
+  def payment_received
+    mail(
+      to: reservation_to,
+      subject: (@title = I18n.t("reservation_mailer.payment_received.subject", fullname: reservation.fullname))
+    )
+  end
+
   def remind_payment
     mail(
       to: reservation_to,
