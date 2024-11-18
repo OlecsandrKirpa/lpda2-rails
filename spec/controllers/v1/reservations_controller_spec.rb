@@ -51,6 +51,48 @@ RSpec.describe V1::ReservationsController, type: :controller do
       post :create, params: data
     end
 
+    context "when number of children and adults are equal" do
+      let(:adults) { 2 }
+      let(:children) { 2 }
+
+      it { expect { req }.to change { Reservation.count }.by(1) }
+
+      context do
+        before { req }
+
+        it { expect(response).to have_http_status(:ok) }
+        it { expect(json).to include(item: Hash) }
+      end
+    end
+
+    context "when where are no adults, only children" do
+      let(:adults) { 0 }
+      let(:children) { 4 }
+
+      it { expect { req }.to change { Reservation.count }.by(1) }
+
+      context do
+        before { req }
+
+        it { expect(response).to have_http_status(:ok) }
+        it { expect(json).to include(item: Hash) }
+      end
+    end
+
+    context "when where are no adults nor children" do
+      let(:adults) { 0 }
+      let(:children) { 0 }
+
+      it { expect { req }.not_to(change { Reservation.count }) }
+
+      context do
+        before { req }
+
+        it { expect(response).to have_http_status(422) }
+        it { expect(json).to include(message: String) }
+      end
+    end
+
     [
       { name: :sunday, wday: 0 },
       { name: :monday, wday: 1 },
