@@ -29,6 +29,33 @@ RSpec.describe ReservationMailer do
       expect(mail.subject).to eq I18n.t("reservation_mailer.confirmation.subject", fullname: reservation.fullname)
     end
 
+    context "when reservation has a payment in status 'paid'" do
+      before do
+        create(:reservation_payment, reservation:, status: :paid)
+      end
+
+      it { expect(reservation.reload.payment).to be_paid }
+      it { expect(mail.text_part.body.encoded).to include(I18n.t("reservation_mailer.confirmation.payment_completed")) }
+      it { expect(mail.html_part.body.encoded).to include(CGI.escapeHTML(I18n.t("reservation_mailer.confirmation.payment_completed"))) }
+    end
+
+    context "when reservation has a payment in status 'todo'" do
+      before do
+        create(:reservation_payment, reservation:, status: :todo)
+      end
+
+      it { expect(reservation.reload.payment).to be_todo }
+      it { expect(mail.text_part.body.encoded).to include(I18n.t("reservation_mailer.confirmation.remember_payment")) }
+      it { expect(mail.html_part.body.encoded).to include(CGI.escapeHTML(I18n.t("reservation_mailer.confirmation.remember_payment"))) }
+    end
+
+    context "when reservation don't have a payment" do
+      it { expect(reservation.reload.payment).to be_nil }
+      it { expect(mail.text_part.body.encoded).not_to include(I18n.t("reservation_mailer.confirmation.remember_payment")) }
+      it { expect(mail.html_part.body.encoded).not_to include(I18n.t("reservation_mailer.confirmation.remember_payment")) }
+      it { expect(mail.html_part.body.encoded).not_to include(CGI.escapeHTML(I18n.t("reservation_mailer.confirmation.remember_payment"))) }
+    end
+
     context "when checking text part body" do
       subject(:body) { mail.text_part.body.encoded }
 

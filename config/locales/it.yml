@@ -297,6 +297,8 @@ it:
     confirmation:
       subject: "La tua prenotazione presso La Porta D'acqua %{fullname}"
       no_email: "Questa prenotazione non ha alcuna mail associata."
+      payment_completed: "Il pagamento è stato completato."
+      remember_payment: "Se non l'hai già fatto, ti ricordiamo che per questa prenotazione è richiesto un pagamento. Puoi completare il pagamento al link sottostante."
     reminder:
       subject: "Ricorda la tua prenotazione presso La Porta D'acqua %{fullname}"
       body: "Ti ricordiamo che hai una prenotazione per il giorno %{date} alle ore %{hour} per %{people} persone."
