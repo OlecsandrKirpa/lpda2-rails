@@ -178,7 +178,7 @@ class PublicCreateReservation < ActiveInteraction::Base
   end
 
   def last_name_is_valid
-    return if /\A[A-Za-z\s']{2,}\z/.match?(last_name)
+    return if /^[A-Za-zÀ-ÖØ-öø-ÿ'´\-\s]+$/.match?(last_name) && last_name.length >= 2
 
     errors.add(:last_name, "#{last_name.inspect} is not a valid last name")
   end
