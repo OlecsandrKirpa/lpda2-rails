@@ -276,11 +276,43 @@ RSpec.describe V1::ReservationsController, type: :controller do
     end
 
     [
+      "'Coro",
+      "Coro'",
+    ].each do |special_name|
+      context "when first_name is #{special_name.inspect}" do
+        let(:first_name) { special_name }
+
+        it { expect { req }.to change { Reservation.count }.by(1) }
+
+        it do
+          req
+          expect(json).not_to include(message: String)
+          expect(response).to have_http_status(:ok)
+          expect(Reservation.last.fullname).to include(special_name.delete("'"))
+        end
+      end
+
+      context "when last_name is #{special_name.inspect}" do
+        let(:last_name) { special_name }
+
+        it { expect { req }.to change { Reservation.count }.by(1) }
+
+        it do
+          req
+          expect(json).not_to include(message: String)
+          expect(response).to have_http_status(:ok)
+          expect(Reservation.last.fullname).to include(special_name.delete("'"))
+        end
+      end
+    end
+
+    [
       "Nicolò",
       "O'Reilly",
       "Mc Donalds",
+      "De Santi",
       "Gigi Pippo",
-      "Corò"
+      "Corò",
     ].each do |special_name|
       context "when first_name is #{special_name.inspect}" do
         let(:first_name) { special_name }
