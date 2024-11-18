@@ -1,8 +1,8 @@
-<%= I18n.t('reservation_mailer.greetings', fullname: @reservation.fullname) %>
+<%= t('reservation_mailer.greetings', fullname: @reservation.fullname) %>
 
-<%= I18n.t('reservation_mailer.remind_payment.body', date: l(@reservation.datetime, format: '%e %B %Y'), hour: @reservation.datetime.strftime('%k:%M'), people: @reservation.people) %>
+<%= t('reservation_mailer.remind_payment.body', date: l(@reservation.datetime, format: '%e %B %Y'), hour: @reservation.datetime.strftime('%k:%M'), people: @reservation.people) %>
 
 
-<%= I18n.t('reservation_mailer.reservation_details_below') %>
+<%= t('reservation_mailer.reservation_details_below') %>
 
 <%= @show_reservation_url %>
