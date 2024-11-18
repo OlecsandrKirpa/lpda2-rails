@@ -84,21 +84,24 @@ RSpec.describe ReservationMailer do
     end
 
     %w[it en].each do |lang|
-      it "when language is #{lang.inspect}" do
-        reservation.update!(lang:)
-        expect(mail.subject).to eq I18n.t("reservation_mailer.reminder.subject", fullname: reservation.fullname,
-                                                                                 locale: lang)
-      end
-
       context "when language is #{lang}" do
+        before { reservation.update!(lang:) }
+
+        it "links should include locale in the path" do
+          expect(mail.html_part.body.encoded).to include("/#{lang}/#/")
+        end
+
+        it "when language is #{lang.inspect}" do
+          expect(mail.subject).to eq I18n.t("reservation_mailer.reminder.subject", fullname: reservation.fullname,
+                                                                                 locale: lang)
+        end
+
         it do
-          reservation.update!(lang:)
           expect(mail.text_part.body.encoded).to include I18n.t("reservation_mailer.greetings",
                                                                 fullname: reservation.fullname, locale: lang)
         end
 
         it do
-          reservation.update!(lang:)
           expect(mail.html_part.body.encoded).to include CGI.escapeHTML(I18n.t("reservation_mailer.greetings",
                                                                                fullname: reservation.fullname, locale: lang))
         end

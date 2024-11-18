@@ -523,7 +523,9 @@ RSpec.describe V1::ReservationsController, type: :controller do
           expect(ReservationPayment.last.failure_url).to include(Reservation.last.secret)
           expect(Nexi::HttpRequest.last.request_body.dig!("url")).to be_present
           expect(Nexi::HttpRequest.last.request_body.dig!("url")).to eq(ReservationPayment.last.success_url)
+          expect(Nexi::HttpRequest.last.request_body.dig!("url")).to include("/#{Reservation.last.lang}/#")
           expect(Nexi::HttpRequest.last.request_body.dig!("url_back")).to be_present
+          expect(Nexi::HttpRequest.last.request_body.dig!("url_back")).to include("/#{Reservation.last.lang}/#")
           expect(Nexi::HttpRequest.last.request_body.dig!("url_back")).to eq(ReservationPayment.last.failure_url)
           expect(Nexi::HttpRequest.last.request_body.dig!("urlpost")).to start_with("http")
           expect(Nexi::HttpRequest.last.request_body.dig!("urlpost")).to include("/v1/nexi/receive_order_outcome")
@@ -552,6 +554,14 @@ RSpec.describe V1::ReservationsController, type: :controller do
               req
               expect(json).to include(item: Hash)
               expect(response).to have_http_status(:ok)
+            end
+
+            it do
+              req
+              expect(Nexi::HttpRequest.last.request_body.dig!("url_back")).to include("/#{Reservation.last.lang}/#")
+              expect(Reservation.last.payment.success_url).to include("/#{Reservation.last.lang}/#")
+              expect(Nexi::HttpRequest.last.request_body.dig!("url")).to include("/#{Reservation.last.lang}/#")
+              expect(Reservation.last.payment.failure_url).to include("/#{Reservation.last.lang}/#")
             end
 
             it do

@@ -112,6 +112,10 @@ RSpec.describe ReservationMailer do
       context "when language is #{lang}" do
         before { reservation.update!(lang:) }
 
+        it "links should include locale in the path" do
+          expect(mail.html_part.body.encoded).to include("/#{lang}/#/")
+        end
+
         it do
           expect(mail.text_part.body.encoded).to include(
             I18n.t(
