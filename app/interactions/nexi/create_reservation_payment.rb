@@ -16,7 +16,7 @@ module Nexi
 
     def execute
       @call = SimplePayment.run(
-        language: reservation.lang.lang_to_iso639_2,
+        language: reservation.lang.lang_to_iso639_2.upcase,
         amount:,
         result_url:,
         cancel_url:,

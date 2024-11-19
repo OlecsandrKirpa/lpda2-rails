@@ -581,8 +581,8 @@ RSpec.describe V1::ReservationsController, type: :controller do
         end
 
         [
-          { lang: "it", code: "ita" },
-          { lang: "en", code: "eng" }
+          { lang: "it", code: "ITA" },
+          { lang: "en", code: "ENG" }
         ].each do |scenario|
           context "when lang is #{scenario[:lang].inspect}" do
             let(:lang) { scenario[:lang] }
