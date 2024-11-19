@@ -13,7 +13,7 @@ Rails.application.routes.draw do
       get "public_data", to: "public_data#index", as: :public_data
       post "nexi/receive_order_outcome", as: :nexi_receive_order_outcome
 
-      resources :images, only: %w[index show create] do
+      resources :images, only: %w[index show update create] do
         member do
           get "download", action: :download
           get "download/:variant", action: :download_variant

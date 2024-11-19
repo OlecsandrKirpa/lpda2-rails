@@ -2,12 +2,12 @@
 
 module V1
   class ImagesController < ApplicationController
-    before_action :find_item, only: %i[download download_variant show remove_from_record]
+    before_action :find_item, only: %i[download update download_variant show remove_from_record]
     before_action :find_item_by_key, only: %i[download_by_key]
     before_action :find_pixel_by_secret, only: %i[download_by_pixel_secret]
     before_action :find_variant, only: %i[download_variant]
     before_action :record, only: %i[update_record remove_from_record]
-    skip_before_action :authenticate_user, except: %i[create remove_from_record update_record]
+    skip_before_action :authenticate_user, except: %i[create update remove_from_record update_record]
 
     def index
       call = ::SearchImages.run(params:)
@@ -72,6 +72,16 @@ module V1
       return show if @call.valid? && @call.result.valid? && @call.result.persisted?
 
       render_unprocessable_entity(@call)
+    end
+
+    def update
+      @image.attached_image.attach(params[:image]) if params[:image].present?
+
+      render_unprocessable_entity(@image) unless @image.valid? && @image.save
+
+      @image.reload
+
+      show
     end
 
     def download
