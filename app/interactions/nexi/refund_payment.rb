@@ -54,7 +54,6 @@ module Nexi
       e << "is blank" if client.json.blank? && client.html.blank?
       e << "is not a hash" if e.empty? && !client.json.is_a?(Hash)
       e << "field 'esito' is not 'ok'" if e.empty? && client.json.dig("esito").to_s.downcase != "ok"
-      e << "field 'idOperazione' is different from 'order_id'" if e.empty? && client.json.dig("idOperazione").to_s != order_id
 
       errors.add(:client, "invalid response #{client.json.inspect}: #{e.join(", ")}") if e.any?
     end
