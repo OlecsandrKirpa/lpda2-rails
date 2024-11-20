@@ -146,7 +146,7 @@ module V1::Admin
         include: [
           {
             payment: {
-              only: %i[id hpp_url status value]
+              only: %i[id hpp_url status external_id value]
             },
             delivered_emails: {
               only: %i[id created_at updated_at],

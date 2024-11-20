@@ -98,6 +98,9 @@ RSpec.describe V1::Admin::ReservationsController, type: :controller do
           it { expect(json[:items].filter { |j| j.keys.include?("payment") }.filter(&:present?).count).to eq(1) }
           it { expect(json[:items].filter { |j| j.keys.include?("payment") }.first).to be_present }
 
+          it do
+            expect(json[:items].pluck(:payment).filter(&:present?)).to all(include(:external_id))
+          end
           it {
             expect(json[:items].filter do |j|
                      j.keys.include?("payment")
