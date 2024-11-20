@@ -38,7 +38,7 @@ default: &default
   nexi_simple_payment_path: ecomm/ecomm/DispatcherServlet
 
   # https://ecommerce.nexi.it/specifiche-tecniche/apibackoffice/stornorimborso.html
-  nexi_refound_payment_path: "ecomm/api/bo/storna"
+  nexi_refund_payment_path: "ecomm/api/bo/storna"
 
   nexi_api_url: https://int-ecommerce.nexi.it
 

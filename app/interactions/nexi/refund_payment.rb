@@ -2,7 +2,7 @@
 
 module Nexi
   # https://ecommerce.nexi.it/specifiche-tecniche/apibackoffice/stornorimborso.html
-  class RefoundPayment < ActiveInteraction::Base
+  class RefundPayment < ActiveInteraction::Base
     # ################################
     # Inputs
     # ################################
@@ -24,7 +24,7 @@ module Nexi
     def execute
       @client = Client.run(
         params:,
-        path: Config.nexi_refound_payment_path,
+        path: Config.nexi_refund_payment_path,
         request_purpose:,
         request_record:,
         mac_part: "apiKey=#{Config.nexi_alias_merchant}codiceTransazione=#{params.dig!(:codiceTransazione)}divisa=#{params.dig!(:divisa)}importo=#{params.dig!(:importo)}timeStamp=#{params.dig!(:timeStamp)}"
