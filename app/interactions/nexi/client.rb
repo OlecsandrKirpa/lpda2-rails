@@ -23,7 +23,10 @@ module Nexi
                                        Config.nexi_alias_merchant || raise("missing nexi_alias_merchant. update your credentials.")
                                      }
 
+    string :content_type, default: "application/x-www-form-urlencoded"
+
     validates_presence_of :path, :http_verb
+    validates :content_type, inclusion: { in: %w[application/x-www-form-urlencoded application/json] }
 
     validate do
       errors.add(:params, "must be hash. got #{params.class}") if params.present? && !params.is_a?(Hash)
@@ -66,20 +69,32 @@ module Nexi
 
     def connection
       @connection ||= Faraday.new(url: request_url) do |f|
-        f.request :url_encoded
-        f.adapter Faraday.default_adapter
+        if content_type == "application/x-www-form-urlencoded"
+          f.request :url_encoded
+          f.adapter Faraday.default_adapter
+        end
       end
     end
 
     def request_params
       params.merge(
-        alias: alias_merchant,
         mac: final_mac
+      ).merge(
+        # When content type is application/json, the alias merchant key is apiKey.
+        # Thanks Nexi for this inconsistency.
+        content_type == "application/json" ? { apiKey: alias_merchant } : { alias: alias_merchant }
       )
     end
 
     def send_request
-      @response = connection.post { |req| req.body = request_params }
+      @response = connection.post do |req|
+        if content_type.to_s == "application/json"
+          req.headers[:content_type] = "application/json"
+          req.body = JSON.generate(request_params)
+        else
+          req.body = request_params
+        end
+      end
     rescue Faraday::ConnectionFailed => e
       errors.add(:base, e.to_s)
       nil

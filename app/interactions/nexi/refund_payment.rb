@@ -27,6 +27,7 @@ module Nexi
         path: Config.nexi_refund_payment_path,
         request_purpose:,
         request_record:,
+        content_type: "application/json",
         mac_part: "apiKey=#{Config.nexi_alias_merchant}codiceTransazione=#{params.dig!(:codiceTransazione)}divisa=#{params.dig!(:divisa)}importo=#{params.dig!(:importo)}timeStamp=#{params.dig!(:timeStamp)}"
       )
 
@@ -43,7 +44,7 @@ module Nexi
       @params ||= {
         codiceTransazione: order_id,
         importo: value.to_s,
-        divisa: "EUR",
+        divisa: 978,
         timeStamp: Time.zone.now.to_i * 1000
       }
     end
