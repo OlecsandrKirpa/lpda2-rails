@@ -2,8 +2,9 @@
 
 module V1::Admin
   class ReservationsController < ApplicationController
-    before_action :find_item, only: %i[show deliver_confirmation_email update destroy update_status add_tag remove_tag]
+    before_action :find_item, only: %i[show refound_payment deliver_confirmation_email update destroy update_status add_tag remove_tag]
     before_action :find_tag, only: %i[add_tag remove_tag]
+    before_action :require_root, only: %i[refound_payment]
 
     def index
       call = ::SearchReservations.run(params:)
@@ -44,6 +45,18 @@ module V1::Admin
       return show if @item.valid? && @item.save
 
       render_unprocessable_entity(@item)
+    end
+
+    # POST /v1/admin/reservations/:id/refound_payment
+    def refound_payment
+      call = RefoundReservationPayment.run(reservation: @item)
+
+      if call.valid?
+        @item.reload
+        return show
+      end
+
+      render_unprocessable_entity(call)
     end
 
     def update

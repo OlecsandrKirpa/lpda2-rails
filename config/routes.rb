@@ -98,6 +98,7 @@ Rails.application.routes.draw do
             post "add_tag/:tag_id", action: :add_tag
             delete "remove_tag/:tag_id", action: :remove_tag
             post "deliver_confirmation_email"
+            post "refound_payment"
           end
         end
 

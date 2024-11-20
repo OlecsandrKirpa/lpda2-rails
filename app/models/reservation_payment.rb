@@ -9,7 +9,8 @@ class ReservationPayment < ApplicationRecord
   # ################################
   enum status: {
     todo: "todo",
-    paid: "paid"
+    paid: "paid",
+    refounded: "refounded"
   }
 
   enum preorder_type: {
