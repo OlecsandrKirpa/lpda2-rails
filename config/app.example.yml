@@ -40,6 +40,8 @@ default: &default
   # https://ecommerce.nexi.it/specifiche-tecniche/apibackoffice/stornorimborso.html
   nexi_refund_payment_path: "ecomm/api/bo/storna"
 
+  nexi_order_status_path: "ecomm/api/bo/situazioneOrdine"
+
   nexi_api_url: https://int-ecommerce.nexi.it
 
   restaurant_location_time_zone: "Europe/Rome"

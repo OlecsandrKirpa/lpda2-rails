@@ -7,3 +7,8 @@ remind_reservation_payments_job:
   cron: "0 10 * * *"
   class: RemindReservationPaymentsJob
   queue: default
+
+update_all_reservation_payment_status_job:
+  cron: "0 * * * *"
+  class: UpdateAllReservationPaymentStatusJob
+  queue: default
