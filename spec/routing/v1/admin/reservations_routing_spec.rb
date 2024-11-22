@@ -9,8 +9,17 @@ RSpec.describe "Routing /v1/admin/reservations" do
   it { expect(put: "v1/admin/reservations/1").to route_to("v1/admin/reservations#update", id: "1", format: :json) }
   it { expect(patch: "v1/admin/reservations/1").to route_to("v1/admin/reservations#update", id: "1", format: :json) }
   it { expect(delete: "v1/admin/reservations/1").to route_to("v1/admin/reservations#destroy", id: "1", format: :json) }
-  it { expect(post: "v1/admin/reservations/1/refund_payment").to route_to("v1/admin/reservations#refund_payment", id: "1", format: :json) }
-  it { expect(post: "v1/admin/reservations/1/refresh_payment_status").to route_to("v1/admin/reservations#refresh_payment_status", id: "1", format: :json) }
+
+  it {
+    expect(post: "v1/admin/reservations/1/refund_payment").to route_to("v1/admin/reservations#refund_payment", id: "1",
+                                                                                                               format: :json)
+  }
+
+  it {
+    expect(post: "v1/admin/reservations/1/refresh_payment_status").to route_to(
+      "v1/admin/reservations#refresh_payment_status", id: "1", format: :json
+    )
+  }
 
   it {
     expect(patch: "v1/admin/reservations/33/status/new-status").to route_to("v1/admin/reservations#update_status",

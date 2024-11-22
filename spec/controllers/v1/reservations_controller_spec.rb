@@ -88,7 +88,7 @@ RSpec.describe V1::ReservationsController, type: :controller do
       context do
         before { req }
 
-        it { expect(response).to have_http_status(422) }
+        it { expect(response).to have_http_status(:unprocessable_entity) }
         it { expect(json).to include(message: String) }
       end
     end
@@ -319,7 +319,7 @@ RSpec.describe V1::ReservationsController, type: :controller do
 
     [
       "'Coro",
-      "Coro'",
+      "Coro'"
     ].each do |special_name|
       context "when first_name is #{special_name.inspect}" do
         let(:first_name) { special_name }
@@ -542,10 +542,11 @@ RSpec.describe V1::ReservationsController, type: :controller do
         it { expect { req }.to(change { Reservation.count }.by(1)) }
         it { expect { req }.to(change { ReservationPayment.count }.by(1)) }
         it { expect { req }.to(change { Nexi::HttpRequest.count }.by(1)) }
+
         it do
           req
           expect(ActionMailer::MailDeliveryJob).to have_been_enqueued.with("ReservationMailer", "confirmation",
-                                                                         "deliver_now", params: anything, args: anything).once
+                                                                           "deliver_now", params: anything, args: anything).once
         end
 
         it do

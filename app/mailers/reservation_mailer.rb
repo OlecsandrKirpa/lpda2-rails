@@ -54,7 +54,8 @@ class ReservationMailer < ApplicationMailer
   def show_reservation_url
     @show_reservation_url ||= URI.join(
       Config.hash[:frontend_base_url],
-      Mustache.render(Config.hash[:show_reservation_url], { locale: reservation.lang || I18n.default_locale, secret: reservation.secret })
+      Mustache.render(Config.hash[:show_reservation_url],
+                      { locale: reservation.lang || I18n.default_locale, secret: reservation.secret })
     ).to_s
   end
 

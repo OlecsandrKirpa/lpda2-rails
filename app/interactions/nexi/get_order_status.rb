@@ -52,6 +52,5 @@ module Nexi
 
       errors.add(:client, "invalid response #{client.json.inspect}: #{e.join(", ")}") if e.any?
     end
-
   end
 end

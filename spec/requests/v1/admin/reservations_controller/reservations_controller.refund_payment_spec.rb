@@ -24,6 +24,14 @@ RSpec.describe "POST /v1/admin/reservations/<id>/refund_payment" do
   include_context REQUEST_AUTHENTICATION_CONTEXT
 
   let(:default_headers) { auth_headers }
+  let(:nexi_response) do
+    {
+      esito: "OK",
+      idOperazione: reservation.payment.external_id,
+      timeStamp: Time.zone.now.to_i * 1000,
+      mac: SecureRandom.hex
+    }
+  end
   let(:default_params) do
     {}
   end
@@ -38,15 +46,6 @@ RSpec.describe "POST /v1/admin/reservations/<id>/refund_payment" do
     reservation
     current_user
     current_user.update!(root_at: Time.zone.now)
-  end
-
-  let(:nexi_response) do
-    {
-      esito: "OK",
-      idOperazione: reservation.payment.external_id,
-      timeStamp: Time.zone.now.to_i * 1000,
-      mac: SecureRandom.hex
-    }
   end
 
   def stub_nexi_server
@@ -114,7 +113,7 @@ RSpec.describe "POST /v1/admin/reservations/<id>/refund_payment" do
     it { expect { req }.to(change { Nexi::HttpRequest.count }.by(1)) }
     it { expect { req }.to(change { Nexi::HttpRequest.where(record: reservation).count }.by(1)) }
 
-    # TODO send email to customer
+    # TODO: send email to customer
     pending "should have sent emails to customer"
   end
 
