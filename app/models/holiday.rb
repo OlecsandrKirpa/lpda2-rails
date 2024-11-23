@@ -38,7 +38,9 @@ class Holiday < ApplicationRecord
   validates :weekly_from, presence: true, if: -> { weekly_to.present? || weekday.present? }
   validates :weekly_to, presence: true, if: -> { weekly_from.present? || weekday.present? }
   validates :weekday, presence: true, if: -> { weekly_from.present? || weekly_to.present? }
+
   validate :weekly_to_less_than_weekly_from, if: -> { weekly_from.present? && weekly_to.present? }
+  validate :from_timestamp_is_before_to_timestamp, if: -> { from_timestamp.present? && to_timestamp.present? }
 
   # ##############################
   # Scopes
@@ -58,6 +60,13 @@ class Holiday < ApplicationRecord
   # ##############################
   # Instance methods
   # ##############################
+  def from_timestamp_is_before_to_timestamp
+    return if from_timestamp.blank? || to_timestamp.blank?
+    return if from_timestamp < to_timestamp
+
+    errors.add(:from_timestamp, :after_to_timestamp)
+  end
+
   def weekly_to_less_than_weekly_from
     return if weekly_to.blank? || weekly_from.blank?
 

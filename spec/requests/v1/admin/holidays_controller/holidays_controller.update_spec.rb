@@ -67,6 +67,21 @@ RSpec.describe "PATCH /v1/admin/holidays/<id>" do
     expect(response).to have_http_status(:ok)
   end
 
+  context "when setting to_timestamp before from_timestamp" do
+    let(:default_params) do
+      {
+        to_timestamp: (holiday.from_timestamp - 2.days).strftime("%Y-%m-%d %H:%M")
+      }
+    end
+
+    it { expect { req }.not_to(change { Holiday.all.as_json }) }
+
+    it do
+      req
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+  end
+
   context "when updating a period holiday by adding weekday, should get 422" do
     let(:default_params) do
       {

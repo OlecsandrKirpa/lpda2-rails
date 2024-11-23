@@ -42,7 +42,7 @@ RSpec.describe "GET /v1/admin/holidays" do
 
   context "when got past holidays (to_timestamp is in the past)" do
     before do
-      holidays.each { |h| h.update!(to_timestamp: 1.day.ago) }
+      holidays.each { |h| h.update!(from_timestamp: 2.days.ago, to_timestamp: 1.day.ago) }
       req
     end
 

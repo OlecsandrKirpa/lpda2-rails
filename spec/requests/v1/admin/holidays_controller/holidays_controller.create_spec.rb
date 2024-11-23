@@ -51,6 +51,21 @@ RSpec.describe "POST /v1/admin/holidays" do
     I18n.with_locale(:en) { expect(holiday.message).to eq("Holiday!") }
   end
 
+  context "when from_timestamp is after to_timestamp" do
+    let(:default_params) do
+      {
+        from_timestamp: 3.days.from_now.strftime("%Y-%m-%d"),
+        to_timestamp: 1.day.from_now.strftime("%Y-%m-%d")
+      }
+    end
+
+    it { expect { req }.not_to(change { Holiday.count }) }
+    it do
+      req
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+  end
+
   context "when creating a period holiday" do
     let(:default_params) do
       {
