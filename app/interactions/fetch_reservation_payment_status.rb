@@ -28,6 +28,17 @@ class FetchReservationPaymentStatus < ActiveInteraction::Base
 
     return errors.merge!(call.errors) unless call.valid?
 
+    # In case user did not proceed with the payment, nexi won't find the order
+    # In this case, NEXI will respond with something like this:
+    # {
+    #   "esito" => "KO",
+    #   "idOperazione" => "1556929671",
+    #   "timeStamp" => "1732363212583",
+    #   "mac" => "221068eab6c869d4cf8a77181d2219fce8161dc0",
+    #   "errore" => { "codice" => 2, "messaggio" => "Nessun ordine trovato" }
+    # }
+    return if reservation_payment.todo? && call.result["esito"].to_s.downcase == "ko" && call.result.dig("errore", "codice").to_s == "2"
+
     item = call.result["report"]&.find { |i| i["codiceTransazione"] == reservation_payment.external_id }
     return errors.add(:reservation_payment, "item not found inside report field. #{call.result.inspect}") unless item.present?
 

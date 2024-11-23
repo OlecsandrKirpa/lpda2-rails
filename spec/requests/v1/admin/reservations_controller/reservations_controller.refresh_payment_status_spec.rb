@@ -10,6 +10,11 @@ RSpec.shared_examples "failed refresh_payment_status" do
 
   it do
     req
+    expect(response).not_to have_http_status(:internal_server_error)
+  end
+
+  it do
+    req
     expect(json).to include(message: String)
   end
 
@@ -132,9 +137,9 @@ RSpec.describe "POST /v1/admin/reservations/<id>/refresh_payment_status" do
     "Contabilizzato Parz.",
     "Autorizzato"
   ].each do |nexi_success_code|
-    [
-      "todo",
-      "refunded"
+    %w[
+      todo
+      refunded
     ].each do |payment_initial_status|
       context "when payment has status '#{payment_initial_status}' but nexi api says it's okay: returns #{nexi_success_code.inspect}" do
         let(:nexi_response) do
@@ -144,7 +149,7 @@ RSpec.describe "POST /v1/admin/reservations/<id>/refresh_payment_status" do
             report: [{
               stato: nexi_success_code,
               dataTransazione: "2024-11-20 23:54:38.0",
-              codiceTransazione: reservation.payment.external_id,
+              codiceTransazione: reservation.payment.external_id
               # ... other fields here
             }],
             timeStamp: "1732145720139",
@@ -175,10 +180,9 @@ RSpec.describe "POST /v1/admin/reservations/<id>/refresh_payment_status" do
     "Rimborsato",
     "Rimborsato Parz."
   ].each do |nexi_success_code|
-
-    [
-      "paid",
-      "todo"
+    %w[
+      paid
+      todo
     ].each do |payment_initial_status|
       context "when payment has status '#{payment_initial_status}' but nexi api says refound was made: returns #{nexi_success_code.inspect}" do
         let(:nexi_response) do
@@ -188,7 +192,7 @@ RSpec.describe "POST /v1/admin/reservations/<id>/refresh_payment_status" do
             report: [{
               stato: nexi_success_code,
               dataTransazione: "2024-11-20 23:54:38.0",
-              codiceTransazione: reservation.payment.external_id,
+              codiceTransazione: reservation.payment.external_id
               # ... other fields here
             }],
             timeStamp: "1732145720139",
@@ -198,7 +202,12 @@ RSpec.describe "POST /v1/admin/reservations/<id>/refresh_payment_status" do
 
         before { reservation.payment.update!(status: payment_initial_status) }
 
-        it { expect { req }.to(change { reservation.reload.payment.status }.from(payment_initial_status).to("refunded")) }
+        it {
+          expect { req }.to(change do
+                              reservation.reload.payment.status
+                            end.from(payment_initial_status).to("refunded"))
+        }
+
         it { expect { req }.to(change { Nexi::HttpRequest.count }.by(1)) }
 
         it do
@@ -248,5 +257,50 @@ RSpec.describe "POST /v1/admin/reservations/<id>/refresh_payment_status" do
     it_behaves_like "failed refresh_payment_status"
     it { expect { req }.to(change { Nexi::HttpRequest.count }.by(1)) }
     it { expect { req }.to(change { Nexi::HttpRequest.where(record: reservation.payment).count }.by(1)) }
+  end
+
+  context "when nexi responds with 'order not found'" do
+    let(:nexi_response) do
+      {
+        "esito" => "KO",
+        "idOperazione" => "1556929671",
+        "timeStamp" => "1732363212583",
+        "mac" => "221068eab6c869d4cf8a77181d2219fce8161dc0",
+        "errore" => { "codice" => 2, "messaggio" => "Nessun ordine trovato" }
+      }
+    end
+
+    %w[
+      paid
+      refunded
+    ].each do |status|
+      context "when payment has status #{status.inspect} is not okay." do
+        before { reservation.payment.update!(status:) }
+
+        it_behaves_like "failed refresh_payment_status"
+        it { expect { req }.to(change { Nexi::HttpRequest.count }.by(1)) }
+        it { expect { req }.to(change { Nexi::HttpRequest.where(record: reservation.payment).count }.by(1)) }
+      end
+    end
+
+    context "when payment has status 'todo' is okay: means that user did not proceed with payment" do
+      before { reservation.payment.todo! }
+
+      it do
+        expect { req }.not_to(change { reservation.reload.payment.status }.from("todo"))
+      end
+
+      it { expect { req }.to(change { Nexi::HttpRequest.count }.by(1)) }
+
+      it do
+        req
+        expect(response).to have_http_status(:ok)
+      end
+
+      it do
+        req
+        expect(json).not_to include(message: String)
+      end
+    end
   end
 end
