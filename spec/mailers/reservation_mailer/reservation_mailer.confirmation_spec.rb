@@ -92,5 +92,27 @@ RSpec.describe ReservationMailer do
         end
       end
     end
+
+    %i[
+      address
+      facebook_url
+      instagram_url
+      tripadvisor_url
+      google_url
+    ].each do |contact_key|
+
+      [
+        "",
+        nil
+      ].each do |blank_value|
+        context "when Contact #{contact_key.inspect} is missing (#{blank_value.inspect})" do
+          before { Contact.create!(key: contact_key, value: blank_value) }
+
+          it { expect { mail }.not_to raise_error }
+          it { expect(mail.text_part.body.encoded).not_to include(Contact::DEFAULTS[contact_key][:value]) }
+          it { expect(mail.html_part.body.encoded).not_to include(Contact::DEFAULTS[contact_key][:value]) }
+        end
+      end
+    end
   end
 end

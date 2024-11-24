@@ -3,16 +3,34 @@
 
 <%= t('mail.need_to_reach') %>
 
-Our website: <%= @contacts.dig!(:homepage_url) %>
+<% if @contacts[:whatsapp_url].present? %>
+  Whatsapp: <%= @contacts.dig!(:whatsapp_url) %>
+<% end %>
 
-Email: <%= @contacts.dig!(:email) %>
+<% if @contacts[:address].present? %>
+  Location: <%= @contacts.dig!(:address) %>
+<% end %>
 
-Whatsapp: <%= @contacts.dig!(:whatsapp_url) %>
+<% if @contacts[:homepage_url].present? %>
+  Our website: <%= @contacts.dig!(:homepage_url) %>
+<% end %>
 
-Call us on <%= @contacts.dig!(:whatsapp_number) %>
+<% if @contacts[:email].present? %>
+  Email: <%= @contacts.dig!(:email) %>
+<% end %>
 
-Facebook: <%= @contacts.dig!(:facebook_url) %>
+<% if @contacts[:whatsapp_number].present? %>
+  Call us on <%= @contacts.dig!(:whatsapp_number) %>
+<% end %>
 
-Instagram: <%= @contacts.dig!(:instagram_url) %>
+<% if @contacts[:facebook_url].present? %>
+  Facebook: <%= @contacts.dig!(:facebook_url) %>
+<% end %>
 
-Tripadvisor: <%= @contacts.dig!(:tripadvisor_url) %>
+<% if @contacts[:instagram_url].present? %>
+  Instagram: <%= @contacts.dig!(:instagram_url) %>
+<% end %>
+
+<% if @contacts[:tripadvisor_url].present? %>
+  Tripadvisor: <%= @contacts.dig!(:tripadvisor_url) %>
+<% end %>

@@ -56,7 +56,7 @@ class Contact < ApplicationRecord
     end
 
     def [](key)
-      where(key:).first&.value || default(key)
+      (f = find_by(key:)).present? ? f.value : default(key)
     end
 
     def create_missing
