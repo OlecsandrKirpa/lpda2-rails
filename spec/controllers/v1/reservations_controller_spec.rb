@@ -1369,9 +1369,20 @@ RSpec.describe V1::ReservationsController, type: :controller do
               "notes" => reservation.notes,
               "secret" => reservation.secret,
               "updated_at" => String,
-              "created_at" => String
+              "created_at" => String,
             )
           }
+        end
+
+        context "when payment has a payment associated" do
+          before do
+            create(:reservation_payment, reservation: reservation)
+            req
+          end
+
+          it { expect(json[:item]).to include("payment" => Hash) }
+          it { expect(json[:item]["payment"]).to include("status" => reservation.reload.payment.status) }
+          it { expect(json[:item]["payment"]).to include("value" => reservation.reload.payment.value) }
         end
       end
 
