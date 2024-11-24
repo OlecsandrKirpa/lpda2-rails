@@ -66,9 +66,9 @@ class Setting
     end
 
     def validate_reservation_min_hours_advance_cancel
-      return if record.value.to_i.positive?
+      return if record.value.to_f >= 0
 
-      record.errors.add(:value, "should be a positive integer")
+      record.errors.add(:value, "reservation_min_hours_advance_cancel should be a positive integer, got #{record.value.inspect}")
     end
 
     def validate_email_images
