@@ -2,7 +2,9 @@
 
 module V1::Admin
   class ReservationsController < ApplicationController
-    before_action :find_item, only: %i[show refund_payment refresh_payment_status deliver_confirmation_email update destroy update_status add_tag remove_tag]
+    before_action :find_item,
+                  only: %i[show refund_payment refresh_payment_status deliver_confirmation_email update destroy update_status add_tag
+                           remove_tag]
     before_action :find_tag, only: %i[add_tag remove_tag]
     before_action :require_root, only: %i[refund_payment refresh_payment_status]
 

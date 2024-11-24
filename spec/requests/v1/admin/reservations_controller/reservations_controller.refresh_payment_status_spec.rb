@@ -27,6 +27,20 @@ RSpec.describe "POST /v1/admin/reservations/<id>/refresh_payment_status" do
   include_context REQUEST_AUTHENTICATION_CONTEXT
 
   let(:default_headers) { auth_headers }
+  let(:nexi_response) do
+    {
+      mac: "1ed21acd6bbbf641e6a599eeb15d027861715265",
+      esito: "OK",
+      report: [{
+        stato: "Annullato",
+        dataTransazione: "2024-11-20 23:54:38.0",
+        codiceTransazione: reservation.payment.external_id
+        # ... other fields here
+      }],
+      timeStamp: "1732145720139",
+      idOperazione: "160209354"
+    }
+  end
   let(:default_params) do
     {}
   end
@@ -41,21 +55,6 @@ RSpec.describe "POST /v1/admin/reservations/<id>/refresh_payment_status" do
     reservation
     current_user
     current_user.update!(root_at: Time.zone.now)
-  end
-
-  let(:nexi_response) do
-    {
-      mac: "1ed21acd6bbbf641e6a599eeb15d027861715265",
-      esito: "OK",
-      report: [{
-        stato: "Annullato",
-        dataTransazione: "2024-11-20 23:54:38.0",
-        codiceTransazione: reservation.payment.external_id,
-        # ... other fields here
-      }],
-      timeStamp: "1732145720139",
-      idOperazione: "160209354"
-    }
   end
 
   def stub_nexi_server

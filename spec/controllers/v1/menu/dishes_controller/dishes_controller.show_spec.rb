@@ -51,10 +51,11 @@ RSpec.describe V1::Menu::DishesController do
 
     %w[inactive deleted].each do |invisible_status|
       context "when dish has status #{invisible_status.inspect}" do
+        subject { response }
+
         let(:dish) { create(:menu_dish, :with_name, :with_description, status: invisible_status) }
 
         before { req(id: dish.id) }
-        subject { response }
 
         it_behaves_like NOT_FOUND
       end

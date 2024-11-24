@@ -161,8 +161,16 @@ RSpec.describe V1::ImagesController, type: :controller do
     let!(:image) { create(:image, :with_attached_image) }
 
     it { expect(instance).to respond_to(:update) }
-    it { is_expected.to route(:patch, "/v1/images/1").to(format: :json, action: :update, id: 1, controller: "v1/images") }
-    it { is_expected.to route(:patch, "/v1/images/881").to(format: :json, action: :update, id: 881, controller: "v1/images") }
+
+    it {
+      expect(subject).to route(:patch, "/v1/images/1").to(format: :json, action: :update, id: 1,
+                                                          controller: "v1/images")
+    }
+
+    it {
+      expect(subject).to route(:patch, "/v1/images/881").to(format: :json, action: :update, id: 881,
+                                                            controller: "v1/images")
+    }
 
     def req(req_params = params)
       patch :update, params: req_params
@@ -190,6 +198,7 @@ RSpec.describe V1::ImagesController, type: :controller do
       it { expect { req }.not_to(change { ImageToRecord.count }) }
       it { expect { req }.not_to(change { Image.count }) }
       it { expect { req }.to(change { image.reload.attached_image.blob.id }) }
+
       it do
         req
         expect(image.reload.attached_image.download).to eq attachment.read

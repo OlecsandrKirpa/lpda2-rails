@@ -26,7 +26,7 @@ RSpec.describe V1::Menu::DishesController do
       context "when a dish has status #{invisible_status.inspect}" do
         let(:dish) do
           create(:menu_dish, :with_name, :with_description, :with_images,
-                :with_allergens, :with_tags, :with_ingredients, status: invisible_status).tap do |d|
+                 :with_allergens, :with_tags, :with_ingredients, status: invisible_status).tap do |d|
             image = create(:image, :with_attached_image)
             d.allergens.map { |a| a.image = image }
             d.tags.map { |a| a.image = image }
@@ -42,7 +42,7 @@ RSpec.describe V1::Menu::DishesController do
         end
 
         it { expect(Menu::Dish.count).to eq 1 }
-        it { expect(Menu::Dish.all.pluck(:status).uniq).to match_array([invisible_status]) }
+        it { expect(Menu::Dish.all.pluck(:status).uniq).to contain_exactly(invisible_status) }
 
         it { expect(response).to have_http_status(:ok) }
         it { expect(json[:items]).to be_empty }

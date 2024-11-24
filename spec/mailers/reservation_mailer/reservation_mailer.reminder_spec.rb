@@ -93,7 +93,7 @@ RSpec.describe ReservationMailer do
 
         it "when language is #{lang.inspect}" do
           expect(mail.subject).to eq I18n.t("reservation_mailer.reminder.subject", fullname: reservation.fullname,
-                                                                                 locale: lang)
+                                                                                   locale: lang)
         end
 
         it do

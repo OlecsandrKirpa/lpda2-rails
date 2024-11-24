@@ -94,7 +94,7 @@ module Menu
     }
 
     # scope :having_dishes, -> { joins(:menu_dishes).distinct }
-    scope :having_public_dishes, -> {
+    scope :having_public_dishes, lambda {
       where(
         id: Menu::DishesInCategory.select(:menu_category_id).where(
           menu_dish_id: Menu::Dish.visible.public_visible.select(:id)

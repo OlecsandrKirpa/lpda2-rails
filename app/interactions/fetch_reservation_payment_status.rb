@@ -14,7 +14,7 @@ class FetchReservationPaymentStatus < ActiveInteraction::Base
 
   def execute
     case reservation_payment.preorder_type
-    when "html_nexi_payment" then return fetch_nexi_status
+    when "html_nexi_payment" then fetch_nexi_status
     else
       errors.add(:reservation, "payment type #{reservation_payment.preorder_type.inspect} not supported")
     end
@@ -40,9 +40,15 @@ class FetchReservationPaymentStatus < ActiveInteraction::Base
     return if reservation_payment.todo? && call.result["esito"].to_s.downcase == "ko" && call.result.dig("errore", "codice").to_s == "2"
 
     item = call.result["report"]&.find { |i| i["codiceTransazione"] == reservation_payment.external_id }
-    return errors.add(:reservation_payment, "item not found inside report field. #{call.result.inspect}") unless item.present?
+    unless item.present?
+      return errors.add(:reservation_payment,
+                        "item not found inside report field. #{call.result.inspect}")
+    end
 
-    return errors.add(:reservation_payment, "item does not have a 'stato' field. #{item.inspect}") unless item["stato"].present?
+    unless item["stato"].present?
+      return errors.add(:reservation_payment,
+                        "item does not have a 'stato' field. #{item.inspect}")
+    end
 
     # https://ecommerce.nexi.it/specifiche-tecniche/apibackoffice/interrogazionedettaglioordine.html
     # Stati possibili:

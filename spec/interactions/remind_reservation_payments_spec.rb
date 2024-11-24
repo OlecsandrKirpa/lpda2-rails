@@ -185,7 +185,8 @@ RSpec.describe RemindReservationPayments, type: :interaction do
     before do
       # reservations
       travel_to DateTime.parse("2024-11-12 10:00") do
-        create(:reservation, status: :active, email: Faker::Internet.email, datetime: DateTime.parse("2024-11-12 13:00")).tap do |res|
+        create(:reservation, status: :active, email: Faker::Internet.email,
+                             datetime: DateTime.parse("2024-11-12 13:00")).tap do |res|
           create(:reservation_payment, reservation: res)
         end
       end

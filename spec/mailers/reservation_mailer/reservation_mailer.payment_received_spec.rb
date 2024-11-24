@@ -113,7 +113,8 @@ RSpec.describe ReservationMailer do
         end
 
         it do
-          expect(mail.text_part.body.encoded).to include I18n.t("reservation_mailer.payment_received.body", locale: lang)
+          expect(mail.text_part.body.encoded).to include I18n.t("reservation_mailer.payment_received.body",
+                                                                locale: lang)
         end
 
         it do
@@ -122,7 +123,9 @@ RSpec.describe ReservationMailer do
         end
 
         it do
-          expect(mail.html_part.body.decoded).to include CGI.escapeHTML(I18n.t("reservation_mailer.payment_received.body", locale: lang))
+          expect(mail.html_part.body.decoded).to include CGI.escapeHTML(I18n.t(
+                                                                          "reservation_mailer.payment_received.body", locale: lang
+                                                                        ))
         end
       end
     end

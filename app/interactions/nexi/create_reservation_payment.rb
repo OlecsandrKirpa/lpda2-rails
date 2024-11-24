@@ -37,13 +37,15 @@ module Nexi
 
     def cancel_url
       Mustache.render(
-        Config.cancelled_payment_reservation_url, Config.hash.merge(secret: reservation.secret, locale: reservation.lang || I18n.default_locale)
+        Config.cancelled_payment_reservation_url, Config.hash.merge(secret: reservation.secret,
+                                                                    locale: reservation.lang || I18n.default_locale)
       ).gsub(%r{//$/}, "")
     end
 
     def result_url
       Mustache.render(
-        Config.processed_payment_reservation_url, Config.hash.merge(secret: reservation.secret, locale: reservation.lang || I18n.default_locale)
+        Config.processed_payment_reservation_url, Config.hash.merge(secret: reservation.secret,
+                                                                    locale: reservation.lang || I18n.default_locale)
       ).gsub(%r{//$/}, "")
     end
 
