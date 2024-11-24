@@ -27,6 +27,16 @@ class Setting
       default: 0
     },
 
+    # How many hours in advance can a reservation be cancelled.
+    reservation_min_hours_advance_cancel: {
+      default: 0,
+    },
+
+    # People that did pay with nexi and cancelled the reservation in time, should be refunded automatically ?
+    nexi_auto_refund_cancelled_reservations: {
+      default: "true",
+    },
+
     # In EUR, how much does the cover per person cost.
     cover_price: {
       default: 4

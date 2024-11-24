@@ -14,6 +14,13 @@ class ReservationMailer < ApplicationMailer
     )
   end
 
+  def cancelled
+    mail(
+      to: reservation_to,
+      subject: (@title = I18n.t("reservation_mailer.cancelled.subject", fullname: reservation.fullname))
+    )
+  end
+
   def reminder
     mail(
       to: reservation_to,

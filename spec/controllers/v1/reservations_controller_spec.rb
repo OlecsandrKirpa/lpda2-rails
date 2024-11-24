@@ -31,13 +31,13 @@ RSpec.describe V1::ReservationsController, type: :controller do
     let(:adults) { 2 }
     let(:children) { 0 }
     let(:datetime) { "#{date.to_date} 19:00" }
-    let(:date) { Time.now.beginning_of_week + 7.days }
+    let(:date) { Time.zone.now.beginning_of_week + 7.days }
     let(:last_name) { Faker::Name.last_name }
     let(:first_name) { Faker::Name.first_name }
     let(:lang) { :en }
     let!(:turn) do
       create(:reservation_turn, starts_at: DateTime.parse("00:01"), ends_at: DateTime.parse("23:59"),
-                                weekday: Time.now.beginning_of_week.wday)
+                                weekday: Time.zone.now.beginning_of_week.wday)
     end
 
     it { expect(instance).to respond_to(:create) }
@@ -617,9 +617,9 @@ RSpec.describe V1::ReservationsController, type: :controller do
       context "when a payment is required for that turn only for certain dates" do
         let(:group) do
           create(:preorder_reservation_group).tap do |grp|
-            grp.dates.create(reservation_turn: turn, date: Time.now.beginning_of_week + 7.days)
-            grp.dates.create(reservation_turn: turn, date: Time.now.beginning_of_week + 14.days)
-            grp.dates.create(reservation_turn: turn, date: Time.now.beginning_of_week + 70.days)
+            grp.dates.create(reservation_turn: turn, date: Time.zone.now.beginning_of_week + 7.days)
+            grp.dates.create(reservation_turn: turn, date: Time.zone.now.beginning_of_week + 14.days)
+            grp.dates.create(reservation_turn: turn, date: Time.zone.now.beginning_of_week + 70.days)
           end
         end
 
@@ -635,9 +635,9 @@ RSpec.describe V1::ReservationsController, type: :controller do
         end
 
         [
-          Time.now.beginning_of_week + 7.days,
-          Time.now.beginning_of_week + 14.days,
-          Time.now.beginning_of_week + 70.days
+          Time.zone.now.beginning_of_week + 7.days,
+          Time.zone.now.beginning_of_week + 14.days,
+          Time.zone.now.beginning_of_week + 70.days
         ].each do |date0|
           context "when date is in the list: #{date0.inspect}" do
             let(:date) { date0 }
@@ -675,8 +675,8 @@ RSpec.describe V1::ReservationsController, type: :controller do
         end
 
         [
-          Time.now.beginning_of_week + 6.days,
-          Time.now.beginning_of_week + 8.days
+          Time.zone.now.beginning_of_week + 8.days,
+          Time.zone.now.beginning_of_week + 10.days,
         ].each do |date0|
           context "when date is NOT in the list: #{date0.inspect}" do
             let(:date) { date0 }
@@ -747,7 +747,7 @@ RSpec.describe V1::ReservationsController, type: :controller do
       context "when turn is not in that weekday" do
         let!(:turn) do
           create(:reservation_turn, starts_at: DateTime.parse("00:01"), ends_at: DateTime.parse("23:59"),
-                                    weekday: Time.now.beginning_of_week.wday + 1)
+                                    weekday: Time.zone.now.beginning_of_week.wday + 1)
         end
 
         it "returns 422" do
@@ -1256,8 +1256,186 @@ RSpec.describe V1::ReservationsController, type: :controller do
                                                                      controller: "v1/reservations")
     }
 
+    let(:nexi_response) do
+      {
+        esito: "OK",
+        idOperazione: reservation.payment.external_id,
+        timeStamp: Time.zone.now.to_i * 1000,
+        mac: SecureRandom.hex
+      }
+    end
+
+    def stub_nexi_server
+      stub_request(:post,
+                   "#{Config.app.dig!(:nexi_api_url)}/#{Config.app.dig!(:nexi_refund_payment_path)}").to_return do |_request|
+        {
+          status: 200,
+          headers: { "Content-Type" => "application/json" },
+          body: nexi_response.to_json
+        }
+      end
+    end
+
     def req(data = params)
+      stub_nexi_server
       patch :cancel, params: data
+    end
+
+    context "will send email to customer", :perform_enqueued_jobs do
+      before do
+        CreateMissingImages.run!
+      end
+
+      it { expect { req }.to change { ActionMailer::Base.deliveries.count }.by(1) }
+      it { expect { req }.to change { Log::DeliveredEmail.count }.by(1) }
+
+      %w[
+        paid
+        todo
+        refunded
+      ].each do |payment_status|
+        context "when reservation has a payment in status #{payment_status.inspect}" do
+          let!(:payment) { create(:reservation_payment, status: payment_status, reservation:) }
+
+          it  { expect { req }.not_to(change { ReservationPayment.count }) }
+          it  { expect { req }.not_to(change { Reservation.count }) }
+          it { expect { req }.to change { ActionMailer::Base.deliveries.count }.by(1) }
+          it { expect { req }.to change { Log::DeliveredEmail.count }.by(1) }
+
+          it do
+            req
+            expect(response).to have_http_status(:ok)
+          end
+
+          it do
+            expect { req }.to change { reservation.reload.status }.to("cancelled")
+          end
+        end
+      end
+    end
+
+    context "when setting nexi_auto_refund_cancelled_reservations is true" do
+      let!(:payment) { create(:reservation_payment, status: :paid, reservation:) }
+
+      before do
+        Setting[:nexi_auto_refund_cancelled_reservations] = "true"
+      end
+
+      context "when reservation payment is paid" do
+        before { payment.paid! }
+        it  { expect { req }.not_to(change { ReservationPayment.count }) }
+        it  { expect { req }.not_to(change { Reservation.count }) }
+
+        it do
+          req
+          expect(response).to have_http_status(:ok)
+        end
+
+        it { expect { req }.to change { reservation.reload.status }.to("cancelled") }
+        it { expect { req }.to change { reservation.payment.reload.status }.to("refunded") }
+      end
+
+      %w[
+        todo
+        refunded
+      ].each do |payment_status|
+        context "when reservation payment is paid" do
+          before { payment.update!(status: payment_status) }
+
+          it  { expect { req }.not_to(change { ReservationPayment.count }) }
+          it  { expect { req }.not_to(change { Reservation.count }) }
+
+          it do
+            req
+            expect(response).to have_http_status(:ok)
+          end
+
+          it { expect { req }.to change { reservation.reload.status }.to("cancelled") }
+          it { expect { req }.not_to(change { reservation.payment.reload.status }) }
+        end
+      end
+
+      context "when reservation has no payment" do
+        before { reservation.payment.destroy }
+
+        it  { expect { req }.not_to(change { ReservationPayment.count }) }
+        it  { expect { req }.not_to(change { Reservation.count }) }
+
+        it do
+          req
+          expect(response).to have_http_status(:ok)
+        end
+
+        it { expect { req }.to change { reservation.reload.status }.to("cancelled") }
+      end
+    end
+
+    context "if reservation_min_hours_advance_cancel is set and reservation is too close" do
+      let(:reservation) { create(:reservation, datetime:) }
+
+      # #################################
+      # Case when not allowed
+      # #################################
+      [
+        ["2024-11-24 18:00", "2024-11-24 17:00", 1],
+        ["2024-11-24 18:00", "2024-11-24 17:30", 1],
+        ["2024-11-24 18:00", "2024-11-24 17:01", 1],
+        ["2024-11-24 18:00", "2024-11-24 17:59", 1],
+        ["2024-11-24 18:00", "2024-11-24 10:01", 10],
+        ["2024-11-24 18:00", "2024-11-24 18:01", 24],
+      ].each do |scenario|
+        context "when scenario #{scenario.inspect} should not be allowed" do
+          let(:datetime) { DateTime.parse(scenario[0]) }
+          let(:now_datetime) { DateTime.parse(scenario[1]) }
+          let(:config_value) { scenario[2] }
+
+          before do
+            Setting[:reservation_min_hours_advance_cancel] = config_value
+          end
+
+          def req(data = params)
+            travel_to(now_datetime) { super(data) }
+          end
+
+          it do
+            req
+            expect(response).to have_http_status(:unprocessable_entity)
+          end
+
+          it { expect { req }.not_to(change { reservation.reload.status }) }
+        end
+      end
+
+      # #################################
+      # Allowed
+      # #################################
+      [
+        ["2024-11-24 18:00", "2024-11-24 14:00", 1],
+        ["2024-11-24 18:00", "2024-11-24 11:30", 1],
+        ["2024-11-24 18:00", "2024-11-24 10:01", 1],
+        ["2024-11-24 18:00", "2024-11-20 17:59", 1],
+      ].each do |scenario|
+        context "when scenario #{scenario.inspect} should be allowed" do
+        let(:datetime) { DateTime.parse(scenario[0]) }
+          let(:now_datetime) { DateTime.parse(scenario[0]) }
+          let(:config_value) { scenario[1] }
+
+          before do
+            Setting[:reservation_min_hours_advance_cancel] = config_value
+          end
+
+          def req(data = params)
+            travel_to(now_datetime) { super(data) }
+          end
+
+          it do
+            req
+            expect(response).to have_http_status(:unprocessable_entity)
+          end
+
+          it { expect { req }.not_to(change { reservation.reload.status }) }
+        end
+      end
     end
 
     context "basic" do

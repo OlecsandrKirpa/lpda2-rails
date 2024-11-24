@@ -17,12 +17,20 @@ class Setting
       when :reservation_min_hours_in_advance then validate_reservation_min_hours_in_advance
       when :cover_price then validate_cover_price
       when :instagram_landing_page_url then validate_instagram_landing_page_url
+      when :reservation_min_hours_advance_cancel then validate_reservation_min_hours_advance_cancel
+      when :nexi_auto_refund_cancelled_reservations then boolean_validator
       else
         record.errors.add(:key, "Don't know how to validate key: #{record.key.to_s.inspect}")
       end
     end
 
     private
+
+    def boolean_validator
+      return if ["true", "false"].include?(record.value)
+
+      record.errors.add(:value, "should be 'true' or 'false'. got #{record.value.inspect}")
+    end
 
     def can_run?
       return false if record.key.to_s.blank?
@@ -52,6 +60,12 @@ class Setting
     end
 
     def validate_max_people_per_reservation
+      return if record.value.to_i.positive?
+
+      record.errors.add(:value, "should be a positive integer")
+    end
+
+    def validate_reservation_min_hours_advance_cancel
       return if record.value.to_i.positive?
 
       record.errors.add(:value, "should be a positive integer")

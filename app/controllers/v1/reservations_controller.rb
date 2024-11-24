@@ -103,9 +103,13 @@ module V1
     end
 
     def cancel
-      return show if @item.cancelled!
+      call = PublicCancelReservation.run(reservation: @item)
 
-      render_unprocessable_entity(@item)
+      return render_unprocessable_entity(call) unless call.errors.empty? && call.valid?
+
+      @item.reload
+
+      show
     end
 
     private
