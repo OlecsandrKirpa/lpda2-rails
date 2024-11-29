@@ -115,7 +115,6 @@ RSpec.describe ReservationMailer do
       tripadvisor_url
       google_url
     ].each do |contact_key|
-
       [
         "",
         nil

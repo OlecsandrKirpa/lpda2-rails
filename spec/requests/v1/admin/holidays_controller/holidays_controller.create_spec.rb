@@ -60,6 +60,7 @@ RSpec.describe "POST /v1/admin/holidays" do
     end
 
     it { expect { req }.not_to(change { Holiday.count }) }
+
     it do
       req
       expect(response).to have_http_status(:unprocessable_entity)

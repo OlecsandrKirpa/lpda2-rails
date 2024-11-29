@@ -387,12 +387,11 @@ RSpec.context "GET /v1/reservations/valid_times", type: :request do
     before do
       create(:reservation_turn, starts_at: "12:00", ends_at: "14:00", step: 30, weekday: Time.zone.now.wday)
       create(:holiday,
-                 from_timestamp: 2.days.ago,
-                 to_timestamp: 2.day.from_now,
-                 weekday: Time.zone.now.wday,
-                 weekly_from: "10:00",
-                 weekly_to: "13:00"
-          )
+             from_timestamp: 2.days.ago,
+             to_timestamp: 2.days.from_now,
+             weekday: Time.zone.now.wday,
+             weekly_from: "10:00",
+             weekly_to: "13:00")
 
       travel_to(Time.zone.now.beginning_of_day) do
         req(date: Time.zone.now.to_date.to_s)
