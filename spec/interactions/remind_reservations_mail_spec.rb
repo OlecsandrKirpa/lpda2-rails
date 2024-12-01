@@ -45,6 +45,17 @@ RSpec.describe RemindReservationsMail do
       it { expect { described_class.run! }.to change { ActionMailer::Base.deliveries.count }.by(2) }
       it { expect { described_class.run! }.to change { Log::DeliveredEmail.count }.by(2) }
 
+      [nil, "", " "].each do |blank_email|
+        context "when a reservation does not have email (email = #{blank_email.inspect}), won't send email for that reservation." do
+          before do
+            reservations[0].update!(email: blank_email)
+          end
+
+          it { expect { described_class.run! }.to change { ActionMailer::Base.deliveries.count }.by(1) }
+          it { expect { described_class.run! }.to change { Log::DeliveredEmail.count }.by(1) }
+        end
+      end
+
       context "won't send email if already sent" do
         before { described_class.run! }
 

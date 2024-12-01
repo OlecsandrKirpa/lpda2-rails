@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Send reminder for all next reservations
 class RemindReservationsMail < ActiveInteraction::Base
   def execute
     elegible.each do |reservation|
@@ -26,6 +27,8 @@ class RemindReservationsMail < ActiveInteraction::Base
         controller_path: "reservation_mailer",
         action_name: "reminder"
       ).select(:record_id)
+    ).where.not(
+      email: [nil, "", " "]
     )
   end
 end
