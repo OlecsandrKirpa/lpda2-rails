@@ -63,6 +63,13 @@ module V1
         render_error(status: 400, details: @item.errors.as_json, message: @item.errors.full_messages.join(", "))
       end
 
+      def update_prices
+        call = ::Menu::UpdateDishesPrices.run(params:)
+        return render json: { ok: true, details: call.result } if call.valid?
+
+        render_error(status: 400, details: call.errors.as_json, message: call.errors.full_messages.join(", "))
+      end
+
       def references
         render json: @item.references_json
       end

@@ -32,8 +32,12 @@ module Menu
 
     private
 
+    def filters
+      @filters ||= params.respond_to?(:permit!) ? params.permit!.to_h : params.to_h
+    end
+
     def filter_by_allowed_fields(items)
-      items.where(params.slice(*%w[id member_id]).permit!)
+      items.where(filters.slice("id", "member_id"))
     end
 
     # "can_suggest" is the id of the dish where you want to add suggestions.
@@ -45,19 +49,19 @@ module Menu
     end
 
     def order(items)
-      return order_by_index_in_category(items) if params.key?(:category_id)
+      return order_by_index_in_category(items) if filters.key?(:category_id)
 
       items
     end
 
     def filter_by_except(items)
-      return items unless params.key?(:except)
+      return items unless filters.key?(:except)
 
       items.where.not(id: [params[:except]].flatten.join(",").split(",").map(&:to_i))
     end
 
     def filter_by_except_in_category(items)
-      return items unless params.key?(:except_in_category)
+      return items unless filters.key?(:except_in_category)
 
       ids = [params[:except_in_category]].flatten.map(&:to_s).join(",").split(",").map(&:to_i)
       ids = nil if ids.empty?
@@ -76,7 +80,7 @@ module Menu
     end
 
     def filter_by_category(items)
-      return items unless params.key?(:category_id)
+      return items unless filters.key?(:category_id)
 
       items.where(
         id: Menu::DishesInCategory.where(
@@ -90,11 +94,11 @@ module Menu
       # if filtering by price_not: 15 and we have [nil, 15, 30] as prices,
       # would expect to get [nil, 30] as result, but we get [30] instead.
       # TODO: check why and fix this. (issue #7)
-      if params.key?(:price_not)
+      if filters.key?(:price_not)
         items = items.where.not(price: params[:price_not].present? ? params[:price_not].to_f : nil)
       end
 
-      if params.key?(:price) && (params[:price].is_a?(String) || params[:price].is_a?(Numeric))
+      if filters.key?(:price) && (params[:price].is_a?(String) || params[:price].is_a?(Numeric))
         items = items.where(price: params[:price].present? ? params[:price].to_f : nil)
       end
 
@@ -120,25 +124,25 @@ module Menu
     end
 
     def filter_by_name(items)
-      return items unless params.key?(:name)
+      return items unless filters.key?(:name)
 
       items.where_name(params[:name].to_s)
     end
 
     def filter_by_description(items)
-      return items unless params.key?(:description)
+      return items unless filters.key?(:description)
 
       items.where_description(params[:description].to_s)
     end
 
     def filter_by_status(items)
-      return items unless params.key?(:status)
+      return items unless filters.key?(:status)
 
       items.where(status: params[:status])
     end
 
     def filter_by_query(items)
-      return items unless params.key?(:query)
+      return items unless filters.key?(:query)
 
       items.filter_by_query(params[:query])
     end

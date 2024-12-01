@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "GET /v1/admin/holidays" do
+RSpec.describe "GET /v1/admin/menu/export" do
   include_context REQUEST_AUTHENTICATION_CONTEXT
 
   def ingredients

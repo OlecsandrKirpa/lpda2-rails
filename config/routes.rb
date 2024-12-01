@@ -162,7 +162,12 @@ Rails.application.routes.draw do
             end
           end
 
+          # /v1/admin/menu/dishes
           resources :dishes do
+            collection do
+              patch "update_prices"
+            end
+
             member do
               post "copy"
 
