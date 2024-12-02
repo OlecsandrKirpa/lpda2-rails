@@ -24,8 +24,7 @@ module V1::Admin
     end
 
     # GET /v1/admin/reservations/resume
-    # Will return a hash with the number of tables for people quantity.
-    # <table_size> => <number_of_tables>
+    # Will return a hash with the number of tables for people quantity, grouped by turn.
     def tables_summary
       call = TablesSummary.run(params: params.permit!.to_h, current_user:)
 
@@ -35,6 +34,20 @@ module V1::Admin
       end
 
       render json: call.result
+    end
+
+    # GET /v1/admin/reservations/ungrouped_tables_summary
+    # Will return a hash with the number of tables for people quantity.
+    # <table_size> => <number_of_tables>
+    def ungrouped_tables_summary
+      search = ::SearchReservations.run(params:)
+
+      unless search.valid?
+        return render_error(status: 400, details: search.errors.as_json,
+                            message: search.errors.full_messages.join(", "))
+      end
+
+      render json: Reservation.where(id: search.result.select(:id)).group("children + adults").count
     end
 
     def show

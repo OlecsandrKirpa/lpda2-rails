@@ -3,13 +3,22 @@
 class SearchReservations < ActiveInteraction::Base
   interface :params, methods: %i[[] merge! fetch each has_key?], default: {}
 
+  validate do
+    errors.add(:params, ":time_from should have format HH:MM when present") if params[:time_from].present? && !params[:time_from].match?(/\A\d{1,2}:\d{1,2}\z/)
+    errors.add(:params, ":time_to should have format HH:MM when present") if params[:time_to].present? && !params[:time_to].match?(/\A\d{1,2}:\d{1,2}\z/)
+  end
+
   def execute
     filter_by_query(
       filter_by_status(
         filter_by_secret(
           filter_by_date(
-            filter_by_created_at(
-              order(items)
+            filter_by_time(
+              filter_by_people(
+                filter_by_created_at(
+                  order(items)
+                )
+              )
             )
           )
         )
@@ -18,6 +27,14 @@ class SearchReservations < ActiveInteraction::Base
   end
 
   private
+
+  def filter_by_people(items)
+    items = items.where(adults: params[:adults]) if params[:adults].present?
+    items = items.where(children: params[:children]) if params[:children].present?
+    items = items.where("adults + children = ?", params[:people]) if params[:people].present?
+
+    items
+  end
 
   def order(items)
     order_by = params[:order_by] || params[:order]
@@ -54,6 +71,34 @@ class SearchReservations < ActiveInteraction::Base
     end
 
     items.order(datetime: :asc)
+  end
+
+  # Filter relative to time of day
+  # Filters format:
+  # time_from: "HH:MM"
+  # time_to: "HH:MM"
+  # TODO: TEST this method
+  def filter_by_time(items)
+    time_from = params[:time_from].present? ? Time.zone.parse(params[:time_from]).seconds_since_midnight : nil
+    time_to = params[:time_to].present? ? Time.zone.parse(params[:time_to]).seconds_since_midnight : nil
+
+    if time_from.present?
+      items.where!(
+        "extract(hour from datetime) * 3600 + extract(minute from datetime) * 60 + extract(second from datetime) >= ?",
+        time_from
+      )
+    end
+
+    if time_to.present?
+      items.where!(
+        "extract(hour from datetime) * 3600 + extract(minute from datetime) * 60 + extract(second from datetime) <= ?",
+        time_to
+      )
+    end
+
+    items
+  rescue ArgumentError
+    items
   end
 
   def filter_by_date(items)
