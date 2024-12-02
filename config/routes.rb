@@ -9,6 +9,14 @@ Rails.application.routes.draw do
   require "sidekiq-status/web"
 
   defaults format: :json do
+    scope module: :v2, path: "v2" do
+      resources :reservations, only: [] do
+        collection do
+          get "valid_times"
+        end
+      end
+    end
+
     scope module: :v1, path: "v1" do
       get "public_data", to: "public_data#index", as: :public_data
       post "nexi/receive_order_outcome", as: :nexi_receive_order_outcome

@@ -58,19 +58,10 @@ module V1
     end
 
     def valid_times
-      return render_error(status: 400, message: "Param 'date' is required") if params[:date].blank?
+      call = ValidTimesGroupByTurn.run(params:)
+      return render_error(status: 400, message: call.errors.full_messages.join(", ")) if call.errors.any? || call.invalid?
 
-      items = ReservationTurn.all.where(weekday: Date.parse(params[:date].to_s).wday).map do |turn|
-        group = turn.preorder_reservation_groups.first&.active? ? turn.preorder_reservation_groups.first : nil
-        turn.as_json.merge(
-          valid_times: turn.valid_times(date: params[:date]),
-          preorder_reservation_group: group&.as_json(methods: %i[message])
-        )
-      end
-
-      render json: items.flatten
-    rescue Date::Error => e
-      render_error(status: 400, message: e)
+      render json: call.result
     end
 
     def valid_dates
