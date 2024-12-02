@@ -228,7 +228,11 @@ module V1
           images: item.images.map(&:full_json),
           # parent: item.parent ? full_json(item.parent) : nil
           parent: item.parent&.as_json,
-          translations: item.translations_json
+          translations: item.translations_json,
+          stats: {
+            dishes: item.dishes.visible.group(:status).count,
+            children: item.children.visible.group(:status).count
+          }
         )
       end
     end
