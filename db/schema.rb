@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_12_183540) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_03_180109) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -416,6 +416,22 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_12_183540) do
     t.index ["title"], name: "index_reservation_tags_on_title", unique: true
   end
 
+  create_table "reservation_turn_messages", force: :cascade do |t|
+    t.date "from_date", comment: "When user tries to reserve for the associated reservation turn after this date, the message will be shown. If date is nil, the message will be shown for all dates."
+    t.date "to_date", comment: "When user tries to reserve for the associated reservation turn before this date, the message will be shown. If date is nil, the message will be shown for all dates. To set a message for exactly one date, set from_date and to_date to the same date."
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "reservation_turn_to_messages", force: :cascade do |t|
+    t.bigint "reservation_turn_id", null: false
+    t.bigint "reservation_turn_message_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reservation_turn_id"], name: "turn_id_reservation_turn_to_messages"
+    t.index ["reservation_turn_message_id"], name: "message_id_reservation_turn_to_messages"
+  end
+
   create_table "reservation_turns", force: :cascade do |t|
     t.time "starts_at", null: false
     t.time "ends_at", null: false
@@ -517,6 +533,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_12_183540) do
   add_foreign_key "preorder_reservation_groups_to_turns", "reservation_turns"
   add_foreign_key "refresh_tokens", "users"
   add_foreign_key "reservation_payments", "reservations"
+  add_foreign_key "reservation_turn_to_messages", "reservation_turn_messages"
+  add_foreign_key "reservation_turn_to_messages", "reservation_turns"
   add_foreign_key "reset_password_secrets", "users"
   add_foreign_key "tag_in_reservations", "reservation_tags"
   add_foreign_key "tag_in_reservations", "reservations"

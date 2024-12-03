@@ -11,7 +11,8 @@ class ReservationTurn < ApplicationRecord
   # ################################
   # Associations
   # ################################
-  # ... here any associations
+  has_many :reservation_turn_to_messages, dependent: :destroy
+  has_many :reservation_turn_messages, through: :reservation_turn_to_messages
 
   # ################################
   # Validations

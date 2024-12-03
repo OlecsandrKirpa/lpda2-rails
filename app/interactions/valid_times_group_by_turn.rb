@@ -19,7 +19,13 @@ class ValidTimesGroupByTurn < ActiveInteraction::Base
     group = turn.preorder_reservation_groups.first&.active? ? turn.preorder_reservation_groups.first : nil
     turn.as_json.merge(
       valid_times: turn.valid_times(date: params[:date]),
-      preorder_reservation_group: group&.as_json(methods: %i[message])
+      preorder_reservation_group: group&.as_json(methods: %i[message]),
+      messages: turn.reservation_turn_messages.active_at(date).map do |m|
+        m.as_json(
+          only: %i[id from_date to_date],
+          methods: %i[message]
+        )
+      end
     )
   end
 

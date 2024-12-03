@@ -6,8 +6,11 @@ RSpec.context "GET /v2/reservations/valid_times", type: :request do
   let(:date) { Time.zone.now.to_date.to_s }
   let(:params) { { date: } }
 
+  let(:default_headers) { {} }
+  let(:headers) { default_headers }
+
   def req(provided_params = params)
-    get "/v2/reservations/valid_times", params: provided_params
+    get "/v2/reservations/valid_times", params: provided_params, headers: headers
   end
 
   context "when there are no turns" do
@@ -79,7 +82,10 @@ RSpec.context "GET /v2/reservations/valid_times", type: :request do
     context "when got one weekly holiday overlapping with the only turn" do
       before do
         create(:holiday, from_timestamp: 10.days.ago, to_timestamp: 10.days.from_now, weekday: Time.zone.now.wday,
-                         weekly_from: "12:30", weekly_to: "15:00")
+                         weekly_from: "12:30", weekly_to: "15:00").tap do |h|
+          h.assign_translation("message", en: "overlapping with only the turn", it: "qualche stringa a caso....")
+          h.save!
+        end
 
         travel_to Time.zone.now.beginning_of_day do
           req(date: Time.zone.now.to_date.to_s)
@@ -89,12 +95,34 @@ RSpec.context "GET /v2/reservations/valid_times", type: :request do
       it { expect(response).to have_http_status(:ok) }
       it { expect(json[:turns]).not_to include(message: String) }
       it { expect(json[:turns].dig(0, "valid_times")).to match_array(%w[12:00 12:10 12:20]) }
+      it { expect(json[:holidays].count).to eq(1) }
+      it { expect(json.dig(:holidays, 0, :message)).to eq("overlapping with only the turn") }
+
+      [
+        "it",
+      ].each do |v|
+        context "if making request with header accept-language: #{v.inspect}" do
+          let(:headers) { default_headers.merge("Accept-Language" => v) }
+
+          before do
+            travel_to Time.zone.now.beginning_of_day do
+              req(date: Time.zone.now.to_date.to_s)
+            end
+          end
+
+          it { expect(json[:holidays].count).to eq(1) }
+          it { expect(json.dig(:holidays, 0, :message)).to eq("qualche stringa a caso....") }
+        end
+      end
     end
 
     context "when got a weekly holiday covering entirely the turn" do
       before do
         create(:holiday, from_timestamp: 10.days.ago, to_timestamp: 10.days.from_now, weekday: Time.zone.now.wday,
-                         weekly_from: "11:00", weekly_to: "15:00")
+                         weekly_from: "11:00", weekly_to: "15:00").tap do |h|
+          h.assign_translation("message", it: "settimanale", en: "weekly holiday, mario")
+          h.save!
+        end
 
         travel_to Time.zone.now.beginning_of_day do
           req(date: Time.zone.now.to_date.to_s)
@@ -105,11 +133,16 @@ RSpec.context "GET /v2/reservations/valid_times", type: :request do
       it { expect(json[:turns]).not_to include(message: String) }
       it { expect(json[:turns].length).to eq(1) }
       it { expect(json[:turns].dig(0, "valid_times")).to eq([]) }
+      it { expect(json[:holidays].count).to eq 1 }
+      it { expect(json.dig(:holidays, 0, :message)).to eq("weekly holiday, mario") }
     end
 
     context "when got a holiday during many days" do
       before do
-        create(:holiday, from_timestamp: 1.day.ago, to_timestamp: 1.day.from_now)
+        create(:holiday, from_timestamp: 1.day.ago, to_timestamp: 1.day.from_now).tap do |h|
+          h.assign_translation("message", it: "ciao mario", en: "hello mario")
+          h.save!
+        end
 
         travel_to Time.zone.now.beginning_of_day do
           req(date: Time.zone.now.to_date.to_s)
@@ -120,6 +153,8 @@ RSpec.context "GET /v2/reservations/valid_times", type: :request do
       it { expect(json[:turns]).not_to include(message: String) }
       it { expect(json[:turns].length).to eq(1) }
       it { expect(json[:turns].dig(0, "valid_times")).to eq([]) }
+      it { expect(json[:holidays].count).to eq 1 }
+      it { expect(json.dig(:holidays, 0, :message)).to eq("hello mario") }
     end
   end
 
@@ -407,5 +442,47 @@ RSpec.context "GET /v2/reservations/valid_times", type: :request do
                j["valid_times"]
              end.flatten).to match_array(%w[13:30 14:00])
     end
+  end
+
+  context "when there are some ReservationTurnMessage for the requested date" do
+    before do
+      t = create(:reservation_turn, starts_at: "12:00", ends_at: "14:00", step: 30, weekday: Time.zone.now.wday)
+
+      t.reservation_turn_messages << create(:reservation_turn_message, from_date: Time.zone.now.to_date, to_date: Time.zone.now.to_date).tap do |m|
+        m.assign_translation("message", it: "primo messaggio", en: "first message")
+        m.save!
+      end
+
+      t.reservation_turn_messages << create(:reservation_turn_message, from_date: 2.days.from_now, to_date: nil).tap do |m|
+        m.assign_translation("message", it: "messaggio futuro", en: "future message")
+        m.save!
+      end
+
+      t.reservation_turn_messages << create(:reservation_turn_message, from_date: nil, to_date: 2.days.ago).tap do |m|
+        m.assign_translation("message", it: "messaggio passato", en: "past message")
+        m.save!
+      end
+
+      t.reservation_turn_messages << create(:reservation_turn_message, from_date: nil, to_date: nil).tap do |m|
+        m.assign_translation("message", it: "messaggio ognipresente", en: "always present message")
+        m.save!
+      end
+
+      travel_to(Time.zone.now.beginning_of_day) do
+        req(date: Time.zone.now.to_date.to_s)
+      end
+    end
+
+    it { expect(response).to have_http_status(:ok) }
+
+    it { expect(json[:turns].count).to eq 1 }
+    it { expect(json.dig(:turns, 0, :messages)).to be_a(Array) }
+    it { expect(json.dig(:turns, 0, :messages)).to all(be_a(Hash)) }
+    it { expect(json.dig(:turns, 0, :messages)).to all(include(message: String)) }
+    it { expect(json.dig(:turns, 0, :messages)).to all(include(message: String)) }
+    it { expect(json.dig(:turns, 0, :messages).pluck(:message)).to match_array([
+      "first message",
+      "always present message"
+    ]) }
   end
 end
