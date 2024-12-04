@@ -677,7 +677,7 @@ RSpec.describe V1::ReservationsController, type: :controller do
 
         [
           Time.zone.now.beginning_of_week + 8.days,
-          Time.zone.now.beginning_of_week + 10.days,
+          Time.zone.now.beginning_of_week + 10.days
         ].each do |date0|
           context "when date is NOT in the list: #{date0.inspect}" do
             let(:date) { date0 }
@@ -1250,13 +1250,6 @@ RSpec.describe V1::ReservationsController, type: :controller do
     let(:params) { { secret: reservation.secret } }
     let!(:reservation) { create(:reservation) }
 
-    it { expect(instance).to respond_to(:cancel) }
-
-    it {
-      expect(subject).to route(:patch, "/v1/reservations/cancel").to(format: :json, action: :cancel,
-                                                                     controller: "v1/reservations")
-    }
-
     let(:nexi_response) do
       {
         esito: "OK",
@@ -1265,6 +1258,13 @@ RSpec.describe V1::ReservationsController, type: :controller do
         mac: SecureRandom.hex
       }
     end
+
+    it { expect(instance).to respond_to(:cancel) }
+
+    it {
+      expect(subject).to route(:patch, "/v1/reservations/cancel").to(format: :json, action: :cancel,
+                                                                     controller: "v1/reservations")
+    }
 
     def stub_nexi_server
       stub_request(:post,
@@ -1324,6 +1324,7 @@ RSpec.describe V1::ReservationsController, type: :controller do
 
       context "when reservation payment is paid" do
         before { payment.paid! }
+
         it  { expect { req }.not_to(change { ReservationPayment.count }) }
         it  { expect { req }.not_to(change { Reservation.count }) }
 
@@ -1383,7 +1384,7 @@ RSpec.describe V1::ReservationsController, type: :controller do
         ["2024-11-24 18:00", "2024-11-24 17:01", 1],
         ["2024-11-24 18:00", "2024-11-24 17:59", 1],
         ["2024-11-24 18:00", "2024-11-24 10:01", 10],
-        ["2024-11-24 18:00", "2024-11-24 18:01", 24],
+        ["2024-11-24 18:00", "2024-11-24 18:01", 24]
       ].each do |scenario|
         context "when scenario #{scenario.inspect} should not be allowed" do
           let(:datetime) { DateTime.parse(scenario[0]) }
@@ -1414,10 +1415,10 @@ RSpec.describe V1::ReservationsController, type: :controller do
         ["2024-11-24 18:00", "2024-11-24 14:00", 1],
         ["2024-11-24 18:00", "2024-11-24 11:30", 1],
         ["2024-11-24 18:00", "2024-11-24 10:01", 1],
-        ["2024-11-24 18:00", "2024-11-20 17:59", 1],
+        ["2024-11-24 18:00", "2024-11-20 17:59", 1]
       ].each do |scenario|
         context "when scenario #{scenario.inspect} should be allowed" do
-        let(:datetime) { DateTime.parse(scenario[0]) }
+          let(:datetime) { DateTime.parse(scenario[0]) }
           let(:now_datetime) { DateTime.parse(scenario[0]) }
           let(:config_value) { scenario[1] }
 
@@ -1548,14 +1549,14 @@ RSpec.describe V1::ReservationsController, type: :controller do
               "notes" => reservation.notes,
               "secret" => reservation.secret,
               "updated_at" => String,
-              "created_at" => String,
+              "created_at" => String
             )
           }
         end
 
         context "when payment has a payment associated" do
           before do
-            create(:reservation_payment, reservation: reservation)
+            create(:reservation_payment, reservation:)
             req
           end
 
