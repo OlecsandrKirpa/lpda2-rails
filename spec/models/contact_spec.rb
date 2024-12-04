@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Contact do
-  context "#public_formatted" do
+  describe "#public_formatted" do
     subject { described_class.public_formatted }
 
     context "when there are no contacts, will equal to defaults" do
@@ -11,7 +11,6 @@ RSpec.describe Contact do
         it { is_expected.to include(key => Contact::DEFAULTS[key][:value]) }
       end
     end
-
 
     %i[
       address
@@ -26,7 +25,7 @@ RSpec.describe Contact do
         nil
       ].each do |blank_value|
         context "when contact #{contact_key.inspect} has value #{blank_value.inspect}" do
-          before  { Contact.create!(key: contact_key, value: blank_value) }
+          before { Contact.create!(key: contact_key, value: blank_value) }
 
           it { is_expected.to include(contact_key => blank_value) }
         end

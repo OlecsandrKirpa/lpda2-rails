@@ -35,7 +35,7 @@ class PublicCancelReservation < ActiveInteraction::Base
     return unless reservation.payment&.paid?
     return unless Setting[:nexi_auto_refund_cancelled_reservations] == "true"
 
-    @refund = RefundReservationPayment.run(reservation: reservation)
+    @refund = RefundReservationPayment.run(reservation:)
     erros.merge!(@refund.errors) if @refund.errors.any? || @refund.invalid?
   end
 

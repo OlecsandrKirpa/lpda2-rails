@@ -27,7 +27,7 @@ class Setting
     private
 
     def boolean_validator
-      return if ["true", "false"].include?(record.value)
+      return if %w[true false].include?(record.value)
 
       record.errors.add(:value, "should be 'true' or 'false'. got #{record.value.inspect}")
     end
@@ -68,7 +68,8 @@ class Setting
     def validate_reservation_min_hours_advance_cancel
       return if record.value.to_f >= 0
 
-      record.errors.add(:value, "reservation_min_hours_advance_cancel should be a positive integer, got #{record.value.inspect}")
+      record.errors.add(:value,
+                        "reservation_min_hours_advance_cancel should be a positive integer, got #{record.value.inspect}")
     end
 
     def validate_email_images
