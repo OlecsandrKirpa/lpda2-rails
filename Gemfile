@@ -11,6 +11,8 @@ gem "pg", "~> 1.1"
 
 gem "health_check", "~> 3.1.0"
 
+gem "icalendar", "~> 2.10.3"
+
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.6"
 

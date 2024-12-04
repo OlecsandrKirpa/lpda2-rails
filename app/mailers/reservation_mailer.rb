@@ -8,6 +8,8 @@ class ReservationMailer < ApplicationMailer
 
   # reload!; ReservationMailer.confirmation(reservation: Reservation.last).deliver_now
   def confirmation
+    attachments['invite.ics'] = ReservationIcs.run!(reservation:)
+
     mail(
       to: reservation_to,
       subject: (@title = I18n.t("reservation_mailer.confirmation.subject", fullname: reservation.fullname))
