@@ -24,7 +24,12 @@ class ReservationTurnValidTimes < ActiveInteraction::Base
       min_time += Setting[:reservation_min_hours_in_advance].to_f.hours
     end
 
-    times = times.select { |time| time > min_time }
+    max_time = 10.years.from_now
+    if Setting[:reservation_max_days_in_advance].to_i.positive?
+      max_time = Time.zone.now.end_of_day + Setting[:reservation_max_days_in_advance].to_i.days
+    end
+
+    times = times.select { |time| time > min_time && time < max_time }
 
     times = delete_times_overlapping_with_weekly_holidays(times)
 

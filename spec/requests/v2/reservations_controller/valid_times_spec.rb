@@ -444,6 +444,64 @@ RSpec.context "GET /v2/reservations/valid_times", type: :request do
     end
   end
 
+  context "when requested date is too far from max date" do
+    before do
+      Setting[:reservation_max_days_in_advance] = 9
+    end
+
+    [
+      0, 1, 5, 7, 8, 9
+    ].each do |days|
+      context "when requested date is #{days} days from now, should return valid times." do
+        before do
+          create(:reservation_turn, starts_at: "12:00", ends_at: "14:00", step: 30, weekday: (Time.zone.now + days.days).wday)
+
+          travel_to(Time.zone.now.beginning_of_day) do
+            req(date: (Time.zone.now + days.days).to_date.to_s)
+          end
+        end
+
+        it { expect(ReservationTurn.all.count).to eq(1) }
+
+        it { expect(response).to have_http_status(:ok) }
+
+        it { expect(json).not_to include(message: String) }
+
+        it do
+          expect(json[:turns].map do |j|
+                   j["valid_times"]
+                 end.flatten).not_to be_empty
+        end
+      end
+    end
+
+    [
+      10, 11, 100, 1000
+    ].each do |days|
+      context "when requested date is #{days} days from now, should not return any time." do
+        before do
+          create(:reservation_turn, starts_at: "12:00", ends_at: "14:00", step: 30, weekday: (Time.zone.now + days.days).wday)
+
+          travel_to(Time.zone.now.beginning_of_day) do
+            req(date: (Time.zone.now + days.days).to_date.to_s)
+          end
+        end
+
+        it { expect(ReservationTurn.all.count).to eq(1) }
+
+        it { expect(response).to have_http_status(:ok) }
+
+        it { expect(json).not_to include(message: String) }
+
+        it do
+          expect(json[:turns].map do |j|
+                   j["valid_times"]
+                 end.flatten).to eq([])
+        end
+      end
+    end
+  end
+
   context "when there are some ReservationTurnMessage for the requested date" do
     before do
       t = create(:reservation_turn, starts_at: "12:00", ends_at: "14:00", step: 30, weekday: Time.zone.now.wday)

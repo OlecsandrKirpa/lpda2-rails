@@ -40,6 +40,10 @@ RSpec.describe V1::ReservationsController, type: :controller do
                                 weekday: Time.zone.now.beginning_of_week.wday)
     end
 
+    before do
+      Setting[:reservation_max_days_in_advance] = 0
+    end
+
     it { expect(instance).to respond_to(:create) }
 
     it {
@@ -109,6 +113,76 @@ RSpec.describe V1::ReservationsController, type: :controller do
         end
 
         it { expect { req }.to change { Reservation.all.filter { |r| r.turn.weekday == scenario[:wday] }.count }.by(1) }
+      end
+    end
+
+    context "when setting reservation_max_days_in_advance" do
+      let!(:turn) do
+        create(:reservation_turn, weekday: date.wday, starts_at: DateTime.parse("12:00"),
+                                  ends_at: DateTime.parse("15:00"))
+      end
+      let(:datetime) { "#{date.to_date} #{time}" }
+      let(:date) { Time.zone.now }
+      let(:time) { "12:00" }
+
+      before do
+        Setting[:reservation_max_days_in_advance] = 3
+      end
+
+      def doit
+        travel_to(Time.zone.now.beginning_of_day + 10.hours) do
+          req
+        end
+      end
+
+      context "when reserving for today" do
+        it { expect { doit }.to(change { Reservation.count }) }
+
+        it do
+          doit
+          expect(response).to have_http_status(:ok)
+        end
+
+        it do
+          doit
+          expect(json).not_to include(message: String)
+        end
+      end
+
+      [2,3].each do |days|
+        context "when reserving for #{days} days in advance, is allowed" do
+          let(:date) { Time.zone.now + days.days }
+
+          it { expect { doit }.to(change { Reservation.count }) }
+
+          it do
+            doit
+            expect(response).to have_http_status(:ok)
+          end
+
+          it do
+            doit
+            expect(json).not_to include(message: String)
+          end
+        end
+      end
+
+      [4, 5, 10].each do |days|
+        context "when reserving for #{days} days in advance, is not allowed." do
+          let(:date) { Time.zone.now + days.days }
+
+          it { expect { doit }.not_to(change { Reservation.count }) }
+
+          it do
+            doit
+            expect(response).to have_http_status(:unprocessable_entity)
+          end
+
+          it do
+            doit
+            expect(json).to include(message: /uture/)
+          end
+        end
       end
     end
 

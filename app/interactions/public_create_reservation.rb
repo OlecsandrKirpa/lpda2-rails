@@ -8,6 +8,7 @@ class PublicCreateReservation < ActiveInteraction::Base
   validate :datetime_is_not_in_the_past
   validate :datetime_has_reservation_turn
   validate :datetime_is_in_valid_reservation_turn_step
+  validate :datetime_is_not_too_far_in_the_future
 
   validate :people_count_is_valid
   validate :people_count_is_not_zero
@@ -248,6 +249,14 @@ class PublicCreateReservation < ActiveInteraction::Base
     return if reservation_turn
 
     errors.add(:datetime, "is not a valid date: there is no reservation turn for this datetime")
+  end
+
+  def datetime_is_not_too_far_in_the_future
+    return if datetime.nil?
+    return unless Setting[:reservation_max_days_in_advance].to_i.positive?
+    return if datetime.to_date <= Time.zone.now.to_date + Setting[:reservation_max_days_in_advance].to_i.days
+
+    errors.add(:datetime, "is too far in the future")
   end
 
   def datetime_is_in_valid_reservation_turn_step
