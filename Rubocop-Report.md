@@ -1,6 +1,6 @@
 # RuboCop Inspection Report
 
-481 files inspected, 4392 offenses detected:
+481 files inspected, 4195 offenses detected:
 
 ### Gemfile - (1 offense)
   * **Line # 1 - convention:** Style/FrozenStringLiteralComment: Missing frozen string literal comment.
@@ -437,7 +437,7 @@
       class ReservationTagsController < ApplicationController
     ```
 
-### app/controllers/v1/admin/reservation_turn_messages_controller.rb - (7 offenses)
+### app/controllers/v1/admin/reservation_turn_messages_controller.rb - (3 offenses)
   * **Line # 4 - convention:** Style/Documentation: Missing top-level documentation comment for `class V1::Admin::ReservationTurnMessagesController`.
 
     ```rb
@@ -450,34 +450,10 @@
         def create ...
     ```
 
-  * **Line # 33 - convention:** Style/IfUnlessModifier: Favor modifier `if` usage when having a single-line body. Another good alternative is the usage of control flow `&&`/`||`.
-
-    ```rb
-          if @item.valid? && @item.persisted?
-    ```
-
   * **Line # 38 - convention:** Metrics/AbcSize: Assignment Branch Condition size for update is too high. [<1, 21, 4> 21.4/17]
 
     ```rb
         def update ...
-    ```
-
-  * **Line # 77 - convention:** Layout/SpaceInsideBlockBraces: Space between { and | missing.
-
-    ```rb
-            turns: item.turns.map {|t| t.as_json(only: %w[id name weekday]) }
-    ```
-
-  * **Line # 79 - convention:** Layout/SpaceBeforeBlockBraces: Space missing to the left of {.
-
-    ```rb
-            turns: item.turns.map{|t| t.as_json(only: %w[id name weekday]) }
-    ```
-
-  * **Line # 79 - convention:** Layout/SpaceInsideBlockBraces: Space between { and | missing.
-
-    ```rb
-            turns: item.turns.map{|t| t.as_json(only: %w[id name weekday]) }
     ```
 
 ### app/controllers/v1/admin/reservation_turns_controller.rb - (1 offense)
@@ -730,7 +706,7 @@
         def index ...
     ```
 
-### app/controllers/v1/reservations_controller.rb - (19 offenses)
+### app/controllers/v1/reservations_controller.rb - (9 offenses)
   * **Line # 4 - convention:** Style/Documentation: Missing top-level documentation comment for `class V1::ReservationsController`.
 
     ```rb
@@ -753,66 +729,6 @@
 
     ```rb
         def create ...
-    ```
-
-  * **Line # 62 - convention:** Style/MultilineIfModifier: Favor a normal if-statement over a modifier clause in a multiline statement.
-
-    ```rb
-          return render_error(status: 400,  ...
-    ```
-
-  * **Line # 62 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          return render_error(status: 400, 
-    ```
-
-  * **Line # 62 - convention:** Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
-
-    ```rb
-          return render_error(status: 400, message: call.errors.full_messages.join(", ")) if call.errors.any? || call.invalid?
-    ```
-
-  * **Line # 62 - convention:** Layout/LineLength: Line is too long. [122/120]
-
-    ```rb
-          return render_error(status: 400, message: call.errors.full_messages.join(", ")) if call.errors.any? || call.invalid?
-    ```
-
-  * **Line # 63 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    message: call.errors.full_messages.join(", ")) if call.errors.any? || call.invalid?
-    ```
-
-  * **Line # 63 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    message: call.errors.full_messages.join(", ")) if call.errors.any? || call.invalid?
-    ```
-
-  * **Line # 63 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                                                        message: call.errors.full_messages.join(", ")) if call.errors.any? || call.invalid?
-    ```
-
-  * **Line # 63 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-                                                        message: call.errors.full_messages.join(", ")) if call.errors.any? || call.invalid?
-    ```
-
-  * **Line # 64 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                                                          message: call.errors.full_messages.join(", "))
-    ```
-
-  * **Line # 64 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-                                                          message: call.errors.full_messages.join(", "))
     ```
 
   * **Line # 70 - convention:** Metrics/AbcSize: Assignment Branch Condition size for valid_dates is too high. [<11, 62, 12> 64.1/17]
@@ -845,7 +761,7 @@
           if Setting.where(key: :reservation_max_days_in_advance).first.present? && (to_date > Time.zone.now.to_date + Setting.where(key: :reservation_max_days_in_advance).first.value.to_i.days)
     ```
 
-### app/controllers/v2/reservations_controller.rb - (28 offenses)
+### app/controllers/v2/reservations_controller.rb - (3 offenses)
   * **Line # 4 - convention:** Style/Documentation: Missing top-level documentation comment for `class V2::ReservationsController`.
 
     ```rb
@@ -862,156 +778,6 @@
 
     ```rb
         def valid_times ...
-    ```
-
-  * **Line # 10 - convention:** Style/MultilineIfModifier: Favor a normal if-statement over a modifier clause in a multiline statement.
-
-    ```rb
-          return render_error(status: 400,  ...
-    ```
-
-  * **Line # 10 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          return render_error(status: 400, 
-    ```
-
-  * **Line # 10 - convention:** Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
-
-    ```rb
-          return render_error(status: 400, message: call.errors.full_messages.join(", ")) if call.errors.any? || call.invalid?
-    ```
-
-  * **Line # 10 - convention:** Layout/LineLength: Line is too long. [122/120]
-
-    ```rb
-          return render_error(status: 400, message: call.errors.full_messages.join(", ")) if call.errors.any? || call.invalid?
-    ```
-
-  * **Line # 11 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    message: call.errors.full_messages.join(", ")) if call.errors.any? || call.invalid?
-    ```
-
-  * **Line # 11 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    message: call.errors.full_messages.join(", ")) if call.errors.any? || call.invalid?
-    ```
-
-  * **Line # 11 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                                                        message: call.errors.full_messages.join(", ")) if call.errors.any? || call.invalid?
-    ```
-
-  * **Line # 11 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-                                                        message: call.errors.full_messages.join(", ")) if call.errors.any? || call.invalid?
-    ```
-
-  * **Line # 12 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                                                          message: call.errors.full_messages.join(", "))
-    ```
-
-  * **Line # 12 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-                                                          message: call.errors.full_messages.join(", "))
-    ```
-
-  * **Line # 15 - convention:** Style/CommentAnnotation: Annotation keywords like `TODO` should be all upper case, followed by a colon, and a space, then a note describing the problem.
-
-    ```rb
-            # TODO test holidays presence and format.
-    ```
-
-  * **Line # 16 - convention:** Layout/LineLength: Line is too long. [166/120]
-
-    ```rb
-            holidays: Holiday.visible.where(":date BETWEEN from_timestamp::date AND to_timestamp::date", date: params[:date]).map{ |h| h.as_json(methods: %w[message ]) },
-    ```
-
-  * **Line # 16 - convention:** Layout/SpaceBeforeBlockBraces: Space missing to the left of {.
-
-    ```rb
-            holidays: Holiday.visible.where(":date BETWEEN from_timestamp::date AND to_timestamp::date", date: params[:date]).map{ |h| h.as_json(methods: %w[message ]) },
-    ```
-
-  * **Line # 16 - convention:** Layout/SpaceInsidePercentLiteralDelimiters: Do not use spaces inside percent literal delimiters.
-
-    ```rb
-            holidays: Holiday.visible.where(":date BETWEEN from_timestamp::date AND to_timestamp::date", date: params[:date]).map{ |h| h.as_json(methods: %w[message ]) },
-    ```
-
-  * **Line # 17 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-            holidays: Holiday.visible.where(":date BETWEEN from_timestamp::date AND to_timestamp::date", 
-    ```
-
-  * **Line # 17 - convention:** Layout/LineLength: Line is too long. [131/120]
-
-    ```rb
-            holidays: Holiday.visible.where(":date BETWEEN from_timestamp::date AND to_timestamp::date", date: params[:date]).map { |h|
-    ```
-
-  * **Line # 17 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-            holidays: Holiday.visible.where(":date BETWEEN from_timestamp::date AND to_timestamp::date", date: params[:date]).map { |h|
-    ```
-
-  * **Line # 18 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    date: params[:date]).map { |h|
-    ```
-
-  * **Line # 18 - convention:** Style/CommentAnnotation: Annotation keywords like `TODO` should be all upper case, followed by a colon, and a space, then a note describing the problem.
-
-    ```rb
-            # TODO test settings presence and format.
-    ```
-
-  * **Line # 18 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-    date: params[:date]).map { |h|
-    ```
-
-  * **Line # 18 - convention:** Layout/BlockEndNewline: Expression at 18, 34 should be on its own line.
-
-    ```rb
-     h.as_json(methods: %w[message]) },
-    ```
-
-  * **Line # 19 - convention:** Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-
-    ```rb
-     h.as_json(methods: %w[message])
-    ```
-
-  * **Line # 21 - convention:** Layout/IndentationWidth: Use 2 (not -16) spaces for indentation.
-
-    ```rb
-      h.as_json(methods: %w[message])
-    ```
-
-  * **Line # 21 - convention:** Style/TrailingCommaInHashLiteral: Avoid comma after the last item of a hash.
-
-    ```rb
-              reservation_min_hours_in_advance: Setting[:reservation_min_hours_in_advance],
-    ```
-
-  * **Line # 22 - convention:** Layout/BlockAlignment: `end` at 22, 0 is not aligned with `Holiday.visible.where(":date BETWEEN from_timestamp::date AND to_timestamp::date",` at 19, 18 or `date: params[:date]).map do |h|` at 20, 40.
-
-    ```rb
-    end,
     ```
 
 ### app/interactions/assign_translation.rb - (2 offenses)
@@ -2368,7 +2134,7 @@
           return items unless params.has_key?(:query)
     ```
 
-### app/interactions/menu/update_dishes_prices.rb - (19 offenses)
+### app/interactions/menu/update_dishes_prices.rb - (6 offenses)
   * **Line # 6 - convention:** Layout/LineLength: Line is too long. [171/120]
 
     ```rb
@@ -2387,36 +2153,6 @@
       # - amount: float, amount to increase/decrease the price. If positive, the price will be increased, if negative, decreased.
     ```
 
-  * **Line # 17 - convention:** Style/MultilineIfModifier: Favor a normal if-statement over a modifier clause in a multiline statement.
-
-    ```rb
-          errors.add(:base,  ...
-    ```
-
-  * **Line # 17 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          errors.add(:base, 
-    ```
-
-  * **Line # 17 - convention:** Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
-
-    ```rb
-          errors.add(:base, "percent must be an integer") if params[:percent].present? && !params[:percent].to_s.match?(/\A-?\d+\z/)
-    ```
-
-  * **Line # 17 - convention:** Layout/LineLength: Line is too long. [128/120]
-
-    ```rb
-          errors.add(:base, "percent must be an integer") if params[:percent].present? && !params[:percent].to_s.match?(/\A-?\d+\z/)
-    ```
-
-  * **Line # 18 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    "percent must be an integer") if params[:percent].present? && !params[:percent].to_s.match?(/\A-?\d+\z/)
-    ```
-
   * **Line # 23 - convention:** Metrics/AbcSize: Assignment Branch Condition size for execute is too high. [<3, 25, 9> 26.74/17]
 
     ```rb
@@ -2433,54 +2169,6 @@
 
     ```rb
         def execute ...
-    ```
-
-  * **Line # 25 - convention:** Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
-
-    ```rb
-              errors.add(:base, "error updating dish #{item.id}: #{item.errors.full_messages.join(", ")}") if item.errors.any?
-    ```
-
-  * **Line # 25 - convention:** Layout/LineLength: Line is too long. [122/120]
-
-    ```rb
-              errors.add(:base, "error updating dish #{item.id}: #{item.errors.full_messages.join(", ")}") if item.errors.any?
-    ```
-
-  * **Line # 26 - convention:** Style/MultilineIfModifier: Favor a normal if-statement over a modifier clause in a multiline statement.
-
-    ```rb
-              errors.add(:base,  ...
-    ```
-
-  * **Line # 26 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-              errors.add(:base, 
-    ```
-
-  * **Line # 27 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    "error updating dish #{item.id}: #{item.errors.full_messages.join(", ")}") if item.errors.any?
-    ```
-
-  * **Line # 31 - convention:** Layout/SpaceBeforeBlockBraces: Space missing to the left of {.
-
-    ```rb
-          items.map{|j| { id: j.id, price: j.price } }
-    ```
-
-  * **Line # 31 - convention:** Layout/SpaceInsideBlockBraces: Space between { and | missing.
-
-    ```rb
-          items.map{|j| { id: j.id, price: j.price } }
-    ```
-
-  * **Line # 33 - convention:** Layout/SpaceInsideBlockBraces: Space between { and | missing.
-
-    ```rb
-          items.map {|j| { id: j.id, price: j.price } }
     ```
 
 ### app/interactions/nexi/client.rb - (10 offenses)
@@ -2770,7 +2458,7 @@
       def elegible ...
     ```
 
-### app/interactions/reservation_ics.rb - (11 offenses)
+### app/interactions/reservation_ics.rb - (4 offenses)
   * **Line # 3 - convention:** Style/Documentation: Missing top-level documentation comment for `class ReservationIcs`.
 
     ```rb
@@ -2789,52 +2477,10 @@
       def execute ...
     ```
 
-  * **Line # 14 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-          e.dtstart = Icalendar::Values::DateTime.new event_start, 'tzid' => tzid
-    ```
-
-  * **Line # 15 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-          e.dtend   = Icalendar::Values::DateTime.new event_end, 'tzid' => tzid
-    ```
-
   * **Line # 17 - convention:** Layout/LineLength: Line is too long. [124/120]
 
     ```rb
           e.attendee = ["mailto:#{organization_email}", "mailto:#{reservation.email}"] # one or more email recipients (required)
-    ```
-
-  * **Line # 21 - convention:** Style/MultilineIfModifier: Favor a normal if-statement over a modifier clause in a multiline statement.
-
-    ```rb
-          e.organizer = Icalendar::Values::CalAddress.new("mailto:#{organization_email}",  ...
-    ```
-
-  * **Line # 21 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          e.organizer = Icalendar::Values::CalAddress.new("mailto:#{organization_email}", 
-    ```
-
-  * **Line # 21 - convention:** Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
-
-    ```rb
-          e.organizer = Icalendar::Values::CalAddress.new("mailto:#{organization_email}", cn: %(La Porta d'Acqua)) if organization_email.present?
-    ```
-
-  * **Line # 21 - convention:** Layout/LineLength: Line is too long. [141/120]
-
-    ```rb
-          e.organizer = Icalendar::Values::CalAddress.new("mailto:#{organization_email}", cn: %(La Porta d'Acqua)) if organization_email.present?
-    ```
-
-  * **Line # 22 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    cn: %(La Porta d'Acqua)) if organization_email.present?
     ```
 
 ### app/interactions/reservation_requires_payment.rb - (4 offenses)
@@ -2901,40 +2547,14 @@
       def execute ...
     ```
 
-### app/interactions/search_reservation_turn_messages.rb - (6 offenses)
+### app/interactions/search_reservation_turn_messages.rb - (1 offense)
   * **Line # 3 - convention:** Style/Documentation: Missing top-level documentation comment for `class SearchReservationTurnMessages`.
 
     ```rb
     class SearchReservationTurnMessages < ActiveInteraction::Base
     ```
 
-  * **Line # 7 - convention:** Style/RedundantAssignment: Redundant assignment before returning detected.
-
-    ```rb
-        items = ReservationTurnMessage.all
-    ```
-
-  * **Line # 8 - convention:** Layout/EmptyLinesAroundMethodBody: Extra empty line detected at method body end.
-
-    ```rb
-     ...
-    ```
-
-  * **Line # 9 - convention:** Layout/EmptyLines: Extra blank line detected.
-
-    ```rb
-     ...
-    ```
-
-  * **Line # 9 - convention:** Layout/EmptyLinesAroundMethodBody: Extra empty line detected at method body end.
-
-    ```rb
-     ...
-    ```
-
-  * **Line # 9 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-### app/interactions/search_reservations.rb - (28 offenses)
+### app/interactions/search_reservations.rb - (18 offenses)
   * **Line # 3 - convention:** Metrics/ClassLength: Class has too many lines. [140/100]
 
     ```rb
@@ -2945,66 +2565,6 @@
 
     ```rb
     class SearchReservations < ActiveInteraction::Base
-    ```
-
-  * **Line # 7 - convention:** Style/MultilineIfModifier: Favor a normal if-statement over a modifier clause in a multiline statement.
-
-    ```rb
-        errors.add(:params,  ...
-    ```
-
-  * **Line # 7 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-        errors.add(:params, 
-    ```
-
-  * **Line # 7 - convention:** Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
-
-    ```rb
-        errors.add(:params, ":time_from should have format HH:MM when present") if params[:time_from].present? && !params[:time_from].match?(/\A\d{1,2}:\d{1,2}\z/)
-    ```
-
-  * **Line # 7 - convention:** Layout/LineLength: Line is too long. [159/120]
-
-    ```rb
-        errors.add(:params, ":time_from should have format HH:MM when present") if params[:time_from].present? && !params[:time_from].match?(/\A\d{1,2}:\d{1,2}\z/)
-    ```
-
-  * **Line # 8 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    ":time_from should have format HH:MM when present") if params[:time_from].present? && !params[:time_from].match?(/\A\d{1,2}:\d{1,2}\z/)
-    ```
-
-  * **Line # 8 - convention:** Style/IfUnlessModifier: Modifier form of `if` makes the line too long.
-
-    ```rb
-        errors.add(:params, ":time_to should have format HH:MM when present") if params[:time_to].present? && !params[:time_to].match?(/\A\d{1,2}:\d{1,2}\z/)
-    ```
-
-  * **Line # 8 - convention:** Layout/LineLength: Line is too long. [153/120]
-
-    ```rb
-        errors.add(:params, ":time_to should have format HH:MM when present") if params[:time_to].present? && !params[:time_to].match?(/\A\d{1,2}:\d{1,2}\z/)
-    ```
-
-  * **Line # 9 - convention:** Style/MultilineIfModifier: Favor a normal if-statement over a modifier clause in a multiline statement.
-
-    ```rb
-        errors.add(:params,  ...
-    ```
-
-  * **Line # 9 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-        errors.add(:params, 
-    ```
-
-  * **Line # 10 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    ":time_to should have format HH:MM when present") if params[:time_to].present? && !params[:time_to].match?(/\A\d{1,2}:\d{1,2}\z/)
     ```
 
   * **Line # 17 - convention:** Metrics/MethodLength: Method has too many lines. [15/10]
@@ -3286,17 +2846,11 @@
             headers: mail.header.fields.map { |field| [field.name, field.value] }.to_h,
     ```
 
-### app/mailers/reservation_mailer.rb - (2 offenses)
+### app/mailers/reservation_mailer.rb - (1 offense)
   * **Line # 3 - convention:** Style/Documentation: Missing top-level documentation comment for `class ReservationMailer`.
 
     ```rb
     class ReservationMailer < ApplicationMailer
-    ```
-
-  * **Line # 11 - convention:** Style/StringLiterals: Prefer double-quoted strings unless you need single quotes to avoid extra backslashes for escaping.
-
-    ```rb
-        attachments['invite.ics'] = ReservationIcs.run!(reservation:)
     ```
 
 ### app/mailers/user_mailer.rb - (1 offense)
@@ -4130,13 +3684,6 @@
       #   errors.add(:ends_at, 'should not overlap with other turns' + full_message, overlapping: overlapping.pluck(:id), full_message:)
     ```
 
-### app/models/reservation_turn_message.rb - (1 offense)
-  * **Line # 31 - convention:** Style/Lambda: Use the `lambda` method for multiline lambdas.
-
-    ```rb
-      scope :active_at, ->(date) {
-    ```
-
 ### app/models/reservation_turn_to_message.rb - (1 offense)
   * **Line # 3 - convention:** Style/Documentation: Missing top-level documentation comment for `class ReservationTurnToMessage`.
 
@@ -4893,29 +4440,11 @@
         Menu::Category.update_all(root_id: nil)
     ```
 
-### db/migrate/20241202215307_create_reservation_turn_messages.rb - (9 offenses)
+### db/migrate/20241202215307_create_reservation_turn_messages.rb - (3 offenses)
   * **Line # 3 - convention:** Style/Documentation: Missing top-level documentation comment for `class CreateReservationTurnMessages`.
 
     ```rb
     class CreateReservationTurnMessages < ActiveRecord::Migration[7.0]
-    ```
-
-  * **Line # 6 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          t.date :from_date, 
-    ```
-
-  * **Line # 6 - convention:** Layout/LineLength: Line is too long. [200/120]
-
-    ```rb
-          t.date :from_date, comment: %(When user tries to reserve for the associated reservation turn after this date, the message will be shown. If date is nil, the message will be shown for all dates.)
-    ```
-
-  * **Line # 7 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    comment: %(When user tries to reserve for the associated reservation turn after this date, the message will be shown. If date is nil, the message will be shown for all dates.)
     ```
 
   * **Line # 7 - convention:** Layout/LineLength: Line is too long. [188/120]
@@ -4924,74 +4453,20 @@
                  comment: %(When user tries to reserve for the associated reservation turn after this date, the message will be shown. If date is nil, the message will be shown for all dates.)
     ```
 
-  * **Line # 7 - convention:** Layout/LineLength: Line is too long. [282/120]
-
-    ```rb
-          t.date :to_date, comment: %(When user tries to reserve for the associated reservation turn before this date, the message will be shown. If date is nil, the message will be shown for all dates. To set a message for exactly one date, set from_date and to_date to the same date.)
-    ```
-
-  * **Line # 8 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          t.date :to_date, 
-    ```
-
-  * **Line # 9 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    comment: %(When user tries to reserve for the associated reservation turn before this date, the message will be shown. If date is nil, the message will be shown for all dates. To set a message for exactly one date, set from_date and to_date to the same date.)
-    ```
-
   * **Line # 9 - convention:** Layout/LineLength: Line is too long. [272/120]
 
     ```rb
                  comment: %(When user tries to reserve for the associated reservation turn before this date, the message will be shown. If date is nil, the message will be shown for all dates. To set a message for exactly one date, set from_date and to_date to the same date.)
     ```
 
-### db/migrate/20241203180109_create_reservation_turn_to_messages.rb - (7 offenses)
+### db/migrate/20241203180109_create_reservation_turn_to_messages.rb - (1 offense)
   * **Line # 3 - convention:** Style/Documentation: Missing top-level documentation comment for `class CreateReservationTurnToMessages`.
 
     ```rb
     class CreateReservationTurnToMessages < ActiveRecord::Migration[7.0]
     ```
 
-  * **Line # 6 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          t.references :reservation_turn, null: false, foreign_key: true, 
-    ```
-
-  * **Line # 6 - convention:** Layout/LineLength: Line is too long. [125/120]
-
-    ```rb
-          t.references :reservation_turn, null: false, foreign_key: true, index: { name: "turn_id_reservation_turn_to_messages" }
-    ```
-
-  * **Line # 7 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    index: { name: "turn_id_reservation_turn_to_messages" }
-    ```
-
-  * **Line # 7 - convention:** Layout/LineLength: Line is too long. [136/120]
-
-    ```rb
-          t.references :reservation_turn_message, null: false, foreign_key: true, index: { name: "message_id_reservation_turn_to_messages" }
-    ```
-
-  * **Line # 8 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          t.references :reservation_turn_message, null: false, foreign_key: true, 
-    ```
-
-  * **Line # 9 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    index: { name: "message_id_reservation_turn_to_messages" }
-    ```
-
-### db/seeds.rb - (23 offenses)
+### db/seeds.rb - (5 offenses)
   * **Line # 1 - convention:** Style/FrozenStringLiteralComment: Missing frozen string literal comment.
 
     ```rb
@@ -5004,112 +4479,10 @@
       puts message
     ```
 
-  * **Line # 105 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-    (-10..10).to_a.each { |day_ago| 5.times {
-    ```
-
-  * **Line # 105 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-    (-10..10).to_a.each { |day_ago| 
-    ```
-
-  * **Line # 105 - convention:** Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
-
-    ```rb
-    (-10..10).to_a.each { |day_ago| 5.times { ...
-    ```
-
-  * **Line # 105 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-    (-10..10).to_a.each { |day_ago| 5.times {
-    ```
-
-  * **Line # 105 - convention:** Layout/LineLength: Line is too long. [284/120]
-
-    ```rb
-    (-10..10).to_a.each { |day_ago| 5.times { Reservation.create!(adults: [2, 2, 2, 3, 4, 5, 6, 7, 8, 9, 10].sample, fullname: Faker::Name.first_name, email: "sasha+#{SecureRandom.hex}@opinioni.net", datetime: day_ago.days.ago.beginning_of_day + [10, 11, 12, 18, 19, 20].sample.hours) } }
-    ```
-
-  * **Line # 105 - convention:** Layout/TrailingEmptyLines: Final newline missing.
-
-    ```rb
-    (-10..10).to_a.each { |day_ago| 5.times { Reservation.create!(adults: [2, 2, 2, 3, 4, 5, 6, 7, 8, 9, 10].sample, fullname: Faker::Name.first_name, email: "sasha+#{SecureRandom.hex}@opinioni.net", datetime: day_ago.days.ago.beginning_of_day + [10, 11, 12, 18, 19, 20].sample.hours) } }
-    ```
-
-  * **Line # 106 - convention:** Style/BlockDelimiters: Avoid using `{...}` for multi-line blocks.
-
-    ```rb
-      5.times {
-    ```
-
-  * **Line # 106 - convention:** Layout/LineLength: Line is too long. [243/120]
-
-    ```rb
-     Reservation.create!(adults: [2, 2, 2, 3, 4, 5, 6, 7, 8, 9, 10].sample, fullname: Faker::Name.first_name, email: "sasha+#{SecureRandom.hex}@opinioni.net", datetime: day_ago.days.ago.beginning_of_day + [10, 11, 12, 18, 19, 20].sample.hours) } }
-    ```
-
-  * **Line # 106 - convention:** Layout/BlockEndNewline: Expression at 106, 241 should be on its own line.
-
-    ```rb
-     Reservation.create!(adults: [2, 2, 2, 3, 4, 5, 6, 7, 8, 9, 10].sample, fullname: Faker::Name.first_name, email: "sasha+#{SecureRandom.hex}@opinioni.net", datetime: day_ago.days.ago.beginning_of_day + [10, 11, 12, 18, 19, 20].sample.hours) } }
-    ```
-
-  * **Line # 106 - convention:** Layout/BlockEndNewline: Expression at 106, 243 should be on its own line.
-
-    ```rb
-     Reservation.create!(adults: [2, 2, 2, 3, 4, 5, 6, 7, 8, 9, 10].sample, fullname: Faker::Name.first_name, email: "sasha+#{SecureRandom.hex}@opinioni.net", datetime: day_ago.days.ago.beginning_of_day + [10, 11, 12, 18, 19, 20].sample.hours) } }
-    ```
-
-  * **Line # 107 - convention:** Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-
-    ```rb
-     Reservation.create!(adults: [2, 2, 2, 3, 4, 5, 6, 7, 8, 9, 10].sample, fullname: Faker::Name.first_name, 
-    ```
-
-  * **Line # 107 - convention:** Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
-
-    ```rb
-      Reservation.create!(adults: [2, 2, 2, 3, 4, 5, 6, 7, 8, 9, 10].sample, fullname: Faker::Name.first_name,
-    ```
-
   * **Line # 107 - convention:** Performance/CollectionLiteralInLoop: Avoid immutable Array literals in loops. It is better to extract it into a local variable or a constant.
 
     ```rb
         Reservation.create!(adults: [2, 2, 2, 3, 4, 5, 6, 7, 8, 9, 10].sample, fullname: Faker::Name.first_name,
-    ```
-
-  * **Line # 107 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-     Reservation.create!(adults: [2, 2, 2, 3, 4, 5, 6, 7, 8, 9, 10].sample, fullname: Faker::Name.first_name, 
-    ```
-
-  * **Line # 108 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    email: "sasha+#{SecureRandom.hex}@opinioni.net", datetime: day_ago.days.ago.beginning_of_day + [10, 11, 12, 18, 19, 20].sample.hours)
-    ```
-
-  * **Line # 108 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    email: "sasha+#{SecureRandom.hex}@opinioni.net", datetime: day_ago.days.ago.beginning_of_day + [10, 11, 12, 18, 19, 20].sample.hours)
-    ```
-
-  * **Line # 108 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                                               email: "sasha+#{SecureRandom.hex}@opinioni.net", datetime: day_ago.days.ago.beginning_of_day + [10, 11, 12, 18, 19, 20].sample.hours)
-    ```
-
-  * **Line # 108 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-                                               email: "sasha+#{SecureRandom.hex}@opinioni.net", datetime: day_ago.days.ago.beginning_of_day + [10, 11, 12, 18, 19, 20].sample.hours)
     ```
 
   * **Line # 108 - convention:** Performance/CollectionLiteralInLoop: Avoid immutable Array literals in loops. It is better to extract it into a local variable or a constant.
@@ -5122,12 +4495,6 @@
 
     ```rb
                             email: "sasha+#{SecureRandom.hex}@opinioni.net", datetime: day_ago.days.ago.beginning_of_day + [10, 11, 12, 18, 19, 20].sample.hours)
-    ```
-
-  * **Line # 109 - convention:** Layout/BlockAlignment: `}` at 109, 0 is not aligned with `5.times {` at 106, 2.
-
-    ```rb
-    }
     ```
 
 ### lib/sidekiq_admin_constraint.rb - (2 offenses)
@@ -16273,7 +15640,7 @@
             allow_any_instance_of(ActionDispatch::Request).to receive(:cookies).and_return(Reservation::PUBLIC_CREATE_COOKIE => secret)
     ```
 
-### spec/controllers/v1/reservations_controller_spec.rb - (167 offenses)
+### spec/controllers/v1/reservations_controller_spec.rb - (166 offenses)
   * **Line # 5 - convention:** RSpec/Rails/InferredSpecType: Remove redundant spec type.
 
     ```rb
@@ -16344,12 +15711,6 @@
 
     ```rb
             it { expect { doit }.to(change { Reservation.count }) }
-    ```
-
-  * **Line # 152 - convention:** Layout/SpaceAfterComma: Space missing after comma.
-
-    ```rb
-          [2,3].each do |days|
     ```
 
   * **Line # 156 - convention:** RSpec/ExpectChange: Prefer `change(Reservation, :count)`.
@@ -24578,102 +23939,11 @@
         it do
     ```
 
-### spec/requests/v1/admin/menu/categories_controller/menu_categories_controller.index_spec.rb - (2 offenses)
-  * **Line # 5 - warning:** Lint/UnusedBlockArgument: Unused block argument - `additions`. You can omit the argument if you don't care about it.
-
-    ```rb
-    RSpec.shared_examples "successul request" do |additions|
-    ```
-
-  * **Line # 78 - convention:** Layout/ClosingParenthesisIndentation: Indent `)` to column 6 (not 8)
-
-    ```rb
-            )
-    ```
-
-### spec/requests/v1/admin/menu/dishes_controller/menu_dishes_controller.update_prices_spec.rb - (30 offenses)
-  * **Line # 20 - convention:** Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
-
-    ```rb
-          create(:menu_dish, price: 3.99),
-    ```
-
-  * **Line # 42 - convention:** RSpec/EmptyLineAfterExample: Add an empty line after `it`.
-
-    ```rb
-        it { expect { req }.to change { dishes.last.reload.price.to_f }.from(3.99).to(5.00) }
-    ```
-
+### spec/requests/v1/admin/menu/dishes_controller/menu_dishes_controller.update_prices_spec.rb - (4 offenses)
   * **Line # 54 - convention:** RSpec/ExampleLength: Example has too many lines. [6/5]
 
     ```rb
         it do ...
-    ```
-
-  * **Line # 56 - convention:** Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the first position after the preceding left parenthesis.
-
-    ```rb
-            { "id" => dishes.first.id, "price" => 2.01 },
-    ```
-
-  * **Line # 58 - convention:** Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
-
-    ```rb
-            { "id" => dishes.second.id, "price" => 3.51 },
-    ```
-
-  * **Line # 58 - convention:** Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
-
-    ```rb
-            { "id" => dishes.last.id, "price" => 5.00 },
-    ```
-
-  * **Line # 59 - convention:** Layout/FirstArrayElementIndentation: Indent the right bracket the same as the first position after the preceding left parenthesis.
-
-    ```rb
-          ])
-    ```
-
-  * **Line # 59 - convention:** Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
-
-    ```rb
-            { "id" => dishes.last.id, "price" => 5.00 }
-    ```
-
-  * **Line # 81 - convention:** RSpec/MatchArray: Prefer `contain_exactly` when matching an array literal.
-
-    ```rb
-            expect(json[:details]).to match_array([ ...
-    ```
-
-  * **Line # 82 - convention:** Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the first position after the preceding left parenthesis.
-
-    ```rb
-              { "id" => dishes.first.id, "price" => 1.01 },
-    ```
-
-  * **Line # 82 - convention:** RSpec/MatchArray: Prefer `contain_exactly` when matching an array literal.
-
-    ```rb
-            expect(json[:details]).to match_array([ ...
-    ```
-
-  * **Line # 82 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-            expect(json[:details]).to contain_exactly({ "id" => dishes.first.id, "price" => 1.01 }, 
-    ```
-
-  * **Line # 82 - convention:** Layout/LineLength: Line is too long. [187/120]
-
-    ```rb
-            expect(json[:details]).to contain_exactly({ "id" => dishes.first.id, "price" => 1.01 }, { "id" => dishes.second.id, "price" => 3.51 }, { "id" => dishes.last.id, "price" => 5.00 })
-    ```
-
-  * **Line # 83 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    { "id" => dishes.second.id, "price" => 3.51 }, { "id" => dishes.last.id, "price" => 5.00 })
     ```
 
   * **Line # 83 - convention:** Layout/LineLength: Line is too long. [141/120]
@@ -24682,88 +23952,10 @@
                                                       { "id" => dishes.second.id, "price" => 3.51 }, { "id" => dishes.last.id, "price" => 5.00 })
     ```
 
-  * **Line # 84 - convention:** Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
-
-    ```rb
-              { "id" => dishes.second.id, "price" => 3.51 },
-    ```
-
-  * **Line # 84 - convention:** Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
-
-    ```rb
-              { "id" => dishes.last.id, "price" => 5.00 },
-    ```
-
-  * **Line # 85 - convention:** Layout/FirstArrayElementIndentation: Indent the right bracket the same as the first position after the preceding left parenthesis.
-
-    ```rb
-            ])
-    ```
-
-  * **Line # 85 - convention:** Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
-
-    ```rb
-              { "id" => dishes.last.id, "price" => 5.00 }
-    ```
-
   * **Line # 103 - convention:** RSpec/ExampleLength: Example has too many lines. [6/5]
 
     ```rb
           it do ...
-    ```
-
-  * **Line # 108 - convention:** Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the first position after the preceding left parenthesis.
-
-    ```rb
-              { "id" => dishes.first.id, "price" => 2.01 },
-    ```
-
-  * **Line # 110 - convention:** Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
-
-    ```rb
-              { "id" => dishes.second.id, "price" => 3.51 },
-    ```
-
-  * **Line # 110 - convention:** Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
-
-    ```rb
-              { "id" => dishes.last.id, "price" => 5.00 },
-    ```
-
-  * **Line # 111 - convention:** Layout/FirstArrayElementIndentation: Indent the right bracket the same as the first position after the preceding left parenthesis.
-
-    ```rb
-            ])
-    ```
-
-  * **Line # 111 - convention:** Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
-
-    ```rb
-              { "id" => dishes.last.id, "price" => 5.00 }
-    ```
-
-  * **Line # 121 - convention:** RSpec/EmptyLineAfterExample: Add an empty line after `it`.
-
-    ```rb
-        it { expect { req }.to change { dishes.last.reload.price.to_f }.from(3.99).to(4.59) }
-    ```
-
-  * **Line # 154 - convention:** Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the first position after the preceding left parenthesis.
-
-    ```rb
-            { "id" => dishes.first.id, "price" => 2.01 },
-    ```
-
-  * **Line # 154 - convention:** Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
-
-    ```rb
-            { "id" => dishes.first.id, "price" => 2.01 },
-    ```
-
-  * **Line # 155 - convention:** Layout/FirstArrayElementIndentation: Indent the right bracket the same as the first position after the preceding left parenthesis.
-
-    ```rb
-          ])
     ```
 
   * **Line # 203 - convention:** RSpec/MultipleExpectations: Example has too many expectations [2/1].
@@ -25337,7 +24529,7 @@
       def req(p = params, h = headers)
     ```
 
-### spec/requests/v1/admin/reservation_turn_messages_controller/admin_reservation_turn_messages_controller.create_spec.rb - (6 offenses)
+### spec/requests/v1/admin/reservation_turn_messages_controller/admin_reservation_turn_messages_controller.create_spec.rb - (3 offenses)
   * **Line # 21 - convention:** RSpec/ExpectChange: Prefer `change(ReservationTurnMessage, :count)`.
 
     ```rb
@@ -25350,79 +24542,31 @@
       it { expect { req }.to(change { ReservationTurnMessage.count }) }
     ```
 
-  * **Line # 48 - convention:** Style/TrailingCommaInHashLiteral: Avoid comma after the last item of a hash.
-
-    ```rb
-      let(:message) { { it: Faker::Lorem.sentence, en: Faker::Lorem.sentence, } }
-    ```
-
   * **Line # 50 - convention:** RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
 
     ```rb
       let!(:reservation_turn) do
     ```
 
-  * **Line # 101 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-        it { expect { req }.to(change { ReservationTurnMessage.where(from_date: from_date).count }.by(1)) }
-    ```
-
-  * **Line # 109 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-        it { expect { req }.to(change { ReservationTurnMessage.where(to_date: to_date).count }.by(1)) }
-    ```
-
-### spec/requests/v1/admin/reservation_turn_messages_controller/admin_reservation_turn_messages_controller.delete_spec.rb - (2 offenses)
+### spec/requests/v1/admin/reservation_turn_messages_controller/admin_reservation_turn_messages_controller.delete_spec.rb - (1 offense)
   * **Line # 35 - convention:** RSpec/ExpectChange: Prefer `change(ReservationTurnMessage, :count)`.
 
     ```rb
       it { expect { req }.to(change { ReservationTurnMessage.count }.by(-1)) }
     ```
 
-  * **Line # 75 - convention:** Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
-
-    ```rb
-        let(:turn_message_id) { 99999999 }
-    ```
-
-### spec/requests/v1/admin/reservation_turn_messages_controller/admin_reservation_turn_messages_controller.index_spec.rb - (3 offenses)
-  * **Line # 39 - convention:** Layout/SpaceInsideHashLiteralBraces: Space inside empty hash literal braces detected.
-
-    ```rb
-        { }
-    ```
-
-  * **Line # 42 - convention:** Style/TrailingCommaInHashLiteral: Avoid comma after the last item of a hash.
-
-    ```rb
-      let(:translations) { { it: Faker::Lorem.sentence, en: Faker::Lorem.sentence, } }
-    ```
-
+### spec/requests/v1/admin/reservation_turn_messages_controller/admin_reservation_turn_messages_controller.index_spec.rb - (1 offense)
   * **Line # 44 - convention:** RSpec/LetSetup: Do not use `let!` to setup objects not referenced in tests.
 
     ```rb
       let!(:message) do
     ```
 
-### spec/requests/v1/admin/reservation_turn_messages_controller/admin_reservation_turn_messages_controller.update_spec.rb - (3 offenses)
+### spec/requests/v1/admin/reservation_turn_messages_controller/admin_reservation_turn_messages_controller.update_spec.rb - (1 offense)
   * **Line # 36 - convention:** RSpec/ExpectChange: Prefer `change(ReservationTurnMessage, :count)`.
 
     ```rb
       it { expect { req }.not_to(change { ReservationTurnMessage.count }) }
-    ```
-
-  * **Line # 49 - convention:** Style/TrailingCommaInHashLiteral: Avoid comma after the last item of a hash.
-
-    ```rb
-      let(:message) { { it: Faker::Lorem.sentence, en: Faker::Lorem.sentence, } }
-    ```
-
-  * **Line # 147 - convention:** Style/NumericLiterals: Use underscores(_) as thousands separator and separate every 3 digits with them.
-
-    ```rb
-        let(:turn_message_id) { 99999999 }
     ```
 
 ### spec/requests/v1/admin/reservations_controller/reservations_controller.refresh_payment_status_spec.rb - (15 offenses)
@@ -26069,17 +25213,11 @@
           ReservationTurn.create!(name: "Night", weekday: Time.now.wday, starts_at: "19:00", ends_at: "21:00", step: 30)
     ```
 
-### spec/requests/v2/reservations_controller/valid_times_spec.rb - (58 offenses)
+### spec/requests/v2/reservations_controller/valid_times_spec.rb - (13 offenses)
   * **Line # 5 - convention:** RSpec/Rails/InferredSpecType: Remove redundant spec type.
 
     ```rb
     RSpec.context "GET /v2/reservations/valid_times", type: :request do
-    ```
-
-  * **Line # 13 - convention:** Style/HashSyntax: Omit the hash value.
-
-    ```rb
-        get "/v2/reservations/valid_times", params: provided_params, headers: headers
     ```
 
   * **Line # 38 - convention:** Layout/LineLength: Line is too long. [133/120]
@@ -26088,70 +25226,16 @@
         context "when got holidays on all weekdays but they are expired (to_timestamp is in the past): should see all times available" do
     ```
 
-  * **Line # 102 - convention:** Style/TrailingCommaInArrayLiteral: Avoid comma after the last item of an array.
-
-    ```rb
-            "it",
-    ```
-
   * **Line # 178 - convention:** Layout/LineLength: Line is too long. [124/120]
 
     ```rb
           expect(json[:turns]).to all(include("id" => Integer, "starts_at" => String, "ends_at" => String, "weekday" => Integer,
     ```
 
-  * **Line # 179 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                                      "step" => Integer))
-    ```
-
-  * **Line # 179 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-                                      "step" => Integer))
-    ```
-
-  * **Line # 179 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                                                      "step" => Integer))
-    ```
-
-  * **Line # 179 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-                                                      "step" => Integer))
-    ```
-
   * **Line # 204 - convention:** Layout/LineLength: Line is too long. [124/120]
 
     ```rb
           expect(json[:turns]).to all(include("id" => Integer, "starts_at" => String, "ends_at" => String, "weekday" => Integer,
-    ```
-
-  * **Line # 205 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                                      "step" => Integer))
-    ```
-
-  * **Line # 205 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-                                      "step" => Integer))
-    ```
-
-  * **Line # 205 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                                                      "step" => Integer))
-    ```
-
-  * **Line # 205 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-                                                      "step" => Integer))
     ```
 
   * **Line # 287 - convention:** Rails/TimeZone: Do not use `Time.now` without zone. Use one of `Time.zone.now`, `Time.current`, `Time.now.in_time_zone`, `Time.now.utc`, `Time.now.getlocal`, `Time.now.xmlschema`, `Time.now.iso8601`, `Time.now.jisx0301`, `Time.now.rfc3339`, `Time.now.httpdate`, `Time.now.to_i`, `Time.now.to_f` instead.
@@ -26196,226 +25280,16 @@
           ReservationTurn.create!(name: "Night", weekday: Time.now.wday, starts_at: "19:00", ends_at: "21:00", step: 30)
     ```
 
-  * **Line # 425 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-                     from_timestamp: 2.days.ago, ...
-    ```
-
-  * **Line # 426 - convention:** Rails/PluralizationGrammar: Prefer `2.days`.
-
-    ```rb
-                     to_timestamp: 2.day.from_now,
-    ```
-
-  * **Line # 430 - convention:** Layout/ClosingParenthesisIndentation: Indent `)` to column 6 (not 10)
-
-    ```rb
-              )
-    ```
-
-  * **Line # 430 - convention:** Layout/MultilineMethodCallBraceLayout: Closing method call brace must be on the same line as the last argument when opening brace is on the same line as the first argument.
-
-    ```rb
-              )
-    ```
-
-  * **Line # 456 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-              create(:reservation_turn, starts_at: "12:00", ends_at: "14:00", step: 30, 
-    ```
-
-  * **Line # 457 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    weekday: (Time.zone.now + days.days).wday)
-    ```
-
-  * **Line # 457 - convention:** Layout/LineLength: Line is too long. [126/120]
-
-    ```rb
-              create(:reservation_turn, starts_at: "12:00", ends_at: "14:00", step: 30, weekday: (Time.zone.now + days.days).wday)
-    ```
-
-  * **Line # 483 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-              create(:reservation_turn, starts_at: "12:00", ends_at: "14:00", step: 30, 
-    ```
-
-  * **Line # 483 - convention:** Layout/LineLength: Line is too long. [126/120]
-
-    ```rb
-              create(:reservation_turn, starts_at: "12:00", ends_at: "14:00", step: 30, weekday: (Time.zone.now + days.days).wday)
-    ```
-
-  * **Line # 484 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    weekday: (Time.zone.now + days.days).wday)
-    ```
-
-  * **Line # 509 - convention:** Layout/LineLength: Line is too long. [147/120]
-
-    ```rb
-          t.reservation_turn_messages << create(:reservation_turn_message, from_date: Time.zone.now.to_date, to_date: Time.zone.now.to_date).tap do |m|
-    ```
-
-  * **Line # 510 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          t.reservation_turn_messages << create(:reservation_turn_message, from_date: Time.zone.now.to_date, 
-    ```
-
-  * **Line # 511 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    to_date: Time.zone.now.to_date).tap do |m|
-    ```
-
-  * **Line # 514 - convention:** Layout/LineLength: Line is too long. [123/120]
-
-    ```rb
-          t.reservation_turn_messages << create(:reservation_turn_message, from_date: 2.days.from_now, to_date: nil).tap do |m|
-    ```
-
-  * **Line # 516 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          t.reservation_turn_messages << create(:reservation_turn_message, from_date: 2.days.from_now, 
-    ```
-
-  * **Line # 517 - convention:** Layout/HashAlignment: Align the keys of a hash literal if they span more than one line.
-
-    ```rb
-    to_date: nil).tap do |m|
-    ```
-
-  * **Line # 540 - convention:** RSpec/EmptyLineAfterExample: Add an empty line after `it`.
-
-    ```rb
-        it { expect(json.dig(:turns, 0, :messages)).to all(include(message: String)) }
-    ```
-
-  * **Line # 541 - convention:** Layout/MultilineBlockLayout: Block body expression is on the same line as the block start.
-
-    ```rb
-        it { expect(json.dig(:turns, 0, :messages).pluck(:message)).to match_array([ ...
-    ```
-
-  * **Line # 541 - convention:** RSpec/MatchArray: Prefer `contain_exactly` when matching an array literal.
-
-    ```rb
-        it { expect(json.dig(:turns, 0, :messages).pluck(:message)).to match_array([ ...
-    ```
-
   * **Line # 542 - convention:** RSpec/RepeatedExample: Don't repeat examples within an example group.
 
     ```rb
         it { expect(json.dig(:turns, 0, :messages)).to all(include(message: String)) }
     ```
 
-  * **Line # 542 - convention:** Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the first position after the preceding left parenthesis.
-
-    ```rb
-          "first message",
-    ```
-
   * **Line # 543 - convention:** RSpec/RepeatedExample: Don't repeat examples within an example group.
 
     ```rb
         it { expect(json.dig(:turns, 0, :messages)).to all(include(message: String)) }
-    ```
-
-  * **Line # 544 - convention:** Layout/FirstArrayElementIndentation: Indent the right bracket the same as the first position after the preceding left parenthesis.
-
-    ```rb
-        ]) }
-    ```
-
-  * **Line # 544 - convention:** Layout/BlockEndNewline: Expression at 544, 8 should be on its own line.
-
-    ```rb
-        ]) }
-    ```
-
-  * **Line # 545 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-        it { 
-    ```
-
-  * **Line # 546 - convention:** Layout/IndentationWidth: Use 2 (not 6) spaces for indentation.
-
-    ```rb
-          expect(json.dig(:turns, 0, :messages).pluck(:message)).to match_array([
-    ```
-
-  * **Line # 546 - convention:** Layout/IndentationWidth: Use 2 (not -2) spaces for indentation.
-
-    ```rb
-      expect(json.dig(:turns, 0, :messages).pluck(:message)).to match_array([
-    ```
-
-  * **Line # 546 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-          expect(json.dig(:turns, 0, 
-    ```
-
-  * **Line # 546 - convention:** RSpec/MatchArray: Prefer `contain_exactly` when matching an array literal.
-
-    ```rb
-      expect(json.dig(:turns, 0, :messages).pluck(:message)).to match_array([ ...
-    ```
-
-  * **Line # 546 - convention:** RSpec/MatchArray: Prefer `contain_exactly` when matching an array literal.
-
-    ```rb
-          expect(json.dig(:turns, 0, :messages).pluck(:message)).to match_array([ ...
-    ```
-
-  * **Line # 546 - convention:** Layout/LineLength: Line is too long. [122/120]
-
-    ```rb
-          expect(json.dig(:turns, 0, :messages).pluck(:message)).to contain_exactly("first message", "always present message")
-    ```
-
-  * **Line # 547 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    :messages).pluck(:message)).to contain_exactly("first message", "always present message")
-    ```
-
-  * **Line # 547 - convention:** Layout/FirstArrayElementIndentation: Use 2 spaces for indentation in an array, relative to the first position after the preceding left parenthesis.
-
-    ```rb
-                                                                                     "first message",
-    ```
-
-  * **Line # 548 - convention:** Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
-
-    ```rb
-          "always present message"
-    ```
-
-  * **Line # 548 - convention:** Layout/ArrayAlignment: Align the elements of an array literal if they span more than one line.
-
-    ```rb
-                                                                                 "always present message"
-    ```
-
-  * **Line # 549 - convention:** Layout/FirstArrayElementIndentation: Indent the right bracket the same as the first position after the preceding left parenthesis.
-
-    ```rb
-                                                                                   ])
-    ```
-
-  * **Line # 550 - convention:** Layout/BlockAlignment: `}` at 550, 0 is not aligned with `it { ` at 545, 4.
-
-    ```rb
-    }
     ```
 
 ### spec/routing/v1/admin/menu/categories_routing_spec.rb - (5 offenses)
@@ -26449,61 +25323,7 @@
                                                                                  format: :json, id: "22", category_child_id: "98")
     ```
 
-### spec/routing/v1/admin/menu/dishes_routing_spec.rb - (18 offenses)
-  * **Line # 13 - convention:** RSpec/EmptyLineAfterExample: Add an empty line after `it`.
-
-    ```rb
-      it { expect(post: "/v1/admin/menu/dishes/52/copy").to route_to("v1/admin/menu/dishes#copy", format: :json, id: "52") }
-    ```
-
-  * **Line # 14 - convention:** Layout/LineLength: Line is too long. [126/120]
-
-    ```rb
-      it { expect(patch: "/v1/admin/menu/dishes/update_prices").to route_to("v1/admin/menu/dishes#update_prices", format: :json) }
-    ```
-
-  * **Line # 15 - convention:** Layout/BlockEndNewline: Expression at 15, 120 should be on its own line.
-
-    ```rb
-     expect(patch: "/v1/admin/menu/dishes/update_prices").to route_to("v1/admin/menu/dishes#update_prices", format: :json) }
-    ```
-
-  * **Line # 16 - convention:** Layout/IndentationWidth: Use 2 (not 1) spaces for indentation.
-
-    ```rb
-     expect(patch: "/v1/admin/menu/dishes/update_prices").to route_to("v1/admin/menu/dishes#update_prices", format: :json)
-    ```
-
-  * **Line # 16 - convention:** Layout/IndentationWidth: Use 2 (not 0) spaces for indentation.
-
-    ```rb
-      expect(patch: "/v1/admin/menu/dishes/update_prices").to route_to("v1/admin/menu/dishes#update_prices", format: :json)
-    ```
-
-  * **Line # 16 - convention:** Layout/TrailingWhitespace: Trailing whitespace detected.
-
-    ```rb
-        expect(patch: "/v1/admin/menu/dishes/update_prices").to route_to("v1/admin/menu/dishes#update_prices", 
-    ```
-
-  * **Line # 16 - convention:** Layout/LineLength: Line is too long. [121/120]
-
-    ```rb
-        expect(patch: "/v1/admin/menu/dishes/update_prices").to route_to("v1/admin/menu/dishes#update_prices", format: :json)
-    ```
-
-  * **Line # 17 - convention:** Layout/ArgumentAlignment: Align the arguments of a method call if they span more than one line.
-
-    ```rb
-    format: :json)
-    ```
-
-  * **Line # 17 - convention:** Layout/BlockAlignment: `}` at 17, 0 is not aligned with `it {` at 15, 2.
-
-    ```rb
-    }
-    ```
-
+### spec/routing/v1/admin/menu/dishes_routing_spec.rb - (9 offenses)
   * **Line # 53 - convention:** Layout/LineLength: Line is too long. [132/120]
 
     ```rb
